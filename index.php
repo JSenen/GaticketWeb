@@ -14,6 +14,13 @@ include "./view/view_header.php";
       Must be 8-20 characters long.
     </span>
   </div>
+  <?php
+  if (function_exists('curl_init')) {
+    echo 'cURL está habilitado en esta instalación de PHP.';
+} else {
+    echo 'cURL no está habilitado en esta instalación de PHP.';
+}
+?>
 </div>
 </div>
 
