@@ -10,11 +10,27 @@ function conection_login($tip,$clave){
      // Buscar el usuario que coincide con el TIP y la clave
      foreach ($data as $user) {
         if ($user['userTip'] == $tip && $user['userPassword'] == $clave) {
-            echo "El usuario con TIP '$tip' y clave proporcionada existe en la API.";
+
+            session_start(); //Iniciamos sesion del usuario
+            $_SESSION['user_id'] = $user['userId'];
+            $_SESSION['user_tip'] = $user['userTip']; 
+            $_SESSION['user_rol'] = $user['userRol']; 
+
+            var_dump($user);
+            
+            setcookie('gaticket', '', 86400); //Establecemos una cokkie de 1 dia
+            if($user['userRol'] === 'administrador'){
+                // Envio a pagina de administradors
+             header('location:index.php?controller=admin&action=ticketlist');
+            } else {
+                //Envio a pagina de usuarios
+             header('location:index.php?controller=user&action=firstPage'); 
+            }
         }
+        
     }
 
-    echo "No se encontró un usuario con el TIP y la clave proporcionados en la API.";
+    echo "El usuario no se encuentra registrado"; //TODO gestionar usuario no encontrado
 }
 
 
