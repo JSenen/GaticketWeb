@@ -1,4 +1,4 @@
-<!-- LEER DE API -->
+<!-- Intercambio de datos con la API -->
 <?php
 function conection_login($tip,$clave){
     $url = 'http://localhost:8080/users';
