@@ -4,6 +4,8 @@ function loginpage()
 { 
 
   require('./view/view_login.php');
-  conection_login();
+  
 
 }
+
+
