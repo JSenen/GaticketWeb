@@ -1,6 +1,7 @@
 <!-- Intercambio de datos con la API -->
 <?php
-function conection_login($tip,$clave){
+ //Comprobar usuario en la base
+function conection_login($tip,$clave){                                                  
     $url = 'http://localhost:8080/users';
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
