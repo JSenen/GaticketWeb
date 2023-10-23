@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <section class="section-log">
 		<div class="container">
 		  <div class="user signinBx">
-			<div class="imgBx"><img src="#" width="50" height="50" alt="" /></div>
+			<div class="imgBx"><img src="./resources/img/GaticketLogo2.png" width="60" height="60" alt="" /></div>
 			<div class="formBx">
 			  <form action="" method="post">
 				<h2>Login</h2>
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				
 			<div id="result"></div> <!-- Pinta el resultado del envio asincrono con AJAX -->
 			</div>
-			<div class="imgBx bg-black img-fluid"><img src="#" class="img-fluid "width="50" height="50" alt="" /></div>
+			<div class="imgBx bg-black img-fluid"><img src="./resources/img/GaticketRegister.png" class="img-fluid "width="50" height="50" alt="" /></div>
 		  </div>
 		</div>
 </section>

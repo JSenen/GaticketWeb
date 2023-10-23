@@ -1,5 +1,6 @@
 <?php
 function firstPage(){
-    echo "Pagina de Usuario";
+    session_start();
+    include('./view/view_user.php');
 }
 ?>
