@@ -75,15 +75,9 @@ function recordTicket(){
             $response = curl_exec($ch);
 
             // Después de procesar la solicitud, redirigir de nuevo a la misma página
-            //header('Location: ' . $_SERVER['PHP_SELF']);
-            //exit(); // asegura de que el script se detenga aquí
+            header('Location: ' . $_SERVER['PHP_SELF']);
+            exit(); // asegura de que el script se detenga aquí
         
-                // Verifica si la solicitud se realizó con éxito
-                if ($response !== false) {
-                    echo "INCIDENCIA AGREGADA.".$response;
-                } else {
-                    echo "ERROR!!!.";
-                }
      } else {
             echo "Acceso no permitido.";
         }
