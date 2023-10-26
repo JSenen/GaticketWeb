@@ -52,24 +52,43 @@ function recordTicket(){
             $incidenceStatus = false;
             $incidenceDate = $fecha_actual;
             $incidenceDateFinish = "";
+            $deviceSerialNumber = $_POST['device_serialnumber'];
+
+            // 1º Buscar  Id device por serial number
+            $endpointserial = 'http://localhost:8080/device?deviceSerial='.$deviceSerialNumber;
+            $ch = curl_init($endpointserial);
+            curl_setopt($ch, CURLOPT_URL, $endpointserial);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            //Decodificamos Json
+            $data = json_decode($result, true);
+            // Verificar si se obtuvo una respuesta válida y si el campo "deviceId" está presente
+                if (is_array($data) && isset($data['deviceId'])) {
+                    // Obtener el valor del deviceId
+                    $deviceId = $data['deviceId'];
+                } else {
+                    echo "No se pudo encontrar el deviceId para el número de serie proporcionado.";
+                }
 
              //Recopila datos del usuario grabo ticket
             $userId = $_SESSION['user_id'];
             $userTip = $_SESSION['user_tip'];
             echo $userId;
             // Define los datos que se enviarán a la API
-            $data = array(
+            $incidencedata = array(
                 'incidenceCommit' => $incidenceCommit,
                 'incidenceTheme' => $incidenceTheme,
                 'incidenceStatus' =>  $incidenceStatus,
                 'incidenceDate' => $incidenceDate,
-                'incidenceDateFinish' => $incidenceDateFinish
+                'incidenceDateFinish' => $incidenceDateFinish,
+                'device' => $deviceId
             );
 
-            // Realiza una solicitud POST a la API para crear un nuevo usuario
+            // Realiza una solicitud POST a la API para grabar una incidencia
             $url = 'http://localhost:8080/incidence/'.$userId;
             $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($incidencedata));
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
             curl_setopt($ch, CURLOPT_POST, 1);
             $response = curl_exec($ch);
