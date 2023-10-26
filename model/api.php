@@ -74,7 +74,7 @@ function recordTicket(){
              //Recopila datos del usuario grabo ticket
             $userId = $_SESSION['user_id'];
             $userTip = $_SESSION['user_tip'];
-            echo $userId;
+            
             // Define los datos que se enviarán a la API
             $incidencedata = array(
                 'incidenceCommit' => $incidenceCommit,
@@ -102,4 +102,22 @@ function recordTicket(){
         }
 }
 
+//===================== LISTAR INCIDENCIAS ========================================
+function getUserIncidences($userId){
+    
+    $urllistincidences = 'http://localhost:8080//incidences/user/'.$userId;
+    $ch = curl_init($urllistincidences);
+    curl_setopt($ch, CURLOPT_URL, $urllistincidences);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila el listado de incidencias del usuario
+    //Decodificamos json
+    $userincidences = json_decode($result, true);
+            
+    return $userincidences;
+
+}
 ?>
+

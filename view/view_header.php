@@ -9,6 +9,8 @@
   <script src="./resources/js/script.js"></script>
     <!-- Agrega JQuery -->
   <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+    
   </head>
   <body>
   

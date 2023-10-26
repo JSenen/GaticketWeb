@@ -8,6 +8,15 @@ function firstPage(){
 }
 
 function listIncidencesUser(){
+    
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $userId = $user['userId'];
+
+    include('./model/model_userincidences.php');
+    $userincidences = getUserIncidences($userId);
+
     include('./view/view_userincidences.php');
+    listUserIncidences($userincidences);
 }
 ?>
