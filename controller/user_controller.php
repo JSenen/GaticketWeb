@@ -6,4 +6,8 @@ function firstPage(){
     include('./view/view_user.php');
     recordTicket();
 }
+
+function listIncidencesUser(){
+    include('./view/view_userincidences.php');
+}
 ?>
