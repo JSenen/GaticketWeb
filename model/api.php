@@ -48,7 +48,7 @@ function recordTicket(){
             // Verifica si se está realizando una solicitud POST desde el formulario
             // Recopila los datos del formulario en los campos name
             $incidenceCommit = $_POST['commit_incidence'];
-            $incidenceTheme = $_POST['theme_incidence'];
+            $incidenceTheme = strtoupper($_POST['theme_incidence']);
             $incidenceStatus = "active";
             $incidenceDate = $fecha_actual;
             $incidenceDateFinish = "";
