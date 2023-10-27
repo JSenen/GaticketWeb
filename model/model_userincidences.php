@@ -21,12 +21,15 @@ function listUserIncidences($incidencesList)
 <?php
         foreach ($incidencesList as $incidence) {
           //Color del estado segun este activo o resuelto
-          if (!$incidence['incidenceStatus']) {
-            $class_td_cell = "table-warning";
+          if ($incidence['incidenceStatus'] == "active") {
+            $class_td_cell = "table-danger";
             $estado = "Activa";
+          } elseif ($incidence['incidenceStatus'] == "process") {
+            $class_td_cell = "table-warning";
+            $estado = "En Proceso";
           } else {
             $class_td_cell = "table-success";
-            $estado = "Resuelta";
+            $estado = "Finalizada";
           }
 ?>
 
