@@ -94,7 +94,7 @@ function recordTicket(){
             $response = curl_exec($ch);
 
             // Después de procesar la solicitud, redirigir de nuevo a la misma página
-            header('Location: ' . $_SERVER['PHP_SELF']);
+            header('Location: index.php?controller=user&action=listIncidencesUser');
             exit(); // asegura de que el script se detenga aquí
         
      } else {
