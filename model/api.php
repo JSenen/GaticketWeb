@@ -105,7 +105,7 @@ function recordTicket(){
 //===================== LISTAR INCIDENCIAS ========================================
 function getUserIncidences($userId){
     
-    $urllistincidences = 'http://localhost:8080//incidences/user/'.$userId;
+    $urllistincidences = 'http://localhost:8080/incidences/user/'.$userId;
     $ch = curl_init($urllistincidences);
     curl_setopt($ch, CURLOPT_URL, $urllistincidences);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
