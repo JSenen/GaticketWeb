@@ -108,7 +108,7 @@ function recordTicket(){
         }
 }
 
-//===================== LISTAR INCIDENCIAS ========================================
+//===================== LISTAR INCIDENCIAS USUARIO ==================================
 function getUserIncidences($userId){
     
     $urllistincidences = 'http://localhost:8080/incidences/user/'.$userId;
@@ -123,6 +123,42 @@ function getUserIncidences($userId){
     $userincidences = json_decode($result, true);
             
     return $userincidences;
+
+}
+
+//==================== LISTAR INCIDENCIAS ADMINISTRADOR ===============================
+
+function getAllIncidences(){
+
+    $urladminincidences = 'http://localhost:8080/incidences';
+    $ch = curl_init($urladminincidences);
+    curl_setopt($ch, CURLOPT_URL, $urladminincidences);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila el listado total de incidencias
+    $adminincidences = json_decode($result, true);
+            
+    return $adminincidences;
+
+}
+
+//==================== DATOS USUARIO ==========================================
+
+function getUserDepartment($userid){
+
+    $urlUserDepart = 'http://localhost:8080/department/'.$userid;
+    $ch = curl_init($urlUserDepart);
+    curl_setopt($ch, CURLOPT_URL, $urlUserDepart);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos del departamento del usuario
+    $userdepart = json_decode($result, true);
+            
+    return $userdepart;
 
 }
 ?>
