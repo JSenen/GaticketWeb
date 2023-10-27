@@ -2,7 +2,7 @@
 include('view_header.php');
 $fecha_actual = date('d-m-Y');
 ?>
-
+<header id="header">
 <nav class="navbar-dark bg-dark navbar-vertical show">
     <ul class="navbar-nav">
         <img src="./resources/img/Gaticket.png"  alt="" width="100" height="100">>
@@ -20,6 +20,11 @@ $fecha_actual = date('d-m-Y');
         </li>
     </ul>
 </nav>
+</header>
+<!-- Start Page content holder -->
+<div class="page-content p-5 text-gray" id="content" style="margin-left: 7%; min-height: 100vh;">
+
+
 
 
 

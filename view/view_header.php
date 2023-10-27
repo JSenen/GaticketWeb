@@ -7,11 +7,11 @@
     <!-- Agrega los enlaces a los archivos CSS de Bootstrap -->
   <link href="./resources/css/styles.css" rel="stylesheet" />
   <script src="./resources/js/script.js"></script>
-    <!-- Agrega JQuery -->
-  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
-    
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script> 
   </head>
   <body>
+    
   
     

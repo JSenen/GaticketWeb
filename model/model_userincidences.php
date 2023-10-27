@@ -5,7 +5,7 @@ function listUserIncidences($incidencesList)
 {
   ?>
   <div class="contenido">
-
+  
     <table class="table table-striped table-fixed" id="tableIncidencesUser">
       <thead>
         <tr>
@@ -35,11 +35,12 @@ function listUserIncidences($incidencesList)
       </tbody>
     </table>
   </div>
+     
 
   <script>
     $(document).ready(function () {
       $('#tableIncidencesUser').DataTable({
-        "order": [[0, "des"]],
+        "order": [[3, "des"]],
         "language": {
           "lengthMenu": "Mostrar _MENU_ registros por página",
           "zeroRecords": "Sin resultados - lo lamento",
