@@ -49,7 +49,7 @@ function recordTicket(){
             // Recopila los datos del formulario en los campos name
             $incidenceCommit = $_POST['commit_incidence'];
             $incidenceTheme = $_POST['theme_incidence'];
-            $incidenceStatus = false;
+            $incidenceStatus = "active";
             $incidenceDate = $fecha_actual;
             $incidenceDateFinish = "";
             $deviceSerialNumber = $_POST['device_serialnumber'];

@@ -10,9 +10,9 @@ function listUserIncidences($incidencesList)
       <thead>
         <tr>
           <th class="text-info" style="width: 14%">ASUNTO</th>
-          <th class="text-info" style="width: 14%">INCIDENCIA</th>
+          <th class="text-info" style="width: 25%">INCIDENCIA</th>
           <th class="text-info" style="width: 14%">DISPOSITIVO</th>
-          <th class="text-info" style="width: 14%">FECHA EMISION</th>
+          <th class="text-info" style="width: 12%">FECHA EMISION</th>
           <th class="text-info" style="width: 7%">ESTADO</th>        
         </tr>
       </thead>
