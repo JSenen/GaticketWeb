@@ -10,23 +10,29 @@ function conection_login($tip,$clave){
 
      // Buscar el usuario que coincide con el TIP y la clave
      foreach ($data as $user) {
-        if ($user['userTip'] == $tip && $user['userPassword'] == $clave) {
+        
+        if ($user['userTip'] == $tip ){
 
-            session_start(); //Iniciamos sesion del usuario
-            $_SESSION['user_id'] = $user['userId'];
-            $_SESSION['user_tip'] = $user['userTip']; 
-            $_SESSION['user_rol'] = $user['userRol']; 
+            //Verificar si la contraseña ingresada coincide con la alamacenada(hash)
+            if (password_verify($clave,$user['userPassword'])){
+                session_start(); //Iniciamos sesion del usuario
+                $_SESSION['user_id'] = $user['userId'];
+                $_SESSION['user_tip'] = $user['userTip']; 
+                $_SESSION['user_rol'] = $user['userRol']; 
 
-            var_dump($user);
-            
-            setcookie('gaticket', '', 86400); //Establecemos una cokkie de 1 dia
-            if($user['userRol'] === 'administrador'){
-                // Envio a pagina de administradors
-             header('location:index.php?controller=admin&action=ticketlist');
-            } else {
-                //Envio a pagina de usuarios
-             header('location:index.php?controller=user&action=firstPage'); 
+                var_dump($user);
+                
+                setcookie('gaticket', '', 86400); //Establecemos una cokkie de 1 dia
+                if($user['userRol'] === 'administrador'){
+                    // Envio a pagina de administradors
+                header('location:index.php?controller=admin&action=ticketlist');
+                } else {
+                    //Envio a pagina de usuarios
+                header('location:index.php?controller=user&action=firstPage'); 
+                }
+
             }
+            
         }
         
     }
