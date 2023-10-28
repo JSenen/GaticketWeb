@@ -25,4 +25,13 @@ function userChanges(){
     include './view/view_admin.php';
     listUsers($userList);
 }
+
+function addUser(){
+
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    include './view/view_adduser.php';
+
+}
 ?>

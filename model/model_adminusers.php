@@ -61,7 +61,7 @@ function listUsers($userlist)
     </table>
   </div>
      
-
+      <!-- JQuery table -->
   <script>
     $(document).ready(function () {
       $('#tableIncidencesAdmin').DataTable({
@@ -82,7 +82,7 @@ function listUsers($userlist)
 
       });
     });
-
+    // ============ EVENTOS CHECK BOX TABLE ======================
     $(document).ready(function() {
     // Maneja el evento de cambio en las casillas de verificación
     $('.select-checkbox').change(function() {
@@ -94,9 +94,31 @@ function listUsers($userlist)
         // Obtiene el userId asociado con la fila seleccionada
         var userId = $(this).data('userid');
 
-        // Modifica el atributo 'href' de los botones Agregar, Modificar y Eliminar para incluir el userId
-        $('#modificar-usuario').attr('href', 'modificar_usuario.php?userId=' + userId);
-        $('#eliminar-usuario').attr('href', 'eliminar_usuario.php?userId=' + userId);
+        // Modifica el atributo 'data-userid' de los botonesModificar y Eliminar para incluir el userId
+        $('#modificar-usuario').data('userid', userId);
+        $('#eliminar-usuario').data('userid', userId);
+    });
+
+    // Maneja el evento de clic en el botón "Agregar"
+    $('#agregar-usuario').click(function() {
+        // Redirige al usuario a la página de agregar usuario
+        window.location.href = 'index.php?controller=admin&action=addUser';
+    });
+
+    // Maneja el evento de clic en el botón "Modificar"
+    $('#modificar-usuario').click(function() {
+        // Obtiene el userId del botón "Modificar"
+        var userId = $(this).data('userid');
+        // Realiza la acción de modificación, por ejemplo, redirige a la página de modificar
+        window.location.href = 'index.php?controller=admin&action=modifyUser&userId=' + userId;
+    });
+
+    // Maneja el evento de clic en el botón "Eliminar"
+    $('#eliminar-usuario').click(function() {
+        // Obtiene el userId del botón "Eliminar"
+        var userId = $(this).data('userid');
+        // Realiza la acción de eliminación, por ejemplo, redirige a la página de eliminar
+        window.location.href = 'index.php?controller=admin&action=deleteUser&userId=' + userId;
     });
 });
   </script>
@@ -107,10 +129,12 @@ function listUsers($userlist)
   
   <label for="user-options" class="user-options-label">Opciones Usuarios</label>
   <div class="btn-group" role="group" aria-label="Basic example" id="user-options">
-    <button type="button" class="btn btn-primary">Agregar</button>
+    <button type="button" class="btn btn-primary" id="agregar-usuario">Agregar</button>
     <button type="button" class="btn btn-success" id="modificar-usuario">Modificar</button>
     <button type="button" class="btn btn-danger" id="eliminar-usuario">Eliminar</button>
   </div>
+ 
+
 
 
 <?php
