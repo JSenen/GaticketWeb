@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <section class="section-log">
 		<div class="container">
 		  <div class="user signinBx">
-			<div class="imgBx"><img src="./resources/img/GaticketLogo2.png" width="60" height="60" alt="" /></div>
+			<div class="imgBx"><img src="./resources/img/GaticketMan.jpeg" width="60" height="60" alt="" /></div>
 			<div class="formBx">
 			  <form action="" method="post">
 				<h2>Login</h2>
