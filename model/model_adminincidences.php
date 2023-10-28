@@ -1,5 +1,4 @@
 <?php
-include './view/view_header.php';
 require_once './model/api.php';
 
 function listadminincidences($incidencesList)
@@ -10,12 +9,12 @@ function listadminincidences($incidencesList)
     <table class="table table-striped table-fixed" id="tableIncidencesAdmin">
       <thead>
         <tr>
-          <th class="text-info" style="width: 14%">ASUNTO</th>
-          <th class="text-info" style="width: 25%">INCIDENCIA</th>
-          <th class="text-info" style="width: 14%">DISPOSITIVO</th>
-          <th class="text-info" style="width: 14%">USUARIO</th>
-          <th class="text-info" style="width: 14%">DEPARTAMENTO</th>
-          <th class="text-info" style="width: 12%">FECHA EMISION</th>
+          <th class="text-info" style="width: 10%">ASUNTO</th>
+          <th class="text-info" style="width: 20%">INCIDENCIA</th>
+          <th class="text-info" style="width: 10%">DISPOSITIVO</th>
+          <th class="text-info" style="width: 10%">USUARIO</th>
+          <th class="text-info" style="width: 10%">DEPARTAMENTO</th>
+          <th class="text-info" style="width: 10%">FECHA EMISION</th>
           <th class="text-info" style="width: 7%">ESTADO</th>        
         </tr>
       </thead>
