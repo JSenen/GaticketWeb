@@ -20,17 +20,19 @@ function listadminincidences($incidencesList)
       </thead>
       <tbody>
 
-<?php
+<?php 
+      if (is_array($incidencesList) && !empty($incidencesList)) {
         foreach ($incidencesList as $incidence) {
-          //Color del estado segun este activo o resuelto
+          
+          //Color del estado segun este activa o resuelto
           if ($incidence['incidenceStatus'] == "active") {
-            $class_td_cell = "table-danger";
+            $class_td_cell = "btn btn-danger btn-sm";
             $estado = "Activa";
           } elseif ($incidence['incidenceStatus'] == "process") {
-            $class_td_cell = "table-warning";
+            $class_td_cell = "btn btn-warning btn-sm";
             $estado = "En Proceso";
           } else {
-            $class_td_cell = "table-success";
+            $class_td_cell = "btn btn-success btn-sm";
             $estado = "Finalizada";
           }
           //Recuperamos los datos del Array Json del usuario
@@ -48,10 +50,13 @@ function listadminincidences($incidencesList)
             <td style="vertical-align: middle;"><?php echo $departmentUser['departmentName'];?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceDate'];?></td>
             <!-- Modificamos color según estado -->
-            <td style="vertical-align: middle;" class="<?php echo $class_td_cell?>"><?php echo $estado ?></td>            
+            <td style="vertical-align: middle;"><a class="<?php echo $class_td_cell?>"><?php echo $estado ?></a></td>            
           </tr>
 <?php
         }
+      } else {
+        echo "Sin incidencias";
+      }
 ?>
       </tbody>
     </table>
@@ -79,8 +84,12 @@ function listadminincidences($incidencesList)
       });
     });
   </script>
- 
+  <!-- Boton actualizar pagina -->
+  <div class="container">
+    <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar</button>
+  </div>
 <?php
+
 }
 include './view/view_footer.php';
 ?>

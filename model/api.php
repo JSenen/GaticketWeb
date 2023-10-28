@@ -48,7 +48,7 @@ function recordTicket(){
         session_start();
     }
 
-        $fecha_actual = date('m/d/Y');
+        $fecha_actual = date('d/m/y');
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Verifica si se está realizando una solicitud POST desde el formulario
@@ -57,8 +57,11 @@ function recordTicket(){
             $incidenceTheme = strtoupper($_POST['theme_incidence']);
             $incidenceStatus = "active";
             $incidenceDate = $fecha_actual;
-            $incidenceDateFinish = "";
+            $incidenceDateFinish = ""; 
             $deviceSerialNumber = $_POST['device_serialnumber'];
+            if (!isset($_POST['device_serialnumber']) || empty($_POST['device_serialnumber'])) {
+                $deviceSerialNumber = "SIN DATOS";
+            }
 
             // 1º Buscar  Id device por serial number
             $endpointserial = 'http://localhost:8080/device?deviceSerial='.$deviceSerialNumber;
@@ -74,7 +77,7 @@ function recordTicket(){
                     // Obtener el valor del deviceId
                     $deviceId = $data['deviceId'];
                 } else {
-                    echo "No se pudo encontrar el deviceId para el número de serie proporcionado.";
+                    echo "No se pudo encontrar el deviceId para el número de serie proporcionado."; //TODO mostrar error a usuario
                 }
 
              //Recopila datos del usuario grabo ticket
@@ -139,8 +142,14 @@ function getAllIncidences(){
 
     //Recopila el listado total de incidencias
     $adminincidences = json_decode($result, true);
+
+    if(is_array($adminincidences) && !empty($adminincidences)){
+        return$adminincidences;
+    }else{
+        return [];
+    }
             
-    return $adminincidences;
+    
 
 }
 
