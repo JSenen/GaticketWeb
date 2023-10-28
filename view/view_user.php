@@ -2,10 +2,13 @@
 include('view_header.php');
 $fecha_actual = date('d-m-Y');
 ?>
+<script>
+    
+</script>
 <header id="header">
 <nav class="navbar-dark bg-dark navbar-vertical show">
     <ul class="navbar-nav">
-        <img src="./resources/img/gaticketUser.jpeg"  alt="" width="100" height="100">>
+        <img src="./resources/img/GATLogo.jpeg"  alt="" width="100" height="100">>
         <li class="nav-item">
         <a class="nav-link" href="#"><?php echo $_SESSION['user_tip'] ?></a>
         </li>
