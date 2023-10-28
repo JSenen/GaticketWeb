@@ -16,6 +16,7 @@ function listUsers($userlist)
           <th class="text-info" style="width: 10%">MAIL</th>
           <th class="text-info" style="width: 10%">INCIDENCIAS</th>
           <th class="text-info" style="width: 10%">ROL</th>
+          <th class="text-info" style="width: 10%">Seleccionar</th>
         </tr>
       </thead>
       <tbody>
@@ -47,7 +48,8 @@ function listUsers($userlist)
             <td style="vertical-align: middle;"><?php echo $userdepartment['departmentPhone'];?></td>
             <td style="vertical-align: middle;"><?php echo $userdepartment['departmentMail'];?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>
-            <td style="vertical-align: middle;"><?php echo $user['userRol'];?></td>           
+            <td style="vertical-align: middle;"><?php echo $user['userRol'];?></td>    
+            <td><input type="checkbox" class="select-checkbox" data-userid="<?php echo $user['userId']; ?>" /></td>       
           </tr>
 <?php
         }
@@ -80,11 +82,37 @@ function listUsers($userlist)
 
       });
     });
+
+    $(document).ready(function() {
+    // Maneja el evento de cambio en las casillas de verificación
+    $('.select-checkbox').change(function() {
+        // Desmarca todas las casillas de verificación
+        $('.select-checkbox').prop('checked', false);
+        // Marca la casilla de verificación seleccionada
+        $(this).prop('checked', true);
+
+        // Obtiene el userId asociado con la fila seleccionada
+        var userId = $(this).data('userid');
+
+        // Modifica el atributo 'href' de los botones Agregar, Modificar y Eliminar para incluir el userId
+        $('#modificar-usuario').attr('href', 'modificar_usuario.php?userId=' + userId);
+        $('#eliminar-usuario').attr('href', 'eliminar_usuario.php?userId=' + userId);
+    });
+});
   </script>
   <!-- Boton actualizar pagina -->
-  <div class="container">
-    <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar</button>
+ 
+    <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar Página</button>
+  
+  
+  <label for="user-options" class="user-options-label">Opciones Usuarios</label>
+  <div class="btn-group" role="group" aria-label="Basic example" id="user-options">
+    <button type="button" class="btn btn-primary">Agregar</button>
+    <button type="button" class="btn btn-success" id="modificar-usuario">Modificar</button>
+    <button type="button" class="btn btn-danger" id="eliminar-usuario">Eliminar</button>
   </div>
+
+
 <?php
 
 }
