@@ -14,4 +14,15 @@ function ticketlist(){
     include './view/view_admin.php';
     listadminincidences($incidences);
 }
+
+function userChanges(){
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+
+    include './model/model_adminusers.php';
+    $userList = getAllUsers();
+    include './view/view_admin.php';
+    listUsers($userList);
+}
 ?>

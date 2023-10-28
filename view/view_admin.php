@@ -36,7 +36,7 @@ $fecha_actual = date('d-m-Y');
         <li class="nav-item">
             <a class="nav-link" href="#">Gestion</a>
                 <ul class="submenu">
-                    <li><a href="#">Usuarios</a></li>
+                    <li><a href="index.php?controller=admin&action=userChanges">Usuarios</a></li>
                     <li><a href="#">Dispositivos</a></li>
                     <li><a href="#">Red</a></li>
                 </ul>

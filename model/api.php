@@ -1,8 +1,10 @@
 <!-- Intercambio de datos con la API -->
 <?php
+include './resources/config.php';
+
 // =========== COMPROBAR USUARIO ===========================
 function conection_login($tip,$clave){                                                  
-    $url = 'http://localhost:8080/users';
+    $url = BASE_URL.'users';
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
@@ -64,7 +66,7 @@ function recordTicket(){
             }
 
             // 1º Buscar  Id device por serial number
-            $endpointserial = 'http://localhost:8080/device?deviceSerial='.$deviceSerialNumber;
+            $endpointserial = BASE_URL.'/device?deviceSerial='.$deviceSerialNumber;
             $ch = curl_init($endpointserial);
             curl_setopt($ch, CURLOPT_URL, $endpointserial);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -114,7 +116,7 @@ function recordTicket(){
 //===================== LISTAR INCIDENCIAS USUARIO ==================================
 function getUserIncidences($userId){
     
-    $urllistincidences = 'http://localhost:8080/incidences/user/'.$userId;
+    $urllistincidences = BASE_URL.'incidences/user/'.$userId;
     $ch = curl_init($urllistincidences);
     curl_setopt($ch, CURLOPT_URL, $urllistincidences);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -133,7 +135,7 @@ function getUserIncidences($userId){
 
 function getAllIncidences(){
 
-    $urladminincidences = 'http://localhost:8080/incidences';
+    $urladminincidences = BASE_URL.'incidences';
     $ch = curl_init($urladminincidences);
     curl_setopt($ch, CURLOPT_URL, $urladminincidences);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -157,7 +159,7 @@ function getAllIncidences(){
 
 function getUserDepartment($userid){
 
-    $urlUserDepart = 'http://localhost:8080/department/'.$userid;
+    $urlUserDepart = BASE_URL.'department/'.$userid;
     $ch = curl_init($urlUserDepart);
     curl_setopt($ch, CURLOPT_URL, $urlUserDepart);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -169,6 +171,23 @@ function getUserDepartment($userid){
             
     return $userdepart;
 
+}
+//================== TODOS LOS USUARIOS ============================================
+
+function getAllUsers(){
+
+    //Listamos los usuarios
+    $urlUser = BASE_URL.'users';
+    $ch = curl_init($urlUser);
+    curl_setopt($ch, CURLOPT_URL, $urlUser);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $resultusers = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos 
+    $userlist = json_decode($resultusers, true);
+
+    return $userlist;
 }
 ?>
 
