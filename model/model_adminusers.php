@@ -99,12 +99,6 @@ function listUsers($userlist)
         $('#eliminar-usuario').data('userid', userId);
     });
 
-    // Maneja el evento de clic en el botón "Agregar"
-    $('#agregar-usuario').click(function() {
-        // Redirige al usuario a la página de agregar usuario
-        window.location.href = 'index.php?controller=admin&action=addUser';
-    });
-
     // Maneja el evento de clic en el botón "Modificar"
     $('#modificar-usuario').click(function() {
         // Obtiene el userId del botón "Modificar"
@@ -129,7 +123,7 @@ function listUsers($userlist)
   
   <label for="user-options" class="user-options-label">Opciones Usuarios</label>
   <div class="btn-group" role="group" aria-label="Basic example" id="user-options">
-    <button type="button" class="btn btn-primary" id="agregar-usuario">Agregar</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addUser'" id="agregar-usuario">Agregar</button>
     <button type="button" class="btn btn-success" id="modificar-usuario">Modificar</button>
     <button type="button" class="btn btn-danger" id="eliminar-usuario">Eliminar</button>
   </div>

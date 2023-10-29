@@ -224,7 +224,7 @@ function recordUserfromAdmin(){
             $userPassword = $_POST['user_password'];
             $userRol = $_POST['user_rol'];
             $departmentId = $_POST['department_id'];
-            
+
             // 1º Grabamos nuevo usuario
             // Define los datos que se enviarán a la API
             $userdata = array(
@@ -241,31 +241,42 @@ function recordUserfromAdmin(){
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
             curl_setopt($ch, CURLOPT_POST, 1);
             $responseSaveUSer = curl_exec($ch);
-            if ($responseSaveUSer === false) {
-                echo 'cURL error: ' . curl_error($ch);
-            } else {
-                var_dump($response);
+
+            // Realiza una solicitud GET para obtener todos los usuarios
+            $urlGetUsers = BASE_URL . 'users';
+            $ch = curl_init($urlGetUsers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $responseGetUsers = curl_exec($ch);
+
+            if ($responseGetUsers !== false) {
+                // Decodifica la respuesta JSON
+                $userList = json_decode($responseGetUsers, true);
+                
+                // Encuentra el último usuario en la lista
+                $lastUser = end($userList);  
+                $newUserId = $lastUser['userId'];
+
+                if (!empty($newUserId)) {
+                    // Realiza una solicitud POST a la API para grabar un usuario en el departamento
+                    $urlsavedepart = BASE_URL . 'user/' . $newUserId . '/' . $departmentId;
+                    $ch = curl_init($urlsavedepart);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    $response = curl_exec($ch);
+
+                    if ($response !== false) {
+                        // La solicitud se realizó con éxito
+                        header('Location: index.php?controller=admin&action=userChanges');
+                        exit();
+                    } else {
+                        echo "Error en la solicitud para grabar al usuario en el departamento.";
+                    }
+                } else {
+                    echo "Error al obtener el ID del nuevo usuario.";
+                }
             }
-                $userData = json_decode($responseSaveUSer, true);
-                $newUserId = $userData['userId'];
-
-            //Realiza una solicitud POST a la API para grabar un usuario al departamento
-            $urlsavedepart = BASE_URL.'user/'.$newUserId.'/'.$departmentId;
-            $ch = curl_init($urlsavedepart);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            curl_setopt($ch, CURLOPT_POST, 1);
-            $response = curl_exec($ch);
-            
-
-            // Después de procesar la solicitud, redirigir de nuevo a la misma página
-            header('Location: index.php?controller=admin&action=userChanges');
-            exit(); // asegura de que el script se detenga aquí
-        
-        } else {
-            echo "Acceso no permitido.";
         }
+        
     }
-    
-
 ?>
 

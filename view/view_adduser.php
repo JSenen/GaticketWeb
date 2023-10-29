@@ -70,7 +70,7 @@ $fecha_actual = date('d-m-Y');
   </div>
   <div class="mb-3">
     <label for="InputDepartment" class="form-label">Departamento</label>
-    <select class="form-select" name="department_id" id="departmentSelect">
+    <select class="form-select" name="departmentid" id="departmentSelect">
         <?php
         // Usar un bucle foreach para generar las opciones
         foreach ($listdepartment as $department) {
@@ -89,7 +89,9 @@ $fecha_actual = date('d-m-Y');
         <div id="rolHelp" class="form-text">Asignar el rol antes de guardar</div>
   </div>
   </div>
-  <input type="hidden" name="action" value="sendnewuser"> <!-- Agrega un campo oculto con el valor de acción para identificar el formulario -->
+  <!-- Agrega un campo oculto con el valor de acción para identificar el formulario -->
+  <input type="hidden" name="action" value="sendnewuser"> 
+  <!-- Agrega un campo oculto con el valor de acción para identificar el id del departamento -->
   <input type="hidden" name="department_id" id="departmentIdField" value="<?php echo $department['departemtId']; ?>">
   <button type="submit" class="btn btn-danger" name="sendnewuser" value="sendnewuser">Grabar</button>
 
