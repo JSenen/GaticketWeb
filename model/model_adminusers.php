@@ -9,14 +9,14 @@ function listUsers($userlist)
     <table class="table table-striped table-fixed" id="tableIncidencesAdmin">
       <thead>
         <tr>
-          <th class="text-info" style="width: 10%">TIP</th>
-          <th class="text-info" style="width: 20%">EMAIL</th>
-          <th class="text-info" style="width: 10%">DEPARTAMENTO</th>
-          <th class="text-info" style="width: 10%">CONTACTO</th>
-          <th class="text-info" style="width: 10%">MAIL</th>
-          <th class="text-info" style="width: 10%">INCIDENCIAS</th>
-          <th class="text-info" style="width: 10%">ROL</th>
-          <th class="text-info" style="width: 10%">Seleccionar</th>
+          <th class="text-warning bg-dark" style="width: 10%">TIP</th>
+          <th class="text-warning bg-dark" style="width: 20%">EMAIL</th>
+          <th class="text-warning bg-dark" style="width: 10%">DEPARTAMENTO</th>
+          <th class="text-warning bg-dark" style="width: 10%">CONTACTO</th>
+          <th class="text-warning bg-dark" style="width: 10%">MAIL</th>
+          <th class="text-warning bg-dark" style="width: 10%">INCIDENCIAS</th>
+          <th class="text-warning bg-dark" style="width: 10%">ROL</th>
+          <th class="text-warning bg-dark" style="width: 10%">Seleccionar</th>
         </tr>
       </thead>
       <tbody>
@@ -77,10 +77,7 @@ function listUsers($userlist)
             "previous": "Anterior"
           },
           "search": "Buscar"
-        }
-
-
-      });
+        text-warning bg-dark;
     });
     // ============ EVENTOS CHECK BOX TABLE ======================
     $(document).ready(function() {
