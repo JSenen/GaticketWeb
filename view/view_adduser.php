@@ -20,6 +20,7 @@ $fecha_actual = date('d-m-Y');
 }
 
 </style>
+
 <header id="header">
 <nav class="navbar-dark bg-dark navbar-vertical show">
     <ul class="navbar-nav">
@@ -47,41 +48,48 @@ $fecha_actual = date('d-m-Y');
     </ul>
 </nav>
 </header>
+
 <!-- Start Page content holder -->
 <div class="page-content p-5 text-gray" id="content" style="margin-left: 7%; min-height: 100vh;">
 
 <!-- FORMULARIO AÑADIR USUARIO -->
 <form action="" method="post">
-  <div class="container d-flex justify-content-center align-items-center" style="height: 85vh;">
-    <div class="form-container" style="width: 600px;">        
-        <div class="form-group text-center">
-            <img class="mb-1" src="./resources/img/ticket.jpeg" alt="" width="200" height="200">
-            <h5>Bienvenido , <?php echo $_SESSION['user_tip'];?></h5>
-            <h4><?php echo $fecha_actual ?></h4>
-            <h4 class="mb-1">ALTA TICKET DE SOPORTE</h4>
-            <div class="form-group">
-            <label for="asunto">ASUNTO:</label>
-            <input type="text" class="form-control" name="theme_incidence" placeholder="Ingrese asunto" required>
-            
-        </div>
-            <label for="nombre">Descripcion:</label>
-            <textarea class="form-control" name="commit_incidence" placeholder="Detalle la incidencia" rows="6" required></textarea>            
-        </div>
-        <div class="form-group text-center">
-            <p>Rellene los campos de los que tenga conocimiento</p>
-        </div>
-        <div class="form-group">
-            <label for="label">NUMERO SERIE EQUIPO:</label>
-            <input type="text" class="form-control" name="device_serialnumber" placeholder="Ingrese numero de serie del equipo">
-        </div>
-        <div class="form-group">
-            <label for="IP">IP:</label>
-            <input type="text" class="form-control" name="device_ip" placeholder="Ingrese IP del equipo">
-        </div>
-        <input type="hidden" name="action" value="sendticket"> <!-- Agrega un campo oculto con el valor de acción para identificar el formulario -->
-        <button type="submit" class="btn btn-primary btn-block" name="sendticket" value="sendticket">Enviar</button>
-    </div>
-</div>
+<div class="container d-flex flex-column justify-content-center align-items-center">
+  <div class="mb-3">
+    <label for="inputTip" class="form-label">TIP</label>
+    <input type="text" class="form-control" name="user_tip" id="userTip">
+  </div>
+  <div class="mb-3">
+    <label for="InputEmail1" class="form-label">Email address</label>
+    <input type="email" class="form-control" name="user_mail" id="InputEmail1" aria-describedby="emailHelp">
+    <div id="emailHelp" class="form-text">Email no sera compartido con nadie</div>
+  </div>
+  <div class="mb-3">
+    <label for="InputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" name ="user_password" id="InputPassword1">
+  </div>
+  <div class="mb-3">
+    <label for="InputDepartment" class="form-label">Departamento</label>
+    <select class="form-select" name="department_id">
+        <?php
+        // Usar un bucle foreach para generar las opciones
+        foreach ($listdepartment as $department) {
+            // Utilizar $department['departmentId'] como el valor y $department['departmentName'] como el texto de la opción
+            echo "<option value='{$department['departemtId']}'>{$department['departmentName']}</option>";
+        }
+        ?>
+    </select>
+    <div class="mb-3">
+        <label for="InputPassword1" class="form-label">Rol</label>
+        <select class="form-select" name="user_rol" aria-describedby="rolHelp">
+            <option value='usuario'>Usuario</option>
+            <option value='administrador'>Administrador</option>
+        </select>
+        <div id="rolHelp" class="form-text">Asignar el rol antes de guardar</div>
+  </div>
+  </div>
+  <input type="hidden" name="action" value="sendnewuser"> <!-- Agrega un campo oculto con el valor de acción para identificar el formulario -->
+  <button type="submit" class="btn btn-danger" name="sendnewuser" value="sendnewuser">Grabar</button>
 </div>
 </form>
 

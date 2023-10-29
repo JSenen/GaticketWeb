@@ -31,7 +31,12 @@ function addUser(){
     session_start();
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
+    //1º Capturar la lista de departamentos
+    $listdepartment = getAllDepartments();
     include './view/view_adduser.php';
+    recordUserfromAdmin();
+    
+
 
 }
 ?>

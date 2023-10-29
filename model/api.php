@@ -97,7 +97,7 @@ function recordTicket(){
             );
 
             // Realiza una solicitud POST a la API para grabar una incidencia
-            $url = 'http://localhost:8080/incidence/'.$userId;
+            $url = BASE_URL.'incidence/'.$userId;
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($incidencedata));
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -189,5 +189,80 @@ function getAllUsers(){
 
     return $userlist;
 }
+
+//================== TODOS LOSDEPARTAMENTOS ============================================
+
+function getAllDepartments(){
+
+    //Listamos los usuarios
+    $urlDepart = BASE_URL.'departments';
+    $ch = curl_init($urlDepart);
+    curl_setopt($ch, CURLOPT_URL, $urlDepart);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $resultdepart = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos 
+    $departlist = json_decode($resultdepart, true);
+
+    return $departlist;
+}
+
+// =========== GRABAR NUEVO USUARIO ================================
+function recordUserfromAdmin(){
+    
+    //Comprobamos que session este iniciada
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            // Verifica si se está realizando una solicitud POST desde el formulario
+            // Recopila los datos del formulario en los campos name
+            $userTip = $_POST['user_tip'];
+            $userMail = $_POST['user_mail'];
+            $userPassword = $_POST['user_password'];
+            $userRol = $_POST['user_rol'];
+            $userdepartmentId = $_POST['department_id'];
+            
+            // 1º Grabamos nuevo usuario
+            // Define los datos que se enviarán a la API
+            $userdata = array(
+                'userMail' => $userMail,
+                'userPassword' =>  $userPassword,
+                'userTip' => $userTip
+            );
+
+            // Realiza una solicitud POST a la API para grabar un usuario
+            $urlsave = BASE_URL.'users';
+            $ch = curl_init($urlsave);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userdata));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            $responseSaveUSer = curl_exec($ch);
+
+            //Buscamos el Id del usuario nuevo
+            if ($responseSaveUSer !== false) {
+                // Decodifica los datos del usuario
+                $userData = json_decode($responseSaveUSer, true);
+                $newUserId = $userData['userId'];
+
+            //Realiza una solicitud POST a la API para grabar un usuario al departamento
+            $urlsavedepart = BASE_URL.'user/'.$newUserId.'/'.$userdepartmentId;
+            $ch = curl_init($urlsavedepart);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            $response = curl_exec($ch);
+
+            // Después de procesar la solicitud, redirigir de nuevo a la misma página
+            header('Location: index.php?controller=admin&action=userChanges');
+            exit(); // asegura de que el script se detenga aquí
+        
+        } else {
+            echo "Acceso no permitido.";
+        }
+    }
+    }
+
 ?>
 
