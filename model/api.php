@@ -2,6 +2,28 @@
 <?php
 include './resources/config.php';
 
+// =========== ELIMINAR USUARIO POR ID =====================
+
+function eraseUser($idUser){
+    
+    $url = BASE_URL . 'user/' . $idUser; // Agrega "/" para formar la URL completa
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        echo "Error de cURL: " . curl_error($ch);
+    } else {
+        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
+        header('Location: index.php?controller=admin&action=userChanges');
+    }
+
+    curl_close($ch);
+
+}
+
 // =========== COMPROBAR USUARIO ===========================
 function conection_login($tip,$clave){                                                  
     $url = BASE_URL.'users';
@@ -155,7 +177,7 @@ function getAllIncidences(){
 
 }
 
-//==================== DATOS USUARIO ==========================================
+//==================== DATOS DEPARTAMENTO USUARIO ==========================================
 
 function getUserDepartment($userid){
 
@@ -219,7 +241,7 @@ function recordUserfromAdmin(){
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Verifica si se está realizando una solicitud POST desde el formulario
             // Recopila los datos del formulario en los campos name
-            $userTip = $_POST['user_tip'];
+            $userTip = strtoupper($_POST['user_tip']);
             $userMail = $_POST['user_mail'];
             $userPassword = $_POST['user_password'];
             $userRol = $_POST['user_rol'];

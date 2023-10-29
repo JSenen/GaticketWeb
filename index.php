@@ -7,7 +7,8 @@ define('DEFAULT_ACTION', "loginpage"); //Accion por defecto
 // Obtenemos el controlador y la acción. Si no, por defecto
 $controller = isset($_GET['controller']) ? $_GET['controller'] : DEFAULT_CONTROLLER;
 $action = isset($_GET['action']) ? $_GET['action'] : DEFAULT_ACTION;
-
+$userId = isset($_GET['userId']) ? $_GET['userId'] : "";
+ 
 if (!empty($_GET['action'])){
   $action = $_GET['action'];
 }else{
@@ -20,6 +21,13 @@ if (!empty($_GET['controller'])){
   $controller = DEFAULT_CONTROLLER;
 }
 
+//Casos en que se recoge un id
+if (!empty($_GET['userId'])){
+  $id = $_GET['userId'];
+}else{
+  $id = '';
+}
+
 //Formacion del fichero que contiene el controlador
 $controller = CONTROLLER_FOLDER . $controller . '_controller.php';
 //Si la variable controller es un fichero, lo requerimos
@@ -30,8 +38,11 @@ else
   die("El controlador no existe 404 Not found"); //TODO crear pagina 404
 
 //Si action es una función, ejecutamos el script
-if (is_callable($action))
+if (is_callable($action) && !$id ){
   $action();
-else
-  die("La accion requerida no existe 404 not found");
+}elseif (is_callable($action) && $id) {
+  $action($id);
+} else
+die("La accion requerida no existe 404 not found");
+
 ?>

@@ -6,7 +6,7 @@ function listUsers($userlist)
   ?>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableIncidencesAdmin">
+    <table class="table table-striped table-fixed" id="tableUsersAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">TIP</th>
@@ -49,7 +49,7 @@ function listUsers($userlist)
             <td style="vertical-align: middle;"><?php echo $userdepartment['departmentMail'];?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>
             <td style="vertical-align: middle;"><?php echo $user['userRol'];?></td>    
-            <td><input type="checkbox" class="select-checkbox" data-userid="<?php echo $user['userId']; ?>" /></td>       
+            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteUser&userId=<?php echo $user['userId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>
 <?php
         }
@@ -60,11 +60,10 @@ function listUsers($userlist)
       </tbody>
     </table>
   </div>
-     
       <!-- JQuery table -->
-  <script>
+      <script>
     $(document).ready(function () {
-      $('#tableIncidencesAdmin').DataTable({
+      $('#tableUsersAdmin').DataTable({
         "order": [[3, "des"]],
         "language": {
           "lengthMenu": "Mostrar _MENU_ registros por página",
@@ -77,56 +76,20 @@ function listUsers($userlist)
             "previous": "Anterior"
           },
           "search": "Buscar"
-        text-warning bg-dark;
-    });
-    // ============ EVENTOS CHECK BOX TABLE ======================
-    $(document).ready(function() {
-    // Maneja el evento de cambio en las casillas de verificación
-    $('.select-checkbox').change(function() {
-        // Desmarca todas las casillas de verificación
-        $('.select-checkbox').prop('checked', false);
-        // Marca la casilla de verificación seleccionada
-        $(this).prop('checked', true);
+        }
 
-        // Obtiene el userId asociado con la fila seleccionada
-        var userId = $(this).data('userid');
 
-        // Modifica el atributo 'data-userid' de los botonesModificar y Eliminar para incluir el userId
-        $('#modificar-usuario').data('userid', userId);
-        $('#eliminar-usuario').data('userid', userId);
+      });
     });
-
-    // Maneja el evento de clic en el botón "Modificar"
-    $('#modificar-usuario').click(function() {
-        // Obtiene el userId del botón "Modificar"
-        var userId = $(this).data('userid');
-        // Realiza la acción de modificación, por ejemplo, redirige a la página de modificar
-        window.location.href = 'index.php?controller=admin&action=modifyUser&userId=' + userId;
-    });
-
-    // Maneja el evento de clic en el botón "Eliminar"
-    $('#eliminar-usuario').click(function() {
-        // Obtiene el userId del botón "Eliminar"
-        var userId = $(this).data('userid');
-        // Realiza la acción de eliminación, por ejemplo, redirige a la página de eliminar
-        window.location.href = 'index.php?controller=admin&action=deleteUser&userId=' + userId;
-    });
-});
   </script>
   <!-- Boton actualizar pagina -->
  
     <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar Página</button>
   
-  
-  <label for="user-options" class="user-options-label">Opciones Usuarios</label>
   <div class="btn-group" role="group" aria-label="Basic example" id="user-options">
     <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addUser'" id="agregar-usuario">Agregar</button>
-    <button type="button" class="btn btn-success" id="modificar-usuario">Modificar</button>
-    <button type="button" class="btn btn-danger" id="eliminar-usuario">Eliminar</button>
   </div>
  
-
-
 
 <?php
 
