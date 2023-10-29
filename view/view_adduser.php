@@ -94,8 +94,9 @@ $fecha_actual = date('d-m-Y');
   <!-- Agrega un campo oculto con el valor de acción para identificar el id del departamento -->
   <input type="hidden" name="department_id" id="departmentIdField" value="<?php echo $department['departemtId']; ?>">
   <button type="submit" class="btn btn-danger" name="sendnewuser" value="sendnewuser">Grabar</button>
-
+   
 </div>
+
 </form>
 
 <script>

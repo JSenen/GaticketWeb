@@ -265,12 +265,18 @@ function recordUserfromAdmin(){
                     $response = curl_exec($ch);
 
                     if ($response !== false) {
-                        // La solicitud se realizó con éxito
-                        header('Location: index.php?controller=admin&action=userChanges');
-                        exit();
+                        // La solicitud se realizó con éxito                     
+                        $message = "Usuario grabado exitosamente.";
                     } else {
-                        echo "Error en la solicitud para grabar al usuario en el departamento.";
+                        $message = "Error en la solicitud para grabar al usuario en el departamento.";
                     }
+                    
+                    echo '<p>' . $message . '</p>';
+                  
+                    // Redirecciona después de 3 segundos
+                    echo '<meta http-equiv="refresh" content="3;url=index.php?controller=admin&action=userChanges">'; 
+                    exit();
+
                 } else {
                     echo "Error al obtener el ID del nuevo usuario.";
                 }
