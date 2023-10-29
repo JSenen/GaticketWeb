@@ -223,14 +223,15 @@ function recordUserfromAdmin(){
             $userMail = $_POST['user_mail'];
             $userPassword = $_POST['user_password'];
             $userRol = $_POST['user_rol'];
-            $userdepartmentId = $_POST['department_id'];
+            $departmentId = $_POST['department_id'];
             
             // 1º Grabamos nuevo usuario
             // Define los datos que se enviarán a la API
             $userdata = array(
                 'userMail' => $userMail,
                 'userPassword' =>  $userPassword,
-                'userTip' => $userTip
+                'userTip' => $userTip,
+                'userRol' => $userRol
             );
 
             // Realiza una solicitud POST a la API para grabar un usuario
@@ -240,19 +241,21 @@ function recordUserfromAdmin(){
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
             curl_setopt($ch, CURLOPT_POST, 1);
             $responseSaveUSer = curl_exec($ch);
-
-            //Buscamos el Id del usuario nuevo
-            if ($responseSaveUSer !== false) {
-                // Decodifica los datos del usuario
+            if ($responseSaveUSer === false) {
+                echo 'cURL error: ' . curl_error($ch);
+            } else {
+                var_dump($response);
+            }
                 $userData = json_decode($responseSaveUSer, true);
                 $newUserId = $userData['userId'];
 
             //Realiza una solicitud POST a la API para grabar un usuario al departamento
-            $urlsavedepart = BASE_URL.'user/'.$newUserId.'/'.$userdepartmentId;
+            $urlsavedepart = BASE_URL.'user/'.$newUserId.'/'.$departmentId;
             $ch = curl_init($urlsavedepart);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
             curl_setopt($ch, CURLOPT_POST, 1);
             $response = curl_exec($ch);
+            
 
             // Después de procesar la solicitud, redirigir de nuevo a la misma página
             header('Location: index.php?controller=admin&action=userChanges');
@@ -262,7 +265,7 @@ function recordUserfromAdmin(){
             echo "Acceso no permitido.";
         }
     }
-    }
+    
 
 ?>
 

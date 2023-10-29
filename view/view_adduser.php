@@ -70,12 +70,13 @@ $fecha_actual = date('d-m-Y');
   </div>
   <div class="mb-3">
     <label for="InputDepartment" class="form-label">Departamento</label>
-    <select class="form-select" name="department_id">
+    <select class="form-select" name="department_id" id="departmentSelect">
         <?php
         // Usar un bucle foreach para generar las opciones
         foreach ($listdepartment as $department) {
             // Utilizar $department['departmentId'] como el valor y $department['departmentName'] como el texto de la opción
             echo "<option value='{$department['departemtId']}'>{$department['departmentName']}</option>";
+            
         }
         ?>
     </select>
@@ -89,9 +90,21 @@ $fecha_actual = date('d-m-Y');
   </div>
   </div>
   <input type="hidden" name="action" value="sendnewuser"> <!-- Agrega un campo oculto con el valor de acción para identificar el formulario -->
+  <input type="hidden" name="department_id" id="departmentIdField" value="<?php echo $department['departemtId']; ?>">
   <button type="submit" class="btn btn-danger" name="sendnewuser" value="sendnewuser">Grabar</button>
+
 </div>
 </form>
+
+<script>
+  // JavaScript para actualizar el campo oculto "department_id" cuando se selecciona un departamento
+  const departmentSelect = document.getElementById('departmentSelect');
+  const departmentIdField = document.getElementById('departmentIdField');
+
+  departmentSelect.addEventListener('change', () => {
+    departmentIdField.value = departmentSelect.value;
+  });
+</script>
 
 <?php
 include ('view_footer.php');
