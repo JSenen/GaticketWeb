@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include_once('view_header.php');
 include_once('./model/api.php');
 
