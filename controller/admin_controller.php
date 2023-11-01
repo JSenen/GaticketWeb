@@ -48,4 +48,19 @@ function deleteUser($iduser) {
     // Obtener usuario seleccionado
     eraseUser($iduser); // Pasar $iduser como argumento
 }
+
+//==== PAGINA ADMIN DISPOSITIVOS ========
+function deviceChanges(){
+
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+
+    include './model/model_admindevices.php';
+    $deviceList = getAllDevices();
+    include './view/view_admin.php';
+    listDevices($deviceList);
+
+}
 ?>
+

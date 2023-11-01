@@ -152,6 +152,21 @@ function getUserIncidences($userId){
     return $userincidences;
 
 }
+//===================== LISTAR INCIDENCIAS DISPOSITIVOS ==================================
+function getDeviceIncidences($deviceId){
+    $urllistincidences = BASE_URL.'incidences/device/'.$deviceId;
+    $ch = curl_init($urllistincidences);
+    curl_setopt($ch, CURLOPT_URL, $urllistincidences);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila el listado de incidencias del usuario
+    //Decodificamos json
+    $deviceIncidences = json_decode($result, true);
+            
+    return $deviceIncidences;
+}
 
 //==================== LISTAR INCIDENCIAS ADMINISTRADOR ===============================
 
@@ -228,6 +243,21 @@ function getAllDepartments(){
     $departlist = json_decode($resultdepart, true);
 
     return $departlist;
+}
+//=================== TODOS LOS DISPOSITIVOS =========================================
+function getAllDevices(){
+     //Listamos los usuarios
+     $urlDepart = BASE_URL.'device';
+     $ch = curl_init($urlDepart);
+     curl_setopt($ch, CURLOPT_URL, $urlDepart);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     $resultdepart = curl_exec($ch);
+     curl_close($ch);
+ 
+     //Recopila los datos 
+     $devicelist = json_decode($resultdepart, true);
+ 
+     return $devicelist;
 }
 
 // =========== GRABAR NUEVO USUARIO ================================
