@@ -62,5 +62,16 @@ function deviceChanges(){
     listDevices($deviceList);
 
 }
+//======= ADMIN DEPARTAMENTOS ==========
+function departmentChanges(){
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+
+    include './model/model_admindepart.php';
+    $departlist = getAllDepartments();
+    include './view/view_admin.php';
+    listDepart($departlist);
+}
 ?>
 
