@@ -10,6 +10,7 @@ function listDevices($deviceList)
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">MODELO</th>
+          <th class="text-warning bg-dark" style="width: 10%">TIPO</th>
           <th class="text-warning bg-dark" style="width: 20%">HD</th>
           <th class="text-warning bg-dark" style="width: 10%">RAM</th>
           <th class="text-warning bg-dark" style="width: 10%">MAC</th>
@@ -34,7 +35,7 @@ function listDevices($deviceList)
           }else{
             $deviceIp = $device['deviceIp'];
           }
-          //$userdepartment = getUserDepartment($userid);
+          $deviceType = $device['deviceTypeId']['typeName'];
          /*  if (empty($userdepartment)) {
             $userdepartment = [
                 'departmentName' => 'Sin datos',
@@ -50,6 +51,7 @@ function listDevices($deviceList)
 ?>
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $device['deviceModel'];?></td>
+            <td style="vertical-align: middle;"><?php echo $deviceType;?></td>
             <td style="vertical-align: middle;"><?php echo $device['deviceHd'];?></td>
             <td style="vertical-align: middle;"><?php echo $device['deviceRam'];?></td>
             <td style="vertical-align: middle;"><?php echo $device['deviceMac'];?></td>
