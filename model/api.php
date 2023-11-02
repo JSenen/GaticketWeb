@@ -24,7 +24,7 @@ function eraseUser($idUser){
 
 }
 
-// =========== COMPROBAR USUARIO ===========================
+// =========== COMPROBAR LOGIN ===========================
 function conection_login($tip,$clave){                                                  
     $url = BASE_URL.'users';
     $ch = curl_init($url);
@@ -46,7 +46,7 @@ function conection_login($tip,$clave){
 
                 var_dump($user);
                 
-                setcookie('gaticket', '', 86400); //Establecemos una cokkie de 1 dia
+                setcookie('gaticket', '', 86400); //Establecemos una cookie de 1 dia
                 if($user['userRol'] === 'administrador'){
                     // Envio a pagina de administradors
                 header('location:index.php?controller=admin&action=ticketlist');
@@ -57,11 +57,16 @@ function conection_login($tip,$clave){
 
             }
             
+        } else {
+            // Login erroneo
+    $_SESSION['login_error'] = "LOGIN FALLIDO"; // Almacena el mensaje de error en una variable de sesión
+    session_write_close(); // Borramos sesiones anteriores
+    header("Refresh: 10; url=index.php");
         }
-        
+       
     }
+    
 
-    echo "El usuario no se encuentra registrado"; //TODO gestionar usuario no encontrado
 }
 
 // =========== GRABAR TICKET ================================
