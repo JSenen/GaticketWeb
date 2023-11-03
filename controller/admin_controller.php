@@ -39,6 +39,20 @@ function addUser(){
     recordUserfromAdmin();
 
 }
+//==== AÑADIR TIPO DISPOSITIVO =====
+function addType(){
+
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }   
+
+    //Mostrar formulario añadir nuevo tipo dispositivo
+    include './view/view_addtype.php';
+    recordNewType();
+
+}
 //==== AÑADIR DISPOSITIVO ====
 function addDevice(){
     session_start();
@@ -60,6 +74,7 @@ function addDevice(){
 
 
 }
+
 //==== ELIMINAR USUARIO =====
 function deleteUser($iduser) {
     session_start();
@@ -72,10 +87,11 @@ function deleteUser($iduser) {
 
 //==== PAGINA ADMIN DISPOSITIVOS ========
 function deviceChanges(){
-
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
+    }   
 
     include './model/model_admindevices.php';
     $deviceList = getAllDevices();
@@ -96,16 +112,17 @@ function departmentChanges(){
 }
 //======== ADMIN TIPOS =================
 function typeChanges(){
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
-
+    }   
+    
     include './model/model_admintypes.php';
     $typelist = getAllSomeThing('types');
     include './view/view_admin.php';
     listTypes($typelist);
-
-
+    
 }
 ?>
 

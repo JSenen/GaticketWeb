@@ -1,5 +1,8 @@
 <?php
 require_once './model/api.php';
+require_once('./resources/config.php');
+
+$urlAddType = BASE_URL.'types';
 
 function listTypes($typelist)
 {
@@ -27,6 +30,8 @@ function listTypes($typelist)
             <td style="vertical-align: middle;"><?php echo 'POR HACER';?></td>
             <td style="vertical-align: middle;"><a href="#<?php echo $type['typeId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>
+
+          
 <?php
         }
         echo "Sin tipos de dispositivos";
@@ -57,14 +62,15 @@ function listTypes($typelist)
       });
     });
   </script>
+
   <!-- Boton actualizar pagina -->
  
     <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar Página</button>
-  
-  <div class="btn-group" role="group" aria-label="Basic example" id="device-options">
-    <button type="button" class="btn btn-primary" onclick="window.location.href='#'" id="agregar_dispositivo">Agregar</button>
-  </div>
- 
+
+    <div class="btn-group" role="group" aria-label="Basic example" id="admin-options">
+      <?php unset($_SESSION['typesave']); ?>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addType'" id="agregar-type">Agregar</button>
+    </div>
 
 <?php
 

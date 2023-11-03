@@ -1,5 +1,5 @@
 <?php
-include('view_header.php');
+include('view_admin.php');
 $fecha_actual = date('d-m-Y');
 ?>
 

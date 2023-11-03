@@ -43,8 +43,6 @@ function conection_login($tip,$clave){
                 $_SESSION['user_id'] = $user['userId'];
                 $_SESSION['user_tip'] = $user['userTip']; 
                 $_SESSION['user_rol'] = $user['userRol']; 
-
-                var_dump($user);
                 
                 setcookie('gaticket', '', 86400); //Establecemos una cookie de 1 dia
                 if($user['userRol'] === 'administrador'){
@@ -265,7 +263,7 @@ function getAllDevices(){
      return $devicelist;
 }
 
-// =========== GRABAR NUEVO USUARIO ================================
+// =========== AÑADIR NUEVO USUARIO ================================
 function recordUserfromAdmin(){
     
     //Comprobamos que session este iniciada
@@ -343,7 +341,7 @@ function recordUserfromAdmin(){
     }
 //=============== AÑADIR DISPOSITIVO ==================================
 function recordDeviceAdmin(){
-  echo  var_dump($_POST);
+  
  //Comprobamos que session este iniciada
  if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -442,6 +440,38 @@ function recordDeviceAdmin(){
         } 
     }
     
+}
+//=============== AÑADIR NUEVO TIPO =================================
+function recordNewType(){
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            
+            // Recopila los datos del nuevo tipo de dispositivo
+            $typeName = strtoupper($_POST['typeName']);
+            
+            // Define los datos que se enviarán a la API
+            $typeData = array(
+                "typeName" => $typeName,
+            );
+            // Realiza una solicitud POST a la API para grabar tippo
+            $urlsave = BASE_URL.'types';
+            $ch = curl_init($urlsave);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($typeData));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_exec($ch);
+
+            $_SESSION['typesave'] = "Nuevo tipo grabado"; // Almacena el mensaje en una variable de sesión
+            header('Location: index.php?controller=admin&action=typeChanges');
+
+        }
+        
+        
+    
+
 }
 
 //=============== BUSCAR TODOS TIPOS==================================
