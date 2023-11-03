@@ -94,5 +94,18 @@ function departmentChanges(){
     include './view/view_admin.php';
     listDepart($departlist);
 }
+//======== ADMIN TIPOS =================
+function typeChanges(){
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+
+    include './model/model_admintypes.php';
+    $typelist = getAllSomeThing('types');
+    include './view/view_admin.php';
+    listTypes($typelist);
+
+
+}
 ?>
 
