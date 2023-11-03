@@ -50,7 +50,7 @@ $fecha_actual = date('d-m-Y');
             <p>Rellene los campos de los que tenga conocimiento</p>
         </div>
         <div class="form-group">
-            <label for="label">NUMERO SERIE EQUIPO:</label>
+            <label for="label">IDENTIFICADOR EQUIPO (NUEMRO SERIE / MAC / IP):</label>
             <input type="text" class="form-control" name="device_serialnumber" placeholder="Ingrese numero de serie del equipo">
         </div>
         <div class="form-group">

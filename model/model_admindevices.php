@@ -97,7 +97,7 @@ function listDevices($deviceList)
     <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar Página</button>
   
   <div class="btn-group" role="group" aria-label="Basic example" id="device-options">
-    <button type="button" class="btn btn-primary" onclick="window.location.href='#'" id="agregar_dispositivo">Agregar</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addDevice'" id="agregar_dispositivo">Agregar</button>
   </div>
  
 

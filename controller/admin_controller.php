@@ -39,6 +39,27 @@ function addUser(){
     recordUserfromAdmin();
 
 }
+//==== AÑADIR DISPOSITIVO ====
+function addDevice(){
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+
+    //1º Capturar la lista de tipos
+    $url = 'types';
+    $listtypes = getAllSomeThing($url);
+    //2º Capturar IP disponibles
+    $urlty = 'net';
+    $listip = getAllIps($urlty);
+    //3º Departamento
+    $urldep = 'departments';
+    $listdepart = getAllSomeThing($urldep);
+    //Mostrar formulario añadir dispositivo
+    include './view/view_adddevice.php';
+    recordDeviceAdmin();
+
+
+}
 //==== ELIMINAR USUARIO =====
 function deleteUser($iduser) {
     session_start();
