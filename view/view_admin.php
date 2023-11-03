@@ -25,7 +25,7 @@ $fecha_actual = date('d-m-Y');
 
 </style>
 <header id="header">
-<nav class="navbar-dark bg-dark navbar-vertical show">
+<nav class="navbar-dark bg-dark navbar-vertical show " style="width: 155px">
     <ul class="navbar-nav">
         <img src="./resources/img/GaticketAdmin.jpeg"  alt="" width="130" height="130">>
         <li class="nav-item">
@@ -41,7 +41,12 @@ $fecha_actual = date('d-m-Y');
             <a class="nav-link" href="#">Gestion</a>
                 <ul class="submenu">
                     <li><a href="index.php?controller=admin&action=userChanges">Usuarios</a></li>
-                    <li><a href="index.php?controller=admin&action=deviceChanges">Dispositivos</a></li>
+                    <li><a href="index.php?controller=admin&action=deviceChanges">Dispositivos</a>
+                        <ul>
+                            <li><a href="#">Tipos</a></li>
+                            <li><a href="#">Red</a></li>
+                        </ul>
+                    </li>
                     <li><a href="index.php?controller=admin&action=departmentChanges">Departamentos</a></li>
                     <li><a href="#">Red</a></li>
                 </ul>
