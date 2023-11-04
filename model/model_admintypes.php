@@ -28,7 +28,7 @@ function listTypes($typelist)
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $type['typeName'];?></td>
             <td style="vertical-align: middle;"><?php echo 'POR HACER';?></td>
-            <td style="vertical-align: middle;"><a href="#<?php echo $type['typeId']?>" class="btn btn-danger">Borrar</a></td> 
+            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteType&id=<?php echo $type['typeId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>
 
           

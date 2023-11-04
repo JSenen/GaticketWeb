@@ -49,7 +49,7 @@ function listUsers($userlist)
             <td style="vertical-align: middle;"><?php echo $userdepartment['departmentMail'];?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>
             <td style="vertical-align: middle;"><?php echo $user['userRol'];?></td>    
-            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteUser&userId=<?php echo $user['userId']?>" class="btn btn-danger">Borrar</a></td> 
+            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteUser&id=<?php echo $user['userId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>
 <?php
         }

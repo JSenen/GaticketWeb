@@ -124,5 +124,14 @@ function typeChanges(){
     listTypes($typelist);
     
 }
+//======= ADMIN BORRAR TIPO ===========
+function deleteType($id){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }  
+    eraseType($id);
+}
 ?>
 

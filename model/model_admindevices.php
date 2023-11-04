@@ -28,15 +28,26 @@ function listDevices($deviceList)
       if (is_array($deviceList) && !empty($deviceList)) {
         foreach ($deviceList as $device) {
 
-          //Recuperamos los datos del Array de dispositivos
+          //Recuperamos los datos del Array de dispositivos y gestionamos los campos que no haya resultado
           $deviceId = $device['deviceId'];
+          
+          //Gestion campo IP
           if (empty($device['net'])) {
             $deviceIP = 'Sin IP';
           }else{
             $deviceIp = $device['deviceIp'];
           }
+          
+         // Gestion campo Tipo
+         if (empty($device['deviceTypeId'])) {
+          $deviceType = 'Sin tipo';
+        }else{
           $deviceType = $device['deviceTypeId']['typeName'];
-         /*  if (empty($userdepartment)) {
+        }
+        
+
+         // Gestion campo departamento
+          /*  if (empty($userdepartment)) {
             $userdepartment = [
                 'departmentName' => 'Sin datos',
                 'departmentPhone' => 'Sin datos',

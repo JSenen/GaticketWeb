@@ -7,7 +7,7 @@ define('DEFAULT_ACTION', "loginpage"); //Accion por defecto
 // Obtenemos el controlador y la acción. Si no, por defecto
 $controller = isset($_GET['controller']) ? $_GET['controller'] : DEFAULT_CONTROLLER;
 $action = isset($_GET['action']) ? $_GET['action'] : DEFAULT_ACTION;
-$userId = isset($_GET['userId']) ? $_GET['userId'] : "";
+$userId = isset($_GET['id']) ? $_GET['id'] : "";
  
 if (!empty($_GET['action'])){
   $action = $_GET['action'];
@@ -22,8 +22,8 @@ if (!empty($_GET['controller'])){
 }
 
 //Casos en que se recoge un id
-if (!empty($_GET['userId'])){
-  $id = $_GET['userId'];
+if (!empty($_GET['id'])){
+  $id = $_GET['id'];
 }else{
   $id = '';
 }
