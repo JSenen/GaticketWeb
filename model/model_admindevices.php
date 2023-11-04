@@ -30,13 +30,13 @@ function listDevices($deviceList)
 
           //Recuperamos los datos del Array de dispositivos y gestionamos los campos que no haya resultado
           $deviceId = $device['deviceId'];
-          
+          $deviceIP = '';
           //Gestion campo IP
-          if (empty($device['net'])) {
+          if (!isset($device['net']) || empty($device['net'])) {
             $deviceIP = 'Sin IP';
-          }else{
-            $deviceIp = $device['deviceIp'];
-          }
+        } else {
+            $deviceIP = $device['net']['netIp'];
+        }
           
          // Gestion campo Tipo
          if (empty($device['deviceTypeId'])) {
@@ -69,7 +69,12 @@ function listDevices($deviceList)
             <td style="vertical-align: middle;"><?php echo $device['deviceSerial'];?></td>
             <td style="vertical-align: middle;"><?php echo $device['deviceDateBuy'];?></td>
             <td style="vertical-align: middle;"><?php echo $device['deviceDateStart'];?></td>
-            <td style="vertical-align: middle;"><?php echo 'POR HACER!!';?></td>
+            <td style="vertical-align: middle;"><?php 
+                          if ($deviceIP === 'Sin IP') {?>
+                            <a href="index.php?controller=admin&action=giveIp&id=<?php echo $device['deviceId'] ?>" class="btn btn-outline-success" value="sennewip" id="agregra_ip">Asignar</a><?php
+                          }else { 
+                            echo $deviceIP;
+                          }?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>    
             <td style="vertical-align: middle;"><a href="#<?php echo $user['userId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>

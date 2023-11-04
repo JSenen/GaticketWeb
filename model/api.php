@@ -44,6 +44,26 @@ function eraseType($idType){
 
 
 }
+// =========== ELIMINAR IP (LIBERAR) ===========================
+function eraseIp($id) {
+
+    $url = BASE_URL . 'net/' . $id; 
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        echo "Error de cURL: " . curl_error($ch);
+    } else {
+        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
+        header('Location: index.php?controller=admin&action=netChanges');
+    }
+
+    curl_close($ch);
+
+}
 // =========== COMPROBAR LOGIN ===========================
 function conection_login($tip,$clave){                                                  
     $url = BASE_URL.'users';
@@ -488,13 +508,50 @@ function recordNewType(){
             header('Location: index.php?controller=admin&action=typeChanges');
 
         }
+         
+
+}
+//=============== AÑADIR IP ==================================
+function recordNewIp(){
+
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            
+        // Recopila los datos de la nueva IP
+        $netGateWay = $_POST['netGateWay'];
+        $netIp = $_POST['netIp'];
+        $netMask = $_POST['netMask'];
+        $netCdir = '/'.$_POST['netCdir'];
+        $netStatus = false;
+
         
-        
-    
+        // Define los datos que se enviarán a la API
+        $netData = array(
+            "netGateWay" => $netGateWay,
+            "netIp" => $netIp,
+            "netMask" => $netMask,
+            "netCdir" => $netCdir,
+            "netStatus" => $netStatus
+        );
+        // Realiza una solicitud POST a la API para grabar tippo
+        $urlsave = BASE_URL.'net';
+        $ch = curl_init($urlsave);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($netData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_exec($ch);
+
+        $_SESSION['netsave'] = "Nueva ip grabada"; // Almacena el mensaje en una variable de sesión
+        header('Location: index.php?controller=admin&action=netChanges');
+
+    }
+     
 
 }
 
-//=============== BUSCAR TODOS TIPOS==================================
+//=============== BUSCAR TODOS ==================================
 function getAllSomeThing($something){
      //Listamos los tipos
      $usrsome = BASE_URL.$something;
@@ -510,8 +567,117 @@ function getAllSomeThing($something){
      return $resultlist;
 
 }
-//=============== BUSCAR TODAS IP=====================================
-function getAllIps(){
+//============ BUSCAR IPs Y DISPOSITIVO POR IP ======================
+function getDeviceIp($ip){
+    
+    //Listamos la red en totalidad
+    $urnet = BASE_URL.'device?ideviceIp='.$ip;
+    $ch = curl_init($urnet);
+    curl_setopt($ch, CURLOPT_URL, $urnet);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $urnet = curl_exec($ch);
+    
+    $deviceIp = json_decode($urnet, true);
+    curl_close($ch);
 
+    return $deviceIp;
+}
+// ============ BUSCAR DISPOSITIVO POR ID ===========================
+function getDeviceById($id){
+    //Listamos los tipos
+    $url = BASE_URL.'device/'.$id;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $url = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos 
+    $result = json_decode($url, true);
+
+    return $result;
+
+}
+// ========== ASIGNAR IP A DISPOSITIVO ============================
+function setIpDevice(){
+    //Comprobamos que session este iniciada
+ if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        // Recopila los datos del formulario en los campos name de la vista
+        $netId = $_POST['netId'];
+        $deviceId = $_POST['deviceId'];
+
+        // Realiza una solicitud POST a la API para grabar tippo
+        $urlsave = BASE_URL.'net/'.$netId.'/'.$deviceId;
+        $ch = curl_init($urlsave);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($netData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_exec($ch);
+
+        echo '<div class="container">';
+        echo '<span>IP asignada</span>';
+        echo '</div>';
+                      
+        header("Refresh: 10; url=index.php?controller=admin&action=deviceChanges.php");
+
+        
+}
+}
+
+//================ AGREGAR DEPARTAMENTO ===================
+function recordNewDepart(){
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            
+            // Recopila los datos del nuevo tipo de dispositivo
+            $departName = strtoupper($_POST['departmentName']);
+            $departPhone = $_POST['departmentPhone'];
+            $departMail = $_POST['departmentMail'];
+            $departCity = $_POST['departmentCity'];
+            // Define los datos que se enviarán a la API
+            $departData = array(
+                "departmentName" => $departName,
+                "departmentPhone" => $departPhone,
+                "departmentMail" => $departMail,
+                "departmentCity" => $departCity
+            );
+            // Realiza una solicitud POST a la API para grabar departamento
+            $urlsave = BASE_URL.'departments';
+            $ch = curl_init($urlsave);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($departData));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_exec($ch);
+
+            $_SESSION['deparsave'] = "Nuevo departamento grabado"; // Almacena el mensaje en una variable de sesión
+            header('Location: index.php?controller=admin&action=departmentChanges');
+
+        }
+         
+}
+//===================== ELIMINAR DEPARTAMENTO ==================
+function eraseDepart($idDepart){
+    $url = BASE_URL . 'departments/' . $idDepart; 
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        echo "Error de cURL: " . curl_error($ch);
+    } else {
+        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
+        header('Location: index.php?controller=admin&action=departmentChanges');
+    }
+
+    curl_close($ch);
 }
 ?>

@@ -64,7 +64,7 @@ function addDevice(){
     $listtypes = getAllSomeThing($url);
     //2º Capturar IP disponibles
     $urlty = 'net';
-    $listip = getAllIps($urlty);
+    $listip = getAllSomeThing($urlty);
     //3º Departamento
     $urldep = 'departments';
     $listdepart = getAllSomeThing($urldep);
@@ -99,6 +99,15 @@ function deviceChanges(){
     listDevices($deviceList);
 
 }
+//======= ADMIN AÑADIR DEPARTAMENTO ====
+function addDepart(){
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+
+    include './view/view_adddepart.php';
+    recordNewDepart();
+}
 //======= ADMIN DEPARTAMENTOS ==========
 function departmentChanges(){
     session_start();
@@ -132,6 +141,65 @@ function deleteType($id){
     $adminId = $user['userId'];
     }  
     eraseType($id);
+}
+//======= ADMIN NET LIST ===========
+function netChanges(){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }   
+    
+    include './model/model_adminnet.php';
+    $netlist = getAllSomeThing('net');
+    include './view/view_admin.php';
+    listNet($netlist);
+}
+//======= LIBERAR NET IP ===========
+function freeIp($idNet){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }  
+    eraseIp($idNet);
+}
+//======= AGREGAR IP  ===========
+function addIp(){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }   
+
+    //Mostrar formulario añadir nuevo tipo dispositivo
+    include './view/view_addip.php';
+    recordNewIp();
+
+}
+//======= ASIGNAR IP A DISPOSITIVO =======
+
+function giveIp($deviceId){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }   
+    //Obtener todas las Ip
+    $device = getDeviceById($deviceId);
+    $listIp = getAllSomeThing('net');
+    include './view/view_addiptodevice.php';
+    setIpDevice();
+    
+}
+//======= BORRAR DEPARTAMENTO ========
+function deleteDepart($id){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }  
+    eraseDepart($id);
 }
 ?>
 
