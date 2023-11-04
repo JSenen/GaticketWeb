@@ -16,6 +16,7 @@ function listNet($netlist)
           <th class="text-warning bg-dark" style="width: 10%">MASK</th>
           <th class="text-warning bg-dark" style="width: 10%">CDIR</th>
           <th class="text-warning bg-dark" style="width: 10%">IP</th>
+          <th class="text-warning bg-dark" style="width: 10%">ASIGNADO</th>
           <th class="text-warning bg-dark" style="width: 10%">ESTADO</th>
 
         </tr>
@@ -25,13 +26,29 @@ function listNet($netlist)
 <?php 
       if (is_array($netlist) && !empty($netlist)) {
         foreach ($netlist as $net) {
-                   
+
+          $ip = $net['netIp'];
+          if ($net['netStatus']) {
+            $device = getDeviceIp($ip);
+            
+            if (!empty($device)) {
+              $model = $device[0]['deviceModel'];
+            }else{
+              $model = '';
+            }
+            
+          } else {
+            $model = '';
+          } 
+          
+            
 ?>
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $net['netGateWay'];?></td>
             <td style="vertical-align: middle;"><?php echo $net['netMask'];?></td>
             <td style="vertical-align: middle;"><?php echo $net['netCdir'];?></td>
             <td style="vertical-align: middle;"><?php echo $net['netIp'];?></td>
+            <td style="vertical-align: middle;"><?php echo $model?></td>
             <td style="vertical-align: middle;"><?php
                     if ($net['netStatus']) {
                         echo '<p class="text-primary">Ocupada</p>';
@@ -44,7 +61,7 @@ function listNet($netlist)
           
 <?php
         }
-        echo "Sin red construida";
+        
       }
 ?>
       </tbody>

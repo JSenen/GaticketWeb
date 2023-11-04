@@ -488,13 +488,11 @@ function recordNewType(){
             header('Location: index.php?controller=admin&action=typeChanges');
 
         }
-        
-        
-    
+         
 
 }
 
-//=============== BUSCAR TODOS TIPOS==================================
+//=============== BUSCAR TODOS ==================================
 function getAllSomeThing($something){
      //Listamos los tipos
      $usrsome = BASE_URL.$something;
@@ -510,8 +508,19 @@ function getAllSomeThing($something){
      return $resultlist;
 
 }
-//=============== BUSCAR TODAS IP=====================================
-function getAllIps(){
-
+//============ BUSCAR IPs Y DISPOSITIVO POR IP ======================
+function getDeviceIp($ip){
+    
+    //Listamos la red en totalidad
+    $urnet = BASE_URL.'device?ideviceIp='.$ip;
+    $ch = curl_init($urnet);
+    curl_setopt($ch, CURLOPT_URL, $urnet);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $urnet = curl_exec($ch);
+    
+    $deviceIp = json_decode($urnet, true);
+    curl_close($ch);
+    
+    return $deviceIp;
 }
 ?>
