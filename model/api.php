@@ -44,6 +44,26 @@ function eraseType($idType){
 
 
 }
+// =========== ELIMINAR IP (LIBERAR) ===========================
+function eraseIp($id) {
+
+    $url = BASE_URL . 'net/' . $id; 
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        echo "Error de cURL: " . curl_error($ch);
+    } else {
+        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
+        header('Location: index.php?controller=admin&action=netChanges');
+    }
+
+    curl_close($ch);
+
+}
 // =========== COMPROBAR LOGIN ===========================
 function conection_login($tip,$clave){                                                  
     $url = BASE_URL.'users';
@@ -520,7 +540,7 @@ function getDeviceIp($ip){
     
     $deviceIp = json_decode($urnet, true);
     curl_close($ch);
-    
+
     return $deviceIp;
 }
 ?>

@@ -146,5 +146,14 @@ function netChanges(){
     include './view/view_admin.php';
     listNet($netlist);
 }
+//======= LIBERAR NET IP ===========
+function freeIp($idNet){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }  
+    eraseIp($idNet);
+}
 ?>
 

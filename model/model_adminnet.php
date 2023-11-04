@@ -18,6 +18,7 @@ function listNet($netlist)
           <th class="text-warning bg-dark" style="width: 10%">IP</th>
           <th class="text-warning bg-dark" style="width: 10%">ASIGNADO</th>
           <th class="text-warning bg-dark" style="width: 10%">ESTADO</th>
+          <th class="text-warning bg-dark" style="width: 10%">ACCION</th>
 
         </tr>
       </thead>
@@ -56,6 +57,12 @@ function listNet($netlist)
                         echo '<p class="text-success">Libre</p>';
                     }
             ?></td> 
+            <td style="vertical-align: middle;"><?php 
+                if ($net['netStatus']) {
+                        echo '<a href="index.php?controller=admin&action=freeIp&id='.$net['netId'].'" class="btn btn-danger">Liberar</a></td>';
+                    } else {
+                        echo '<p class="text-success">Libre</p>';
+                    }?></td>
           </tr>
 
           
