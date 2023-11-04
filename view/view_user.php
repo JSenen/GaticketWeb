@@ -2,12 +2,18 @@
 include('view_header.php');
 $fecha_actual = date('d-m-Y');
 ?>
+<script>
+    
+</script>
 <header id="header">
 <nav class="navbar-dark bg-dark navbar-vertical show">
     <ul class="navbar-nav">
-        <img src="./resources/img/Gaticket.png"  alt="" width="100" height="100">>
+        <img src="./resources/img/GATLogo.jpeg"  alt="" width="130" height="130">>
         <li class="nav-item">
-        <a class="nav-link" href="#"><?php echo $_SESSION['user_tip'] ?></a>
+            <a class="nav-link" href="#" style="color: white;">USUARIO</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#" style="color: white;"><?php echo $_SESSION['user_tip'] ?></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="index.php?controller=user&action=firstPage" style="color: yellow;">Grabar Ticket</a>
@@ -44,7 +50,7 @@ $fecha_actual = date('d-m-Y');
             <p>Rellene los campos de los que tenga conocimiento</p>
         </div>
         <div class="form-group">
-            <label for="label">NUMERO SERIE EQUIPO:</label>
+            <label for="label">IDENTIFICADOR EQUIPO (NUEMRO SERIE / MAC / IP):</label>
             <input type="text" class="form-control" name="device_serialnumber" placeholder="Ingrese numero de serie del equipo">
         </div>
         <div class="form-group">

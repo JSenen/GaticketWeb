@@ -1,8 +1,52 @@
 <!-- Intercambio de datos con la API -->
 <?php
-// =========== COMPROBAR USUARIO ===========================
+include './resources/config.php';
+
+// =========== ELIMINAR USUARIO POR ID =====================
+
+function eraseUser($idUser){
+    
+    $url = BASE_URL . 'user/' . $idUser; // Agrega "/" para formar la URL completa
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        echo "Error de cURL: " . curl_error($ch);
+    } else {
+        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
+        header('Location: index.php?controller=admin&action=userChanges');
+    }
+
+    curl_close($ch);
+
+}
+// =========== ELIMINAR TIPO ===========================
+function eraseType($idType){
+
+    $url = BASE_URL . 'type/' . $idType; 
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        echo "Error de cURL: " . curl_error($ch);
+    } else {
+        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
+        header('Location: index.php?controller=admin&action=typeChanges');
+    }
+
+    curl_close($ch);
+
+
+}
+// =========== COMPROBAR LOGIN ===========================
 function conection_login($tip,$clave){                                                  
-    $url = 'http://localhost:8080/users';
+    $url = BASE_URL.'users';
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
@@ -19,10 +63,8 @@ function conection_login($tip,$clave){
                 $_SESSION['user_id'] = $user['userId'];
                 $_SESSION['user_tip'] = $user['userTip']; 
                 $_SESSION['user_rol'] = $user['userRol']; 
-
-                var_dump($user);
                 
-                setcookie('gaticket', '', 86400); //Establecemos una cokkie de 1 dia
+                setcookie('gaticket', '', 86400); //Establecemos una cookie de 1 dia
                 if($user['userRol'] === 'administrador'){
                     // Envio a pagina de administradors
                 header('location:index.php?controller=admin&action=ticketlist');
@@ -33,11 +75,16 @@ function conection_login($tip,$clave){
 
             }
             
+        } else {
+            // Login erroneo
+    $_SESSION['login_error'] = "LOGIN FALLIDO"; // Almacena el mensaje de error en una variable de sesión
+    session_write_close(); // Borramos sesiones anteriores
+    header("Refresh: 10; url=index.php");
         }
-        
+       
     }
+    
 
-    echo "El usuario no se encuentra registrado"; //TODO gestionar usuario no encontrado
 }
 
 // =========== GRABAR TICKET ================================
@@ -48,7 +95,7 @@ function recordTicket(){
         session_start();
     }
 
-        $fecha_actual = date('m/d/Y');
+        $fecha_actual = date('d/m/y');
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Verifica si se está realizando una solicitud POST desde el formulario
@@ -57,11 +104,14 @@ function recordTicket(){
             $incidenceTheme = strtoupper($_POST['theme_incidence']);
             $incidenceStatus = "active";
             $incidenceDate = $fecha_actual;
-            $incidenceDateFinish = "";
+            $incidenceDateFinish = ""; 
             $deviceSerialNumber = $_POST['device_serialnumber'];
+            if (!isset($_POST['device_serialnumber']) || empty($_POST['device_serialnumber'])) {
+                $deviceSerialNumber = "SIN DATOS";
+            }
 
             // 1º Buscar  Id device por serial number
-            $endpointserial = 'http://localhost:8080/device?deviceSerial='.$deviceSerialNumber;
+            $endpointserial = BASE_URL.'/device?deviceSerial='.$deviceSerialNumber;
             $ch = curl_init($endpointserial);
             curl_setopt($ch, CURLOPT_URL, $endpointserial);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -74,7 +124,7 @@ function recordTicket(){
                     // Obtener el valor del deviceId
                     $deviceId = $data['deviceId'];
                 } else {
-                    echo "No se pudo encontrar el deviceId para el número de serie proporcionado.";
+                    echo "No se pudo encontrar el deviceId para el número de serie proporcionado."; //TODO mostrar error a usuario
                 }
 
              //Recopila datos del usuario grabo ticket
@@ -92,7 +142,7 @@ function recordTicket(){
             );
 
             // Realiza una solicitud POST a la API para grabar una incidencia
-            $url = 'http://localhost:8080/incidence/'.$userId;
+            $url = BASE_URL.'incidence/'.$userId;
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($incidencedata));
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -108,10 +158,10 @@ function recordTicket(){
         }
 }
 
-//===================== LISTAR INCIDENCIAS ========================================
+//===================== LISTAR INCIDENCIAS USUARIO ==================================
 function getUserIncidences($userId){
     
-    $urllistincidences = 'http://localhost:8080/incidences/user/'.$userId;
+    $urllistincidences = BASE_URL.'incidences/user/'.$userId;
     $ch = curl_init($urllistincidences);
     curl_setopt($ch, CURLOPT_URL, $urllistincidences);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -125,5 +175,343 @@ function getUserIncidences($userId){
     return $userincidences;
 
 }
-?>
+//===================== LISTAR INCIDENCIAS DISPOSITIVOS ==================================
+function getDeviceIncidences($deviceId){
+    $urllistincidences = BASE_URL.'incidences/device/'.$deviceId;
+    $ch = curl_init($urllistincidences);
+    curl_setopt($ch, CURLOPT_URL, $urllistincidences);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
 
+    //Recopila el listado de incidencias del usuario
+    //Decodificamos json
+    $deviceIncidences = json_decode($result, true);
+            
+    return $deviceIncidences;
+}
+
+//==================== LISTAR INCIDENCIAS ADMINISTRADOR ===============================
+
+function getAllIncidences(){
+
+    $urladminincidences = BASE_URL.'incidences';
+    $ch = curl_init($urladminincidences);
+    curl_setopt($ch, CURLOPT_URL, $urladminincidences);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila el listado total de incidencias
+    $adminincidences = json_decode($result, true);
+
+    if(is_array($adminincidences) && !empty($adminincidences)){
+        return$adminincidences;
+    }else{
+        return [];
+    }
+            
+    
+
+}
+
+//==================== DATOS DEPARTAMENTO USUARIO ==========================================
+
+function getUserDepartment($userid){
+
+    $urlUserDepart = BASE_URL.'department/'.$userid;
+    $ch = curl_init($urlUserDepart);
+    curl_setopt($ch, CURLOPT_URL, $urlUserDepart);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos del departamento del usuario
+    $userdepart = json_decode($result, true);
+            
+    return $userdepart;
+
+}
+//================== TODOS LOS USUARIOS ============================================
+
+function getAllUsers(){
+
+    //Listamos los usuarios
+    $urlUser = BASE_URL.'users';
+    $ch = curl_init($urlUser);
+    curl_setopt($ch, CURLOPT_URL, $urlUser);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $resultusers = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos 
+    $userlist = json_decode($resultusers, true);
+
+    return $userlist;
+}
+
+//================== TODOS LOSDEPARTAMENTOS ============================================
+
+function getAllDepartments(){
+
+    //Listamos los usuarios
+    $urlDepart = BASE_URL.'departments';
+    $ch = curl_init($urlDepart);
+    curl_setopt($ch, CURLOPT_URL, $urlDepart);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $resultdepart = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos 
+    $departlist = json_decode($resultdepart, true);
+
+    return $departlist;
+}
+//=================== TODOS LOS DISPOSITIVOS =========================================
+function getAllDevices(){
+     //Listamos los usuarios
+     $urlDepart = BASE_URL.'device';
+     $ch = curl_init($urlDepart);
+     curl_setopt($ch, CURLOPT_URL, $urlDepart);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     $resultdepart = curl_exec($ch);
+     curl_close($ch);
+ 
+     //Recopila los datos 
+     $devicelist = json_decode($resultdepart, true);
+ 
+     return $devicelist;
+}
+
+// =========== AÑADIR NUEVO USUARIO ================================
+function recordUserfromAdmin(){
+    
+    //Comprobamos que session este iniciada
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            // Verifica si se está realizando una solicitud POST desde el formulario
+            // Recopila los datos del formulario en los campos name
+            $userTip = strtoupper($_POST['user_tip']);
+            $userMail = $_POST['user_mail'];
+            $userPassword = $_POST['user_password'];
+            $userRol = $_POST['user_rol'];
+            $departmentId = $_POST['department_id'];
+
+            // 1º Grabamos nuevo usuario
+            // Define los datos que se enviarán a la API
+            $userdata = array(
+                'userMail' => $userMail,
+                'userPassword' =>  $userPassword,
+                'userTip' => $userTip,
+                'userRol' => $userRol
+            );
+
+            // Realiza una solicitud POST a la API para grabar un usuario
+            $urlsave = BASE_URL.'users';
+            $ch = curl_init($urlsave);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userdata));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            $responseSaveUSer = curl_exec($ch);
+
+            // Realiza una solicitud GET para obtener todos los usuarios
+            $urlGetUsers = BASE_URL . 'users';
+            $ch = curl_init($urlGetUsers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $responseGetUsers = curl_exec($ch);
+
+            if ($responseGetUsers !== false) {
+                // Decodifica la respuesta JSON
+                $userList = json_decode($responseGetUsers, true);
+                
+                // Encuentra el último usuario en la lista
+                $lastUser = end($userList);  
+                $newUserId = $lastUser['userId'];
+
+                if (!empty($newUserId)) {
+                    // Realiza una solicitud POST a la API para grabar un usuario en el departamento
+                    $urlsavedepart = BASE_URL . 'user/' . $newUserId . '/' . $departmentId;
+                    $ch = curl_init($urlsavedepart);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    $response = curl_exec($ch);
+
+                    if ($response !== false) {
+                        // La solicitud se realizó con éxito                     
+                        $message = "Usuario grabado exitosamente.";
+                    } else {
+                        $message = "Error en la solicitud para grabar al usuario en el departamento.";
+                    }
+                    
+                    echo '<p>' . $message . '</p>';
+                  
+                    // Redirecciona después de 3 segundos
+                    echo '<meta http-equiv="refresh" content="3;url=index.php?controller=admin&action=userChanges">'; 
+                    exit();
+
+                } else {
+                    echo "Error al obtener el ID del nuevo usuario.";
+                }
+            }
+        }
+        
+    }
+//=============== AÑADIR DISPOSITIVO ==================================
+function recordDeviceAdmin(){
+  
+ //Comprobamos que session este iniciada
+ if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        // Recopila los datos del formulario en los campos name de la vista
+        $deviceHd = strtoupper($_POST['device_hd']);
+        $deviceRam = $_POST['device_ram'];
+        $deviceSerie = $_POST['device_serial'];
+        $deviceMac = $_POST['device_mac'];
+        $deviceModel = strtoupper($_POST['device_model']);
+        $DateBuy = $_POST['device_dateget'];
+        $DateStart = $_POST['device_dad'];
+        
+        //Convertimos las fechas al formato que admite la API
+        // Convierte la fecha al formato "dd/MM/yyyy"
+        $deviceDateBuy = date('d/m/Y', strtotime($DateBuy));
+        $deviceDateStart = date('d/m/Y', strtotime($DateStart));
+        
+        $departmentId = $_POST['department_id'];
+        $typeId = $_POST['type_id'];
+
+        
+
+        // 1º Grabamos nuevo dispositivo
+        // Define los datos que se enviarán a la API
+        $deviceData = array(
+            "deviceHd" => $deviceHd,
+            "deviceRam" => $deviceRam,
+            "deviceMac" => $deviceMac,
+            "deviceSerial" => $deviceSerie,
+            "deviceModel" => $deviceModel,
+            "deviceDateBuy" => $deviceDateBuy,
+            "deviceDateStart" => $deviceDateStart
+        );
+
+        // Realiza una solicitud POST a la API para grabar dispositivo
+        $urlsave = BASE_URL.'device';
+        $ch = curl_init($urlsave);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($deviceData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_POST, 1);
+        $responseSaveDevice = curl_exec($ch);
+
+        // Realiza una solicitud GET para obtener todos los dispositivos
+        $urlGetDevice = BASE_URL . 'device';
+            $ch = curl_init($urlGetDevice);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $responseGetDevice = curl_exec($ch);
+
+        if ($responseGetDevice !== false) {
+            // Decodifica la respuesta JSON
+            $deviceList = json_decode($responseGetDevice, true);
+            
+            // Encuentra el último dispositivo en la lista
+            $lastDevice = end($deviceList);  
+            $newDevice = $lastDevice['deviceId'];
+
+            if (!empty($newDevice)) {
+                // Realiza una solicitud POST a la API para grabar dispositivo en el departamento
+                $urlsavedepart = BASE_URL . 'department/' . $newDevice . '/' . $departmentId;
+                $ch = curl_init($urlsavedepart);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+                curl_setopt($ch, CURLOPT_POST, 1);
+                $response = curl_exec($ch);
+
+                if ($response !== false) {
+                    // La solicitud se realizó con éxito                     
+                    $message = "Dispositivo grabado exitosamente.";
+                } else {
+                    $message = "Error en la solicitud para grabar al dispositivo en el departamento.";
+                }
+                
+                echo '<p>' . $message . '</p>';
+                // Realiza una solicitud POST a la API para grabar tipo al dispositivo
+                $urlsavetype = BASE_URL . 'device/' . $newDevice . '/' . $typeId;
+                $ch = curl_init($urlsavetype);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+                curl_setopt($ch, CURLOPT_POST, 1);
+                $response = curl_exec($ch);
+
+                if ($response !== false) {
+                    // La solicitud se realizó con éxito                     
+                    $message = "Dispositivo grabado exitosamente.";
+                } else {
+                    $message = "Error en la solicitud para grabar al tipo de dispositivo.";
+                }
+                /* // Redirecciona después de 3 segundos
+                echo '<meta http-equiv="refresh" content="3;url=index.php?controller=admin&action=deviceChanges">'; 
+                exit(); */
+
+            } else {
+                echo "Error al obtener el ID del nuevo dispositivo.";
+            }
+        } 
+    }
+    
+}
+//=============== AÑADIR NUEVO TIPO =================================
+function recordNewType(){
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            
+            // Recopila los datos del nuevo tipo de dispositivo
+            $typeName = strtoupper($_POST['typeName']);
+            
+            // Define los datos que se enviarán a la API
+            $typeData = array(
+                "typeName" => $typeName,
+            );
+            // Realiza una solicitud POST a la API para grabar tippo
+            $urlsave = BASE_URL.'types';
+            $ch = curl_init($urlsave);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($typeData));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_exec($ch);
+
+            $_SESSION['typesave'] = "Nuevo tipo grabado"; // Almacena el mensaje en una variable de sesión
+            header('Location: index.php?controller=admin&action=typeChanges');
+
+        }
+        
+        
+    
+
+}
+
+//=============== BUSCAR TODOS TIPOS==================================
+function getAllSomeThing($something){
+     //Listamos los tipos
+     $usrsome = BASE_URL.$something;
+     $ch = curl_init($usrsome);
+     curl_setopt($ch, CURLOPT_URL, $usrsome);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     $usrsome = curl_exec($ch);
+     curl_close($ch);
+ 
+     //Recopila los datos 
+     $resultlist = json_decode($usrsome, true);
+ 
+     return $resultlist;
+
+}
+//=============== BUSCAR TODAS IP=====================================
+function getAllIps(){
+
+}
+?>

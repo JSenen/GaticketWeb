@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include_once('view_header.php');
 include_once('./model/api.php');
 
@@ -16,11 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			addNewUser();
 	}
 }
+
 ?>
 <section class="section-log">
 		<div class="container">
 		  <div class="user signinBx">
-			<div class="imgBx"><img src="./resources/img/GaticketLogo2.png" width="60" height="60" alt="" /></div>
+			<div class="imgBx"><img src="./resources/img/GaticketMan.jpeg" width="60" height="60" alt="" /></div>
 			<div class="formBx">
 			  <form action="" method="post">
 				<h2>Login</h2>
@@ -28,6 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 					<input type="text" name="usertip" placeholder="TIP" required/>
 					<input type="password" name="password" placeholder="Password" required />
 					<input type="submit" class="btn btn-primary" value="Login" />
+						<!--  Login erroneo. Se comprueba variable de sesion -->
+						<?php
+						// Verifica si hay un mensaje de error almacenado en la variable de sesión
+						if (isset($_SESSION['login_error'])) {
+							echo '<div id="error-message" class="alert alert-danger" role="alert">';
+							echo $_SESSION['login_error']; // Muestra el mensaje de error
+							echo '</div>';
+							unset($_SESSION['login_error']); // Limpia la variable de sesión después de mostrar el mensaje
+						}
+						?>
 						<p class="signup">
 							¿No dispone de cuenta?
 							<a href="#" onclick="toggleForm();">Crear registro.</a>

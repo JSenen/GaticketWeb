@@ -9,11 +9,11 @@ function listUserIncidences($incidencesList)
     <table class="table table-striped table-fixed" id="tableIncidencesUser">
       <thead>
         <tr>
-          <th class="text-info" style="width: 14%">ASUNTO</th>
-          <th class="text-info" style="width: 25%">INCIDENCIA</th>
-          <th class="text-info" style="width: 14%">DISPOSITIVO</th>
-          <th class="text-info" style="width: 12%">FECHA EMISION</th>
-          <th class="text-info" style="width: 7%">ESTADO</th>        
+          <th class="text-warning bg-dark" style="width: 14%">ASUNTO</th>
+          <th class="text-warning bg-dark" style="width: 25%">INCIDENCIA</th>
+          <th class="text-warning bg-dark" style="width: 14%">DISPOSITIVO</th>
+          <th class="text-warning bg-dark" style="width: 12%">FECHA EMISION</th>
+          <th class="text-warning bg-dark" style="width: 7%">ESTADO</th>        
         </tr>
       </thead>
       <tbody>
@@ -69,8 +69,7 @@ function listUserIncidences($incidencesList)
 
       });
     });
-  </script>
- 
+  </text-warning bg-dark
 <?php
 }
 include './view/view_footer.php';
