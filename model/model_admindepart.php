@@ -34,7 +34,7 @@ function listDepart($departlist)
             <td style="vertical-align: middle;"><?php echo $depart['departmentMail'];?></td>
             <!-- TODO: Añadir total dispositivos y personal del departamento -->
             <td style="vertical-align: middle;"><?php echo $depart['departmentCity'];?></td>
-            <td style="vertical-align: middle;"><a href="#<?php echo $depart['departemtId']?>" class="btn btn-danger">Borrar</a></td> 
+            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteDepart&id=<?php echo $depart['departemtId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>
 <?php
         }
@@ -70,9 +70,9 @@ function listDepart($departlist)
  
     <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar Página</button>
   
-  <div class="btn-group" role="group" aria-label="Basic example" id="device-options">
-    <button type="button" class="btn btn-primary" onclick="window.location.href='#'" id="agregar_dispositivo">Agregar</button>
-  </div>
+    <div class="btn-group" role="group" aria-label="Basic example" id="device-options">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addDepart'" id="agregar_dispositivo">Agregar</button>
+    </div>
  
 
 <?php

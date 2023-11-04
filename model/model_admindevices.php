@@ -69,7 +69,12 @@ function listDevices($deviceList)
             <td style="vertical-align: middle;"><?php echo $device['deviceSerial'];?></td>
             <td style="vertical-align: middle;"><?php echo $device['deviceDateBuy'];?></td>
             <td style="vertical-align: middle;"><?php echo $device['deviceDateStart'];?></td>
-            <td style="vertical-align: middle;"><?php echo $deviceIP;?></td>
+            <td style="vertical-align: middle;"><?php 
+                          if ($deviceIP === 'Sin IP') {?>
+                            <a href="index.php?controller=admin&action=giveIp&id=<?php echo $device['deviceId'] ?>" class="btn btn-outline-success" value="sennewip" id="agregra_ip">Asignar</a><?php
+                          }else { 
+                            echo $deviceIP;
+                          }?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>    
             <td style="vertical-align: middle;"><a href="#<?php echo $user['userId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>

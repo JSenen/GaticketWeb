@@ -48,7 +48,6 @@ $fecha_actual = date('d-m-Y');
                         </ul>
                     </li>
                     <li><a href="index.php?controller=admin&action=departmentChanges">Departamentos</a></li>
-                    <li><a href="#">Red</a></li>
                 </ul>
         </li>
         <li class="nav-item">

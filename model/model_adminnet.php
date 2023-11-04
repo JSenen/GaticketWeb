@@ -61,7 +61,8 @@ function listNet($netlist)
                 if ($net['netStatus']) {
                         echo '<a href="index.php?controller=admin&action=freeIp&id='.$net['netId'].'" class="btn btn-danger">Liberar</a></td>';
                     } else {
-                        echo '<p class="text-success">Libre</p>';
+                        echo '<p class="text-success">--</p>';
+                        
                     }?></td>
           </tr>
 
@@ -101,9 +102,9 @@ function listNet($netlist)
  
     <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar Página</button>
 
-    <div class="btn-group" role="group" aria-label="Basic example" id="admin-options">
-      <?php unset($_SESSION['typesave']); ?>
-      <button type="button" class="btn btn-primary" onclick="window.location.href='#'" id="agregar-type">Agregar</button>
+    <div class="btn-group" role="group" aria-label="Agragar IP" id="admin-options">
+      <?php unset($_SESSION['netsave']); ?>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addIp'" id="agregar-net">Agregar</button>
     </div>
 
 <?php
