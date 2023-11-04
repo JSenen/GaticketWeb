@@ -133,5 +133,18 @@ function deleteType($id){
     }  
     eraseType($id);
 }
+//======= ADMIN NET LIST ===========
+function netChanges(){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }   
+    
+    include './model/model_adminnet.php';
+    $netlist = getAllSomeThing('net');
+    include './view/view_admin.php';
+    listNet($netlist);
+}
 ?>
 

@@ -44,7 +44,7 @@ $fecha_actual = date('d-m-Y');
                     <li><a href="index.php?controller=admin&action=deviceChanges">Dispositivos</a>
                         <ul>
                             <li><a href="index.php?controller=admin&action=typeChanges">Tipos</a></li>
-                            <li><a href="#">Red</a></li>
+                            <li><a href="index.php?controller=admin&action=netChanges">Red</a></li>
                         </ul>
                     </li>
                     <li><a href="index.php?controller=admin&action=departmentChanges">Departamentos</a></li>
