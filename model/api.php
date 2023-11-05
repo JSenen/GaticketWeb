@@ -776,7 +776,8 @@ function changeRol($idUser,$rol){
             
            
         } else {
-            echo "Error al realizar la solicitud PATCH.";
+            $_SESSION['rolchange'] = "Error al realizar la solicitud";
+            header('location: index.php?controller=admin&action=userChanges');
         }
 
 }
