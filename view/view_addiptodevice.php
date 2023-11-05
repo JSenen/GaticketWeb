@@ -23,19 +23,19 @@ $fecha_actual = date('d-m-Y');
                             ?>
                         </select>
                 </div>
-               
+                    
                     <div class="col-md-3">
                         <div class="container">
                             <label for="SelectedDevice" class="form-label">MODELO</label>
-                            <span><?php echo $device['deviceModel'] ?></span>
+                            <span><?php echo isset($device['deviceModel']) ? $device['deviceModel'] : ''; ?></span>
                         </div>
                         <div class="container">
                             <label for="SelectedDevice" class="form-label">S/N</label>
-                            <span><?php echo $device['deviceSerial'] ?></span>
+                            <span><?php echo isseet($device['deviceSerial']) ? $device['deviceSerial'] : ''; ?></span>
                         </div>
                         <div class="container">
                             <label for="SelectedDevice" class="form-label">TIPO</label>
-                            <span><?php echo $device['deviceTypeId']['typeName'] ?></span>
+                            <span><?php echo isset($device['deviceTypeId']['typeName']) ? $device['deviceTypeId']['typeName'] : ''; ?></span>
                         </div>
                        
                     </div>
