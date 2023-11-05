@@ -222,11 +222,19 @@ function updateUser($idUser){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }  
-
-    $url = 'user/'.$idUser;
+    //Buscamos el usuario
+    $userdata = getOneUser($idUser);
+    $rol = $userdata['userRol'];
     
-    changeRol($url);
-    header('Location: index.php?controller=admin&action=departmentChanges');
+    //Segun el tipo de rol, le pasamos el contrario
+    if($rol == 'usuario') {
+        $rol = 'administrador';
+    }else{
+        $rol = 'usuario';
+    }
+    //Cambiamos el rol
+    changeRol($idUser,$rol);
+    
 }
 ?>
 
