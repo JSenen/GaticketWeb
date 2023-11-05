@@ -74,6 +74,16 @@ function addDevice(){
 
 
 }
+//==== ELIMINAR DISPOSITIVO =====
+function deleteDevice($idDevice){
+    session_start();
+    $user['userId'] = $_SESSION['user_id'];
+    $adminId = $user['userId'];
+
+    // Obtener usuario seleccionado
+    eraseDevice($idDevice); // Pasar $iduser como argumento
+
+}
 
 //==== ELIMINAR USUARIO =====
 function deleteUser($iduser) {

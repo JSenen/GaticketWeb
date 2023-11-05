@@ -483,13 +483,13 @@ function recordDeviceAdmin(){
 
                 if ($response !== false) {
                     // La solicitud se realizó con éxito                     
-                    $message = "Dispositivo grabado exitosamente.";
+                    $_SESSION['rolchange'] = "Dispositivo grabado.";
                 } else {
-                    $message = "Error en la solicitud para grabar al tipo de dispositivo.";
+                    $_SESSION['rolchange'] = "Error en la solicitud para grabar al tipo de dispositivo.";
                 }
-                /* // Redirecciona después de 3 segundos
-                echo '<meta http-equiv="refresh" content="3;url=index.php?controller=admin&action=deviceChanges">'; 
-                exit(); */
+                
+                echo '<meta http-equiv="refresh" content="0.1;url=index.php?controller=admin&action=deviceChanges">'; 
+                exit(); 
 
             } else {
                 echo "Error al obtener el ID del nuevo dispositivo.";
@@ -780,5 +780,24 @@ function changeRol($idUser,$rol){
             header('location: index.php?controller=admin&action=userChanges');
         }
 
+}
+
+//============ ELIMINAR DISPOSITIVO ====================
+function eraseDevice($idDevice){
+    $url = BASE_URL . 'device/' . $idDevice; 
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        echo "Error de cURL: " . curl_error($ch);
+    } else {
+        $_SESSION['rolchange'] =  "Dispositivo eliminado: ";
+        header('Location: index.php?controller=admin&action=deviceChanges');
+    }
+
+    curl_close($ch);
 }
 ?>
