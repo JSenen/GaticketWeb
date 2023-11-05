@@ -199,7 +199,7 @@ function giveIp($deviceId){
     $device = getDeviceById($deviceId);
     $listIp = getAllSomeThing('net');
     include './view/view_addiptodevice.php';
-    setIpDevice();
+    setIpDevice($device);
     
 }
 //======= BORRAR DEPARTAMENTO ========

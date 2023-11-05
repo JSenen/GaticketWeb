@@ -616,7 +616,7 @@ function getDeviceById($id){
 
 }
 // ========== ASIGNAR IP A DISPOSITIVO ============================
-function setIpDevice(){
+function setIpDevice($device){
     //Comprobamos que session este iniciada
  if (session_status() == PHP_SESSION_NONE) {
     session_start();
