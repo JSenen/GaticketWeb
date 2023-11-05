@@ -720,7 +720,10 @@ function changeDepart($idDepart){
             $_SESSION['deparsave'] = "Nuevo departamento grabado"; // Almacena el mensaje en una variable de sesión
             
 
-        }
-         
+        }         
+}
+//======== CHANGE ROL =============
+function changeRol($url){
+
 }
 ?>

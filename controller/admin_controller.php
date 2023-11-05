@@ -215,5 +215,18 @@ function updateDepart($idDepart){
     changeDepart($idDepart);
     header('Location: index.php?controller=admin&action=departmentChanges');
 }
+//======== UPDATE USER ================
+function updateUser($idUser){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }  
+
+    $url = 'user/'.$idUser;
+    
+    changeRol($url);
+    header('Location: index.php?controller=admin&action=departmentChanges');
+}
 ?>
 
