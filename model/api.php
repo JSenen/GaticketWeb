@@ -378,15 +378,15 @@ function recordUserfromAdmin(){
 
                     if ($response !== false) {
                         // La solicitud se realizó con éxito                     
-                        $message = "Usuario grabado exitosamente.";
+                        $_SESSION['rolchange'] = "Usuario grabado.";
                     } else {
-                        $message = "Error en la solicitud para grabar al usuario en el departamento.";
+                        $_SESSION['rolchange'] = "Error en la solicitud para grabar al usuario en el departamento.";
                     }
                     
                     echo '<p>' . $message . '</p>';
                   
                     // Redirecciona después de 3 segundos
-                    echo '<meta http-equiv="refresh" content="3;url=index.php?controller=admin&action=userChanges">'; 
+                    echo '<meta http-equiv="refresh" content="0.1;url=index.php?controller=admin&action=userChanges">'; 
                     exit();
 
                 } else {
