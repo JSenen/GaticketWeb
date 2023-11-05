@@ -39,10 +39,10 @@ function listDevices($deviceList)
         }
           
          // Gestion campo Tipo
-         if (empty($device['deviceTypeId'])) {
+         if (empty($device['deviceType'])) {
           $deviceType = 'Sin tipo';
         }else{
-          $deviceType = $device['deviceTypeId']['typeName'];
+          $deviceType = $device['deviceType']['typeName'];
         }
         
 
