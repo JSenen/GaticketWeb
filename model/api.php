@@ -680,4 +680,47 @@ function eraseDepart($idDepart){
 
     curl_close($ch);
 }
+//=========== UPDATE DEPARTAMENTO ===============
+function changeDepart($idDepart){
+
+ if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            
+            // Recopila los datos del nuevo tipo de dispositivo
+            $departName = strtoupper($_POST['departmentName']);
+            $departPhone = $_POST['departmentPhone'];
+            $departMail = $_POST['departmentMail'];
+            $departCity = $_POST['departmentCity'];
+            // Define los datos que se enviarán a la API
+            $departData = array(
+                "departmentName" => $departName,
+                "departmentPhone" => $departPhone,
+                "departmentMail" => $departMail,
+                "departmentCity" => $departCity
+            );
+            // Realiza una solicitud POST a la API para grabar departamento
+            $urlupdate = BASE_URL.'departments/'.$idDepart;
+            $ch = curl_init($urlupdate);
+            // Configurar cURL para una solicitud PUT
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+            // Codificar los datos como JSON
+            $data_json = json_encode($departData);
+            // Establecer el cuerpo de la solicitud con los datos JSON
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
+            // Configurar las cabeceras adecuadas
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            // Ejecutar la solicitud PUT
+            $response = curl_exec($ch);
+            // Cerrar la sesión cURL
+            curl_close($ch);
+
+            $_SESSION['deparsave'] = "Nuevo departamento grabado"; // Almacena el mensaje en una variable de sesión
+            
+
+        }
+         
+}
 ?>

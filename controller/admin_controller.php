@@ -201,5 +201,19 @@ function deleteDepart($id){
     }  
     eraseDepart($id);
 }
+//======== UPDATE DEPARTAMENTO =========
+function updateDepart($idDepart){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }  
+
+    $url = 'departments/'.$idDepart;
+    $depart = getAllSomeThing($url);
+    include './view/view_updatedepart.php';
+    changeDepart($idDepart);
+    header('Location: index.php?controller=admin&action=departmentChanges');
+}
 ?>
 
