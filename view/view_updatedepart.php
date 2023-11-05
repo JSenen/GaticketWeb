@@ -32,7 +32,7 @@ $fecha_actual = date('d-m-Y');
    <!-- Agrega un campo oculto con el valor de acción para identificar el id del tipo -->
    <input type="hidden" name="type_id" id="typeIdField" value="<?php echo $type['typeId']; ?>">
    <div class="mb-3 mt-3">
-        <button type="submit" class="btn btn-success" name="sendnewdevice" value="sendnewdevice">Actualizar<?php</button>
+        <button type="submit" class="btn btn-success" name="sendnewdevice" value="sendnewdevice">Actualizar</button>
     </div>
                 
    

@@ -111,12 +111,16 @@ function deviceChanges(){
 }
 //======= ADMIN AÑADIR DEPARTAMENTO ====
 function addDepart(){
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
-
+    }   
+    
+    
     include './view/view_adddepart.php';
     recordNewDepart();
+    
 }
 //======= ADMIN DEPARTAMENTOS ==========
 function departmentChanges(){
@@ -128,6 +132,7 @@ function departmentChanges(){
     $departlist = getAllDepartments();
     include './view/view_admin.php';
     listDepart($departlist);
+    
 }
 //======== ADMIN TIPOS =================
 function typeChanges(){

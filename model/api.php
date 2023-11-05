@@ -44,24 +44,45 @@ function eraseType($idType){
 
 
 }
-// =========== ELIMINAR IP (LIBERAR) ===========================
-function eraseIp($id) {
+// =========== UPDATE IP (LIBERAR) ===========================
+function eraseIp($idNet) {
 
-    $url = BASE_URL . 'net/' . $id; 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $url = BASE_URL.'net/'.$idNet;
 
-    $response = curl_exec($ch);
+        // Datos que envia en la solicitud PATCH 
+        $data = [
+            "netStatus" => false
+        ];
 
-    if ($response === false) {
-        echo "Error de cURL: " . curl_error($ch);
-    } else {
-        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
-        header('Location: index.php?controller=admin&action=netChanges');
-    }
+        $data_string = json_encode($data);
 
-    curl_close($ch);
+        // Inicializa una instancia de cURL
+        $ch = curl_init($url);
+
+        // Configura la solicitud cURL
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH'); // Indica que es una solicitud PATCH
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string); // Define los datos a enviar
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json', // Especifica el tipo de contenido (en este caso, JSON)
+        ]);
+
+        // Realiza la solicitud cURL y obtén la respuesta
+        $response = curl_exec($ch);
+
+        // Cierra la instancia cURL
+        curl_close($ch);
+
+        // Maneja la respuesta 
+        if ($response) {
+            $_SESSION['rolchange'] = 'Ip liberada ';
+            header('location: index.php?controller=admin&action=netChanges');
+            
+           
+        } else {
+            $_SESSION['rolchange'] = "Error al realizar la solicitud";
+            header('location: index.php?controller=admin&action=netChanges');
+        }
 
 }
 // =========== COMPROBAR LOGIN ===========================
