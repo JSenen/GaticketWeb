@@ -99,7 +99,7 @@ function conection_login($tip,$clave){
             // Login erroneo
     $_SESSION['login_error'] = "LOGIN FALLIDO"; // Almacena el mensaje de error en una variable de sesión
     session_write_close(); // Borramos sesiones anteriores
-    header("Refresh: 10; url=index.php");
+    header("Refresh: 3; url=index.php");
         }
        
     }
@@ -771,7 +771,10 @@ function changeRol($idUser,$rol){
 
         // Maneja la respuesta 
         if ($response) {
-            header('Location: index.php?controller=admin&action=userChanges');
+            $_SESSION['rolchange'] = 'Rol modificado con exito ';
+            header('location: index.php?controller=admin&action=userChanges');
+            
+           
         } else {
             echo "Error al realizar la solicitud PATCH.";
         }

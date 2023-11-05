@@ -234,7 +234,9 @@ function updateUser($idUser){
     }
     //Cambiamos el rol
     changeRol($idUser,$rol);
+   
     
-}
+
+}   
 ?>
 
