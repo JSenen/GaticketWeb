@@ -8,7 +8,7 @@ $fecha_actual = date('d-m-Y');
 <header id="header">
 <nav class="navbar-dark bg-dark navbar-vertical show">
     <ul class="navbar-nav">
-        <img src="./resources/img/GATLogo.jpeg"  alt="" width="130" height="130">>
+        <img src="./resources/img/GaticketLogo_epic.jpg"  alt="" width="130" height="130">>
         <li class="nav-item">
             <a class="nav-link" href="#" style="color: white;">USUARIO</a>
         </li>
@@ -34,7 +34,7 @@ $fecha_actual = date('d-m-Y');
   <div class="container d-flex justify-content-center align-items-center" style="height: 85vh;">
     <div class="form-container" style="width: 600px;">        
         <div class="form-group text-center">
-            <img class="mb-1" src="./resources/img/ticket.jpeg" alt="" width="200" height="200">
+            <img class="mb-1" src="./resources/img/ticketlogo.jpg" alt="" width="200" height="200">
             <h5>Bienvenido , <?php echo $_SESSION['user_tip'];?></h5>
             <h4><?php echo $fecha_actual ?></h4>
             <h4 class="mb-1">ALTA TICKET DE SOPORTE</h4>
