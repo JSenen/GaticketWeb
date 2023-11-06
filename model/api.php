@@ -2,27 +2,7 @@
 <?php
 include './resources/config.php';
 
-// =========== ELIMINAR USUARIO POR ID =====================
 
-function eraseUser($idUser){
-    
-    $url = BASE_URL . 'user/' . $idUser; // Agrega "/" para formar la URL completa
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $response = curl_exec($ch);
-
-    if ($response === false) {
-        echo "Error de cURL: " . curl_error($ch);
-    } else {
-        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
-        header('Location: index.php?controller=admin&action=userChanges');
-    }
-
-    curl_close($ch);
-
-}
 // =========== ELIMINAR TIPO ===========================
 function eraseType($idType){
 
@@ -44,47 +24,7 @@ function eraseType($idType){
 
 
 }
-// =========== UPDATE IP (LIBERAR) ===========================
-function eraseIp($idNet) {
 
-    $url = BASE_URL.'net/'.$idNet;
-
-        // Datos que envia en la solicitud PATCH 
-        $data = [
-            "netStatus" => false
-        ];
-
-        $data_string = json_encode($data);
-
-        // Inicializa una instancia de cURL
-        $ch = curl_init($url);
-
-        // Configura la solicitud cURL
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH'); // Indica que es una solicitud PATCH
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string); // Define los datos a enviar
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json', // Especifica el tipo de contenido (en este caso, JSON)
-        ]);
-
-        // Realiza la solicitud cURL y obtén la respuesta
-        $response = curl_exec($ch);
-
-        // Cierra la instancia cURL
-        curl_close($ch);
-
-        // Maneja la respuesta 
-        if ($response) {
-            $_SESSION['rolchange'] = 'Ip liberada ';
-            header('location: index.php?controller=admin&action=netChanges');
-            
-           
-        } else {
-            $_SESSION['rolchange'] = "Error al realizar la solicitud";
-            header('location: index.php?controller=admin&action=netChanges');
-        }
-
-}
 // =========== COMPROBAR LOGIN ===========================
 function conection_login($tip,$clave){                                                  
     $url = BASE_URL.'users';
@@ -323,22 +263,7 @@ function getAllDevices(){
  
      return $devicelist;
 }
-//================== BUSCAR 1 USUARIO ============================================
 
-function getOneUser($idUser){
-
-    //Listamos los usuarios
-    $urlUser = BASE_URL.'users/'.$idUser;
-    $ch = curl_init($urlUser);
-    curl_setopt($ch, CURLOPT_URL, $urlUser);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $resultusers = curl_exec($ch);
-    curl_close($ch);
-
-    //Recopila los datos 
-    $userdata = json_decode($resultusers, true);
-    return $userdata;
-}
 
 
 // =========== AÑADIR NUEVO USUARIO ================================
@@ -625,45 +550,7 @@ function recordNewType(){
          
 
 }
-//=============== AÑADIR IP ==================================
-function recordNewIp(){
 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            
-        // Recopila los datos de la nueva IP
-        $netGateWay = $_POST['netGateWay'];
-        $netIp = $_POST['netIp'];
-        $netMask = $_POST['netMask'];
-        $netCdir = '/'.$_POST['netCdir'];
-        $netStatus = false;
-
-        
-        // Define los datos que se enviarán a la API
-        $netData = array(
-            "netGateWay" => $netGateWay,
-            "netIp" => $netIp,
-            "netMask" => $netMask,
-            "netCdir" => $netCdir,
-            "netStatus" => $netStatus
-        );
-        // Realiza una solicitud POST a la API para grabar tippo
-        $urlsave = BASE_URL.'net';
-        $ch = curl_init($urlsave);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($netData));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_exec($ch);
-
-        $_SESSION['netsave'] = "Nueva ip grabada"; // Almacena el mensaje en una variable de sesión
-        header('Location: index.php?controller=admin&action=netChanges');
-
-    }
-     
-
-}
 
 //=============== BUSCAR TODOS ==================================
 function getAllSomeThing($something){
@@ -742,142 +629,8 @@ function setIpDevice($device){
 }
 }
 
-//================ AGREGAR DEPARTAMENTO ===================
-function recordNewDepart(){
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-    
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            
-            // Recopila los datos del nuevo tipo de dispositivo
-            $departName = strtoupper($_POST['departmentName']);
-            $departPhone = $_POST['departmentPhone'];
-            $departMail = $_POST['departmentMail'];
-            $departCity = $_POST['departmentCity'];
-            // Define los datos que se enviarán a la API
-            $departData = array(
-                "departmentName" => $departName,
-                "departmentPhone" => $departPhone,
-                "departmentMail" => $departMail,
-                "departmentCity" => $departCity
-            );
-            // Realiza una solicitud POST a la API para grabar departamento
-            $urlsave = BASE_URL.'departments';
-            $ch = curl_init($urlsave);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($departData));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_exec($ch);
 
-            $_SESSION['deparsave'] = "Nuevo departamento grabado"; // Almacena el mensaje en una variable de sesión
-            header('Location: index.php?controller=admin&action=departmentChanges');
 
-        }
-         
-}
-//===================== ELIMINAR DEPARTAMENTO ==================
-function eraseDepart($idDepart){
-    $url = BASE_URL . 'departments/' . $idDepart; 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $response = curl_exec($ch);
-
-    if ($response === false) {
-        echo "Error de cURL: " . curl_error($ch);
-    } else {
-        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
-        header('Location: index.php?controller=admin&action=departmentChanges');
-    }
-
-    curl_close($ch);
-}
-//=========== UPDATE DEPARTAMENTO ===============
-function changeDepart($idDepart){
-
- if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-    
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            
-            // Recopila los datos del nuevo tipo de dispositivo
-            $departName = strtoupper($_POST['departmentName']);
-            $departPhone = $_POST['departmentPhone'];
-            $departMail = $_POST['departmentMail'];
-            $departCity = $_POST['departmentCity'];
-            // Define los datos que se enviarán a la API
-            $departData = array(
-                "departmentName" => $departName,
-                "departmentPhone" => $departPhone,
-                "departmentMail" => $departMail,
-                "departmentCity" => $departCity
-            );
-            // Realiza una solicitud POST a la API para grabar departamento
-            $urlupdate = BASE_URL.'departments/'.$idDepart;
-            $ch = curl_init($urlupdate);
-            // Configurar cURL para una solicitud PUT
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-            // Codificar los datos como JSON
-            $data_json = json_encode($departData);
-            // Establecer el cuerpo de la solicitud con los datos JSON
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-            // Configurar las cabeceras adecuadas
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            // Ejecutar la solicitud PUT
-            $response = curl_exec($ch);
-            // Cerrar la sesión cURL
-            curl_close($ch);
-
-            $_SESSION['deparsave'] = "Nuevo departamento grabado"; // Almacena el mensaje en una variable de sesión
-            
-
-        }         
-}
-//======== CHANGE ROL =============
-function changeRol($idUser,$rol){
-
-        
-        $url = BASE_URL.'user/'.$idUser;
-
-        // Datos que envia en la solicitud PATCH 
-        $data = [
-            "userRol" => $rol
-        ];
-
-        $data_string = json_encode($data);
-
-        // Inicializa una instancia de cURL
-        $ch = curl_init($url);
-
-        // Configura la solicitud cURL
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH'); // Indica que es una solicitud PATCH
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string); // Define los datos a enviar
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json', // Especifica el tipo de contenido (en este caso, JSON)
-        ]);
-
-        // Realiza la solicitud cURL y obtén la respuesta
-        $response = curl_exec($ch);
-
-        // Cierra la instancia cURL
-        curl_close($ch);
-
-        // Maneja la respuesta 
-        if ($response) {
-            $_SESSION['rolchange'] = 'Rol modificado con exito ';
-            header('location: index.php?controller=admin&action=userChanges');
-            
-           
-        } else {
-            $_SESSION['rolchange'] = "Error al realizar la solicitud";
-            header('location: index.php?controller=admin&action=userChanges');
-        }
-
-}
 
 //============ ELIMINAR DISPOSITIVO ====================
 function eraseDevice($idDevice){
