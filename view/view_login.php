@@ -7,13 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if ($_POST['action'] === 'login') {
 			// Lógica para procesar el formulario de inicio de sesión
 			// Llama a la función que deseas ejecutar para el inicio de sesión
-            $tip = $_POST['usertip'];
+            $tip = strtoupper($_POST['usertip']);
             $clave = $_POST['password'];
 			conection_login($tip,$clave);
 	} elseif ($_POST['action'] === 'register') {
 			// Lógica para procesar el formulario de registro
 			// Llama a la función que deseas ejecutar para el registro
-			addNewUser();
+			recordUserFromRegister();
 	}
 }
 
@@ -53,32 +53,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			  <form action="" method="post">
 				<h2>Crear cuenta</h2>
 				<input type="hidden" name="action" value="register"> <!-- Agrega un campo oculto con el valor de acción para identificar el formulario -->
-				<input type="text" name="tip" id="TIPInput" placeholder="TIP" class="form-cotrol"/>
+				<input type="text" name="user_tip" id="TIPInput" placeholder="TIP" class="form-cotrol"/>
 							<div id="tipValidation" class="invalid-feedback">
 								Por favor, introduzca TIP valida
 							</div>
 
-			  <input type="text" name="oficialPhone" placeholder="Telefono Oficial" required/>
-				<input type="text" name="unit" placeholder="Unidad" required/>
-				<input type="text" name="email" id="emailInput" placeholder="Correo electrónico" class="form-control" />
+					<label for="InputDepartment" class="form-label">Departamento</label>
+						<select class="form-select" name="department_id" id="departmentSelect">
+								<?php
+								// Usar un bucle foreach para generar las opciones
+								foreach ($departmentlist as $department) {
+										// Utilizar $department['departmentId'] como el valor y $department['departmentName'] como el texto de la opción
+										echo "<option value='{$department['departemtId']}'>{$department['departmentName']}</option>";
+										
+								}
+								?>
+						</select>
+              
+				<input type="text" name="user_mail" id="emailInput" placeholder="Correo electrónico" class="form-control" />
 					<div id="emailValidation" class="invalid-feedback">
 						Por favor, ingresa un correo electrónico válido.
 					</div>
-				<input type="password" name="pass" placeholder="Crear Password" required/>
+				<input type="password" name="user_password" placeholder="Crear Password" required/>
 				<input type="submit" class="btn btn-primary" name="addregister" value="Registrar" />
 				<p class="signup">
 				  ¿Ya tiene una cuenta ?
 				  <a href="#" onclick="toggleForm();">Login.</a>
-					<a href="indexTickets.php?controller=login&action=recoverPassword">Recuperar contraseña</a>
+					
 				</p>
 			  </form>
-				
+			<input type="hidden" name="department_id" id="departmentIdField" value="<?php echo $department['departemtId']; ?>">
 			<div id="result"></div> <!-- Pinta el resultado del envio asincrono con AJAX -->
 			</div>
 			<div class="imgBx bg-black img-fluid"><img src="./resources/img/GaticketRegister.png" class="img-fluid "width="50" height="50" alt="" /></div>
 		  </div>
 		</div>
 </section>
+<script>
+  // JavaScript para actualizar el campo oculto "department_id" cuando se selecciona un departamento
+  const departmentSelect = document.getElementById('departmentSelect');
+  const departmentIdField = document.getElementById('departmentIdField');
+
+  departmentSelect.addEventListener('change', () => {
+    departmentIdField.value = departmentSelect.value;
+  });
+</script>
 <?php
 include('view_footer.php');
 ?>
