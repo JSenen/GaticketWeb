@@ -31,7 +31,7 @@ $fecha_actual = date('d-m-Y');
                         </div>
                         <div class="container">
                             <label for="SelectedDevice" class="form-label">S/N</label>
-                            <span><?php echo isseet($device['deviceSerial']) ? $device['deviceSerial'] : ''; ?></span>
+                            <span><?php echo isset($device['deviceSerial']) ? $device['deviceSerial'] : ''; ?></span>
                         </div>
                         <div class="container">
                             <label for="SelectedDevice" class="form-label">TIPO</label>
