@@ -41,13 +41,13 @@ $fecha_actual = date('d-m-Y');
             <a class="nav-link" href="#">Gestion</a>
                 <ul class="submenu">
                     <li><a href="index.php?controller=admin&action=userChanges">Usuarios</a></li>
+                    <li><a href="index.php?controller=admin&action=departmentChanges">Departamentos</a></li>
                     <li><a href="index.php?controller=admin&action=deviceChanges">Dispositivos</a>
                         <ul>
                             <li><a href="index.php?controller=admin&action=typeChanges">Tipos</a></li>
                             <li><a href="index.php?controller=admin&action=netChanges">Red</a></li>
                         </ul>
                     </li>
-                    <li><a href="index.php?controller=admin&action=departmentChanges">Departamentos</a></li>
                 </ul>
         </li>
         <li class="nav-item">

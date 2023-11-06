@@ -44,24 +44,45 @@ function eraseType($idType){
 
 
 }
-// =========== ELIMINAR IP (LIBERAR) ===========================
-function eraseIp($id) {
+// =========== UPDATE IP (LIBERAR) ===========================
+function eraseIp($idNet) {
 
-    $url = BASE_URL . 'net/' . $id; 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $url = BASE_URL.'net/'.$idNet;
 
-    $response = curl_exec($ch);
+        // Datos que envia en la solicitud PATCH 
+        $data = [
+            "netStatus" => false
+        ];
 
-    if ($response === false) {
-        echo "Error de cURL: " . curl_error($ch);
-    } else {
-        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
-        header('Location: index.php?controller=admin&action=netChanges');
-    }
+        $data_string = json_encode($data);
 
-    curl_close($ch);
+        // Inicializa una instancia de cURL
+        $ch = curl_init($url);
+
+        // Configura la solicitud cURL
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH'); // Indica que es una solicitud PATCH
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string); // Define los datos a enviar
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json', // Especifica el tipo de contenido (en este caso, JSON)
+        ]);
+
+        // Realiza la solicitud cURL y obtén la respuesta
+        $response = curl_exec($ch);
+
+        // Cierra la instancia cURL
+        curl_close($ch);
+
+        // Maneja la respuesta 
+        if ($response) {
+            $_SESSION['rolchange'] = 'Ip liberada ';
+            header('location: index.php?controller=admin&action=netChanges');
+            
+           
+        } else {
+            $_SESSION['rolchange'] = "Error al realizar la solicitud";
+            header('location: index.php?controller=admin&action=netChanges');
+        }
 
 }
 // =========== COMPROBAR LOGIN ===========================
@@ -99,7 +120,7 @@ function conection_login($tip,$clave){
             // Login erroneo
     $_SESSION['login_error'] = "LOGIN FALLIDO"; // Almacena el mensaje de error en una variable de sesión
     session_write_close(); // Borramos sesiones anteriores
-    header("Refresh: 10; url=index.php");
+    header("Refresh: 3; url=index.php");
         }
        
     }
@@ -302,6 +323,23 @@ function getAllDevices(){
  
      return $devicelist;
 }
+//================== BUSCAR 1 USUARIO ============================================
+
+function getOneUser($idUser){
+
+    //Listamos los usuarios
+    $urlUser = BASE_URL.'users/'.$idUser;
+    $ch = curl_init($urlUser);
+    curl_setopt($ch, CURLOPT_URL, $urlUser);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $resultusers = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos 
+    $userdata = json_decode($resultusers, true);
+    return $userdata;
+}
+
 
 // =========== AÑADIR NUEVO USUARIO ================================
 function recordUserfromAdmin(){
@@ -361,15 +399,15 @@ function recordUserfromAdmin(){
 
                     if ($response !== false) {
                         // La solicitud se realizó con éxito                     
-                        $message = "Usuario grabado exitosamente.";
+                        $_SESSION['rolchange'] = "Usuario grabado.";
                     } else {
-                        $message = "Error en la solicitud para grabar al usuario en el departamento.";
+                        $_SESSION['rolchange'] = "Error en la solicitud para grabar al usuario en el departamento.";
                     }
                     
                     echo '<p>' . $message . '</p>';
                   
                     // Redirecciona después de 3 segundos
-                    echo '<meta http-equiv="refresh" content="3;url=index.php?controller=admin&action=userChanges">'; 
+                    echo '<meta http-equiv="refresh" content="0.1;url=index.php?controller=admin&action=userChanges">'; 
                     exit();
 
                 } else {
@@ -466,13 +504,13 @@ function recordDeviceAdmin(){
 
                 if ($response !== false) {
                     // La solicitud se realizó con éxito                     
-                    $message = "Dispositivo grabado exitosamente.";
+                    $_SESSION['rolchange'] = "Dispositivo grabado.";
                 } else {
-                    $message = "Error en la solicitud para grabar al tipo de dispositivo.";
+                    $_SESSION['rolchange'] = "Error en la solicitud para grabar al tipo de dispositivo.";
                 }
-                /* // Redirecciona después de 3 segundos
-                echo '<meta http-equiv="refresh" content="3;url=index.php?controller=admin&action=deviceChanges">'; 
-                exit(); */
+                
+                echo '<meta http-equiv="refresh" content="0.1;url=index.php?controller=admin&action=deviceChanges">'; 
+                exit(); 
 
             } else {
                 echo "Error al obtener el ID del nuevo dispositivo.";
@@ -599,7 +637,7 @@ function getDeviceById($id){
 
 }
 // ========== ASIGNAR IP A DISPOSITIVO ============================
-function setIpDevice(){
+function setIpDevice($device){
     //Comprobamos que session este iniciada
  if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -720,7 +758,96 @@ function changeDepart($idDepart){
             $_SESSION['deparsave'] = "Nuevo departamento grabado"; // Almacena el mensaje en una variable de sesión
             
 
+        }         
+}
+//======== CHANGE ROL =============
+function changeRol($idUser,$rol){
+
+        
+        $url = BASE_URL.'user/'.$idUser;
+
+        // Datos que envia en la solicitud PATCH 
+        $data = [
+            "userRol" => $rol
+        ];
+
+        $data_string = json_encode($data);
+
+        // Inicializa una instancia de cURL
+        $ch = curl_init($url);
+
+        // Configura la solicitud cURL
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH'); // Indica que es una solicitud PATCH
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string); // Define los datos a enviar
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json', // Especifica el tipo de contenido (en este caso, JSON)
+        ]);
+
+        // Realiza la solicitud cURL y obtén la respuesta
+        $response = curl_exec($ch);
+
+        // Cierra la instancia cURL
+        curl_close($ch);
+
+        // Maneja la respuesta 
+        if ($response) {
+            $_SESSION['rolchange'] = 'Rol modificado con exito ';
+            header('location: index.php?controller=admin&action=userChanges');
+            
+           
+        } else {
+            $_SESSION['rolchange'] = "Error al realizar la solicitud";
+            header('location: index.php?controller=admin&action=userChanges');
         }
-         
+
+}
+
+//============ ELIMINAR DISPOSITIVO ====================
+function eraseDevice($idDevice){
+    $url = BASE_URL . 'device/' . $idDevice; 
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        echo "Error de cURL: " . curl_error($ch);
+    } else {
+        $_SESSION['rolchange'] =  "Dispositivo eliminado: ";
+        header('Location: index.php?controller=admin&action=deviceChanges');
+    }
+
+    curl_close($ch);
+}
+
+// ======== DISPOSITIVOS POR TIPO ==========
+function getAllByType($typeId){
+
+    //Obtenemos nombre del tipo de dispositivo
+    $url = BASE_URL.'types/'.$typeId;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $url = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos 
+    $result = json_decode($url, true);
+    $name = $result['typeName'];
+
+    //Buscamos los dispositivos con el tipo.
+    $urldevice = BASE_URL.'device?typeName='.$name;
+    $ch = curl_init($urldevice);
+    curl_setopt($ch, CURLOPT_URL, $urldevice);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $url = curl_exec($ch);
+    curl_close($ch);
+    //Recopila los datos 
+    $devicesTypeName = json_decode($url, true);
+    return $devicesTypeName;
+
+
 }
 ?>

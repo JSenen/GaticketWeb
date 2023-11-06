@@ -39,10 +39,10 @@ function listDevices($deviceList)
         }
           
          // Gestion campo Tipo
-         if (empty($device['deviceTypeId'])) {
+         if (empty($device['deviceType'])) {
           $deviceType = 'Sin tipo';
         }else{
-          $deviceType = $device['deviceTypeId']['typeName'];
+          $deviceType = $device['deviceType']['typeName'];
         }
         
 
@@ -76,7 +76,7 @@ function listDevices($deviceList)
                             echo $deviceIP;
                           }?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>    
-            <td style="vertical-align: middle;"><a href="#<?php echo $user['userId']?>" class="btn btn-danger">Borrar</a></td> 
+            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteDevice&id=<?php echo $device['deviceId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>
 <?php
         }
@@ -85,6 +85,15 @@ function listDevices($deviceList)
 ?>
       </tbody>
     </table>
+    <!--- MENSAJE EMERGENTE --->
+          <div id="rolChangeMessage" class="alert alert-success" style="display: none;">
+              <?php
+              if (isset($_SESSION['rolchange'])) {
+                  echo $_SESSION['rolchange'];
+                  unset($_SESSION['rolchange']); // Limpia la variable de sesión después de mostrar el mensaje
+              }
+              ?>
+          </div>
   </div>
       <!-- JQuery table -->
       <script>
@@ -115,7 +124,23 @@ function listDevices($deviceList)
   <div class="btn-group" role="group" aria-label="Basic example" id="device-options">
     <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addDevice'" id="agregar_dispositivo">Agregar</button>
   </div>
- 
+  
+  <!-- Control mensaje emergente -->
+  <script>
+    $(document).ready(function() {
+        // Mostrar el mensaje si está presente
+        var rolChangeMessage = $('#rolChangeMessage');
+        if (rolChangeMessage.html().trim() !== '') {
+            rolChangeMessage.show();
+
+            // Ocultar el mensaje después de 3 segundos (3000 milisegundos)
+            setTimeout(function() {
+                rolChangeMessage.hide();
+            }, 3000); // 3000 ms = 3 segundos
+        }
+    });
+</script>
+
 
 <?php
 

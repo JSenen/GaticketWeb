@@ -74,6 +74,17 @@ function listNet($netlist)
 ?>
       </tbody>
     </table>
+
+     <!--- MENSAJE EMERGENTE --->
+     <div id="rolChangeMessage" class="alert alert-success" style="display: none;">
+              <?php
+              if (isset($_SESSION['deparsave'])) {
+                  echo $_SESSION['deparsave'];
+                  unset($_SESSION['deparsave']); // Limpia la variable de sesión después de mostrar el mensaje
+              }
+              ?>
+          </div>
+
   </div>
       <!-- JQuery table -->
       <script>
@@ -106,6 +117,22 @@ function listNet($netlist)
       <?php unset($_SESSION['netsave']); ?>
       <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addIp'" id="agregar-net">Agregar</button>
     </div>
+
+      <!-- Control mensaje emergente -->
+ <script>
+    $(document).ready(function() {
+        // Mostrar el mensaje si está presente
+        var rolChangeMessage = $('#rolChangeMessage');
+        if (rolChangeMessage.html().trim() !== '') {
+            rolChangeMessage.show();
+
+            // Ocultar el mensaje después de 2 segundos (3000 milisegundos)
+            setTimeout(function() {
+                rolChangeMessage.hide();
+            }, 2000); // 3000 ms = 3 segundos
+        }
+    });
+</script>
 
 <?php
 

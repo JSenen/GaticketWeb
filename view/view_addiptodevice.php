@@ -23,19 +23,19 @@ $fecha_actual = date('d-m-Y');
                             ?>
                         </select>
                 </div>
-               
+                    
                     <div class="col-md-3">
                         <div class="container">
                             <label for="SelectedDevice" class="form-label">MODELO</label>
-                            <span><?php echo $device['deviceModel'] ?></span>
+                            <span><?php echo isset($device['deviceModel']) ? $device['deviceModel'] : ''; ?></span>
                         </div>
                         <div class="container">
                             <label for="SelectedDevice" class="form-label">S/N</label>
-                            <span><?php echo $device['deviceSerial'] ?></span>
+                            <span><?php echo isset($device['deviceSerial']) ? $device['deviceSerial'] : ''; ?></span>
                         </div>
                         <div class="container">
                             <label for="SelectedDevice" class="form-label">TIPO</label>
-                            <span><?php echo $device['deviceTypeId']['typeName'] ?></span>
+                            <span><?php echo isset($device['deviceTypeId']['typeName']) ? $device['deviceTypeId']['typeName'] : ''; ?></span>
                         </div>
                        
                     </div>
@@ -52,10 +52,10 @@ document.getElementById('departmentSelect').addEventListener('change', function(
 
  <!-- Campos ocultos  -->
   <input type="hidden" name="action" value="sendnewdevice"> 
-   <!-- Agrega un campo oculto con el valor de acción para identificar el id de la red -->
-   <input  type="hidden" name="netId" id="departmentIdField" value="<?php echo $ip['netId']; ?>">
+   <!-- Agrega un campo oculto con el valor de acción para identificar el id del dispositivo-->
    <input  type="hidden" name="deviceId" id="departmentIdField" value="<?php echo $device['deviceId']; ?>">
-   
+     <!-- Agrega un campo oculto con el valor de acción para identificar el id de de la red --> 
+     <input type="hidden" name="net_id" id="typeIdField" value="<?php echo $net['netId']; ?>">
    <div class="mb-3 mt-3">
         <button type="submit" class="btn btn-primary" name="sendnewdevice" value="sendnewdevice">Asignar</button>
     </div>
@@ -73,7 +73,9 @@ document.getElementById('departmentSelect').addEventListener('change', function(
     departmentIdField.value = departmentSelect.value;
     typeIdField.value = typeSelect.value; // Actualiza también el campo type_id
   });
-
+  typeSelect.addEventListener('change', () => {
+    typeIdField.value = typeSelect.value;
+  });
  
 </script>
 <?php

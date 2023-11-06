@@ -9,13 +9,13 @@ function listUsers($userlist)
     <table class="table table-striped table-fixed" id="tableUsersAdmin">
       <thead>
         <tr>
-          <th class="text-warning bg-dark" style="width: 10%">TIP</th>
-          <th class="text-warning bg-dark" style="width: 20%">EMAIL</th>
+          <th class="text-warning bg-dark" style="width: 5%">TIP</th>
+          <th class="text-warning bg-dark" style="width: 10%">@</th>
           <th class="text-warning bg-dark" style="width: 10%">DEPARTAMENTO</th>
           <th class="text-warning bg-dark" style="width: 10%">CONTACTO</th>
-          <th class="text-warning bg-dark" style="width: 10%">MAIL</th>
-          <th class="text-warning bg-dark" style="width: 10%">INCIDENCIAS</th>
-          <th class="text-warning bg-dark" style="width: 10%">ROL</th>
+          <th class="text-warning bg-dark" style="width: 10%">@ DEPARTAMENTO</th>
+          <th class="text-warning bg-dark" style="width: 3%">INCIDENCIAS</th>
+          <th class="text-warning bg-dark" style="width: 5%">ROL</th>
           <th class="text-warning bg-dark" style="width: 10%">Seleccionar</th>
         </tr>
       </thead>
@@ -49,7 +49,7 @@ function listUsers($userlist)
             <td style="vertical-align: middle;"><?php echo $userdepartment['departmentMail'];?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>
             <td style="vertical-align: middle;"><?php echo $user['userRol'];?></td>    
-            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteUser&id=<?php echo $user['userId']?>" class="btn btn-danger">Borrar</a></td> 
+            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteUser&id=<?php echo $user['userId']?>" class="btn btn-outline-danger">Borrar</a><a href="index.php?controller=admin&action=updateUser&id=<?php echo $user['userId']?>" class="btn btn-outline-success">Rol</a></td> 
           </tr>
 <?php
         }
@@ -59,6 +59,16 @@ function listUsers($userlist)
 ?>
       </tbody>
     </table>
+
+    <!--- MENSAJE EMERGENTE --->
+          <div id="rolChangeMessage" class="alert alert-success" style="display: none;">
+              <?php
+              if (isset($_SESSION['rolchange'])) {
+                  echo $_SESSION['rolchange'];
+                  unset($_SESSION['rolchange']); // Limpia la variable de sesión después de mostrar el mensaje
+              }
+              ?>
+          </div>
   </div>
       <!-- JQuery table -->
       <script>
@@ -89,7 +99,22 @@ function listUsers($userlist)
   <div class="btn-group" role="group" aria-label="Basic example" id="user-options">
     <button type="button" class="btn btn-primary" onclick="window.location.href='index.php?controller=admin&action=addUser'" id="agregar-usuario">Agregar</button>
   </div>
- 
+
+ <!-- Control mensaje emergente -->
+ <script>
+    $(document).ready(function() {
+        // Mostrar el mensaje si está presente
+        var rolChangeMessage = $('#rolChangeMessage');
+        if (rolChangeMessage.html().trim() !== '') {
+            rolChangeMessage.show();
+
+            // Ocultar el mensaje después de 3 segundos (3000 milisegundos)
+            setTimeout(function() {
+                rolChangeMessage.hide();
+            }, 3000); // 3000 ms = 3 segundos
+        }
+    });
+</script>
 
 <?php
 

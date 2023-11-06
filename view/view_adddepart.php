@@ -3,7 +3,7 @@ include('view_admin.php');
 $fecha_actual = date('d-m-Y');
 ?>
 
-<!-- FORMULARIO AÑADIR DISPOSITIVO -->
+<!-- FORMULARIO AÑADIR DEPARTAMENTO -->
 <form action="" method="post">
     <div class="container">
         <div class="row">

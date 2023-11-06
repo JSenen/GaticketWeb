@@ -74,6 +74,16 @@ function addDevice(){
 
 
 }
+//==== ELIMINAR DISPOSITIVO =====
+function deleteDevice($idDevice){
+    session_start();
+    $user['userId'] = $_SESSION['user_id'];
+    $adminId = $user['userId'];
+
+    // Obtener usuario seleccionado
+    eraseDevice($idDevice); // Pasar $iduser como argumento
+
+}
 
 //==== ELIMINAR USUARIO =====
 function deleteUser($iduser) {
@@ -101,12 +111,16 @@ function deviceChanges(){
 }
 //======= ADMIN AÑADIR DEPARTAMENTO ====
 function addDepart(){
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
-
+    }   
+    
+    
     include './view/view_adddepart.php';
     recordNewDepart();
+    
 }
 //======= ADMIN DEPARTAMENTOS ==========
 function departmentChanges(){
@@ -118,6 +132,7 @@ function departmentChanges(){
     $departlist = getAllDepartments();
     include './view/view_admin.php';
     listDepart($departlist);
+    
 }
 //======== ADMIN TIPOS =================
 function typeChanges(){
@@ -189,7 +204,7 @@ function giveIp($deviceId){
     $device = getDeviceById($deviceId);
     $listIp = getAllSomeThing('net');
     include './view/view_addiptodevice.php';
-    setIpDevice();
+    setIpDevice($device);
     
 }
 //======= BORRAR DEPARTAMENTO ========
@@ -215,5 +230,28 @@ function updateDepart($idDepart){
     changeDepart($idDepart);
     header('Location: index.php?controller=admin&action=departmentChanges');
 }
+//======== UPDATE USER ================
+function updateUser($idUser){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    }  
+    //Buscamos el usuario
+    $userdata = getOneUser($idUser);
+    $rol = $userdata['userRol'];
+    
+    //Segun el tipo de rol, le pasamos el contrario
+    if($rol == 'usuario') {
+        $rol = 'administrador';
+    }else{
+        $rol = 'usuario';
+    }
+    //Cambiamos el rol
+    changeRol($idUser,$rol);
+   
+    
+
+}   
 ?>
 

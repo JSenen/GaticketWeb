@@ -47,8 +47,9 @@ $fecha_actual = date('d-m-Y');
   <button type="submit" class="btn btn-danger" name="sendnewuser" value="sendnewuser">Grabar</button>
    
 </div>
-
 </form>
+
+ 
 
 <script>
   // JavaScript para actualizar el campo oculto "department_id" cuando se selecciona un departamento
@@ -59,7 +60,6 @@ $fecha_actual = date('d-m-Y');
     departmentIdField.value = departmentSelect.value;
   });
 </script>
-
 <?php
 include ('view_footer.php');
 ?>

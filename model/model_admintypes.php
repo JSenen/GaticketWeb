@@ -6,6 +6,7 @@ $urlAddType = BASE_URL.'types';
 
 function listTypes($typelist)
 {
+
   ?>
   <div class="contenido">
   
@@ -13,7 +14,7 @@ function listTypes($typelist)
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">NOMBRE</th>
-          <th class="text-warning bg-dark" style="width: 10%">TOTAL</th>
+          <th class="text-warning bg-dark" style="width: 10%">TOTAL POR TIPO</th>
           <th class="text-warning bg-dark" style="width: 10%">Opciones</th>
 
         </tr>
@@ -23,11 +24,16 @@ function listTypes($typelist)
 <?php 
       if (is_array($typelist) && !empty($typelist)) {
         foreach ($typelist as $type) {
+
+          //Totales por tipo
+        $typeId = $type['typeId'];
+        $typo = getAllByType($typeId);
+        $numberType = count($typo);
                    
 ?>
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $type['typeName'];?></td>
-            <td style="vertical-align: middle;"><?php echo 'POR HACER';?></td>
+            <td style="vertical-align: middle;"><?php echo $numberType;?></td>
             <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteType&id=<?php echo $type['typeId']?>" class="btn btn-danger">Borrar</a></td> 
           </tr>
 
