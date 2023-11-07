@@ -164,7 +164,8 @@ function deleteType($id){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }  
-    eraseType($id);
+    $typeToErase = new Type();
+   $typeToErase->eraseType($id);
 }
 //======= ADMIN NET LIST ===========
 function netChanges(){

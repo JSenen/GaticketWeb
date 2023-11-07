@@ -10,6 +10,24 @@ class User {
 
     }
 
+    //===================== LISTAR INCIDENCIAS USUARIO ==================================
+function getUserIncidences($userId){
+    
+    $urllistincidences = BASE_URL.'incidences/user/'.$userId;
+    $ch = curl_init($urllistincidences);
+    curl_setopt($ch, CURLOPT_URL, $urllistincidences);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila el listado de incidencias del usuario
+    //Decodificamos json
+    $userincidences = json_decode($result, true);
+            
+    return $userincidences;
+
+}
+
     // =========== ELIMINAR USUARIO POR ID =====================
 
 function eraseUser($idUser){

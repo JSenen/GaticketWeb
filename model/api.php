@@ -3,28 +3,6 @@
 include './config/config.php';
 
 
-// =========== ELIMINAR TIPO ===========================
-function eraseType($idType){
-
-    $url = BASE_URL . 'type/' . $idType; 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $response = curl_exec($ch);
-
-    if ($response === false) {
-        echo "Error de cURL: " . curl_error($ch);
-    } else {
-        echo "Solicitud DELETE exitosa. Respuesta del servidor: " . $response;
-        header('Location: index.php?controller=admin&action=typeChanges');
-    }
-
-    curl_close($ch);
-
-
-}
-
 
 
 // =========== GRABAR TICKET ================================
@@ -98,23 +76,7 @@ function recordTicket(){
         }
 }
 
-//===================== LISTAR INCIDENCIAS USUARIO ==================================
-function getUserIncidences($userId){
-    
-    $urllistincidences = BASE_URL.'incidences/user/'.$userId;
-    $ch = curl_init($urllistincidences);
-    curl_setopt($ch, CURLOPT_URL, $urllistincidences);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $result = curl_exec($ch);
-    curl_close($ch);
 
-    //Recopila el listado de incidencias del usuario
-    //Decodificamos json
-    $userincidences = json_decode($result, true);
-            
-    return $userincidences;
-
-}
 //===================== LISTAR INCIDENCIAS DISPOSITIVOS ==================================
 function getDeviceIncidences($deviceId){
     $urllistincidences = BASE_URL.'incidences/device/'.$deviceId;
