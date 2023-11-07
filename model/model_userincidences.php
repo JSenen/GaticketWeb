@@ -32,11 +32,18 @@ function listUserIncidences($incidencesList)
             $estado = "Finalizada";
           }
 ?>
-
+          <?php
+          
+          if(empty($incidence['device']['deviceMac']) || is_null($incidence['device']['deviceMac'])){
+            $device = "Sin Datos";
+          }else{
+            $device = $incidence['device']['deviceMac'];
+          }
+          ?>
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $incidence['incidenceTheme'];?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceCommit'];?></td>
-            <td style="vertical-align: middle;"><?php echo $incidence['device'];?></td>
+            <td style="vertical-align: middle;"><?php echo $device;?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceDate'];?></td>
             <!-- Modificamos color según estado -->
             <td style="vertical-align: middle;" class="<?php echo $class_td_cell?>"><?php echo $estado ?></td>            

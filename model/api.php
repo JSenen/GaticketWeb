@@ -23,41 +23,58 @@ function recordTicket(){
             $incidenceStatus = "active";
             $incidenceDate = $fecha_actual;
             $incidenceDateFinish = ""; 
-            $deviceSerialNumber = $_POST['device_serialnumber'];
-            if (!isset($_POST['device_serialnumber']) || empty($_POST['device_serialnumber'])) {
-                $deviceSerialNumber = "SIN DATOS";
-            }
+            $deviceSerialNumber = $_POST['deviceSerial'];
+            $deviceMAc = $_POST['deviceMac'];
 
-            // 1º Buscar  Id device por serial number
-            $endpointserial = BASE_URL.'/device?deviceSerial='.$deviceSerialNumber;
-            $ch = curl_init($endpointserial);
-            curl_setopt($ch, CURLOPT_URL, $endpointserial);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($ch);
-            curl_close($ch);
-            //Decodificamos Json
-            $data = json_decode($result, true);
-            // Verificar si se obtuvo una respuesta válida y si el campo "deviceId" está presente
-                if (is_array($data) && isset($data['deviceId'])) {
-                    // Obtener el valor del deviceId
-                    $deviceId = $data['deviceId'];
-                } else {
-                    echo "No se pudo encontrar el deviceId para el número de serie proporcionado."; //TODO mostrar error a usuario
-                }
+           // Inicializa $endpoint a un valor predeterminado
+            $endpoint = BASE_URL.'/device';
 
-             //Recopila datos del usuario grabo ticket
-            $userId = $_SESSION['user_id'];
-            $userTip = $_SESSION['user_tip'];
+            if (isset($_POST['deviceSerial']) && !empty($_POST['deviceSerial'])) {
+                $deviceSerialNumber = $_POST['deviceSerial'];
+                $endpoint .= '?deviceSerial=' . $deviceSerialNumber;
+            } elseif (isset($_POST['deviceMac']) && !empty($_POST['deviceMac'])) {
+                $deviceMac = $_POST['deviceMac'];
+                $endpoint .= '?mac=' . $deviceMac;
+            } else 
             
-            // Define los datos que se enviarán a la API
-            $incidencedata = array(
-                'incidenceCommit' => $incidenceCommit,
-                'incidenceTheme' => $incidenceTheme,
-                'incidenceStatus' =>  $incidenceStatus,
-                'incidenceDate' => $incidenceDate,
-                'incidenceDateFinish' => $incidenceDateFinish,
-                'device' => $deviceId
-            );
+            
+
+                // 1º GET device según $endpoint formado
+                if ($deviceSerialNumber !== null || $deviceMac !== null) {
+                    $ch = curl_init($endpoint);
+                    curl_setopt($ch, CURLOPT_URL, $endpoint);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                    // Decodificamos Json
+                    $data = json_decode($result, true);
+                    // Verificar si se obtuvo una respuesta válida y si el campo "deviceId" está presente
+                    if (is_array($data) && isset($data['deviceId'])) {
+                        // Obtener el valor del deviceId
+                        $deviceId = $data['deviceId'];
+                    } else {
+                        echo "No se pudo encontrar el deviceId para el número de serie o dirección MAC proporcionada."; // 
+                    }
+                }
+                //Recopila datos del usuario grabo ticket
+                $userId = $_SESSION['user_id'];
+                $userTip = $_SESSION['user_tip'];
+                
+                // Define los datos que se enviarán a la API
+                    $incidencedata = array(
+                        'incidenceCommit' => $incidenceCommit,
+                        'incidenceTheme' => $incidenceTheme,
+                        'incidenceStatus' =>  $incidenceStatus,
+                        'incidenceDate' => $incidenceDate,
+                        'incidenceDateFinish' => $incidenceDateFinish
+                    );
+
+                    // Agrega el dispositivo solo si se proporcionó uno
+                    if ($deviceSerialNumber !== null || $deviceMac !== null) {
+                        $incidencedata['device'] = array(
+                            'deviceId' => $deviceId
+                        );
+                    }
 
             // Realiza una solicitud POST a la API para grabar una incidencia
             $url = BASE_URL.'incidence/'.$userId;
