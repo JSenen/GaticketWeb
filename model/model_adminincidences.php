@@ -1,5 +1,6 @@
 <?php
 require_once './model/api.php';
+require_once './model/domain/Department.php';
 
 function listadminincidences($incidencesList)
 {
@@ -38,7 +39,8 @@ function listadminincidences($incidencesList)
           //Recuperamos los datos del Array Json del usuario
           $usertip = $incidence['user']['userTip'];
           $userid = $incidence['user']['userId'];
-          $departmentUser = getUserDepartment($userid);
+          $departUser = new Department();
+          $departmentUser = $departUser->getUserDepartment($userid);
           
           
 ?>

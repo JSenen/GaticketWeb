@@ -1,6 +1,7 @@
 <?php
 require_once './model/api.php';
 require_once './model/domain/User.php';
+require_once './model/domain/Department.php';
 
 function listUsers($userlist)
 {
@@ -28,7 +29,8 @@ function listUsers($userlist)
 
           //Recuperamos los datos del Array Json del usuario
           $userid = $user['userId'];
-          $userdepartment = getUserDepartment($userid);
+          $departSearch = new Department();
+          $userdepartment = $departSearch->getUserDepartment($userid);
           if (empty($userdepartment)) {
             $userdepartment = [
                 'departmentName' => 'Sin datos',

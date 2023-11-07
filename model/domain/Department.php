@@ -105,5 +105,24 @@ function changeDepart($idDepart){
  
          }         
  }
+
+ //==================== DATOS DEPARTAMENTO USUARIO ==========================================
+
+function getUserDepartment($userid){
+
+    $urlUserDepart = BASE_URL.'department/'.$userid;
+    $ch = curl_init($urlUserDepart);
+    curl_setopt($ch, CURLOPT_URL, $urlUserDepart);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila los datos del departamento del usuario
+    $userdepart = json_decode($result, true);
+            
+    return $userdepart;
+
+}
+
 }
 ?>
