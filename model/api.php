@@ -1,6 +1,6 @@
-<!-- Intercambio de datos con la API -->
+<!-- Intercambio general de datos con la API -->
 <?php
-include './resources/config.php';
+include './config/config.php';
 
 
 // =========== ELIMINAR TIPO ===========================
