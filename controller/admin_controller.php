@@ -1,8 +1,12 @@
 <?php
 require_once './model/api.php';
-require_once './domain/Net.php';
-require_once './domain/User.php';
-require_once './domain/Department.php';
+require_once './model/domain/Net.php';
+require_once './model/domain/User.php';
+require_once './model/domain/Department.php';
+require_once './model/domain/Device.php';
+require_once './model/domain/Type.php';
+require_once './model/domain/Incidence.php';
+require_once './model/domain/IncidenceHistory.php';
 
 //==== MODIFICAR ADMIN TICKETS =====
 function ticketlist(){
