@@ -25,48 +25,7 @@ function eraseType($idType){
 
 }
 
-// =========== COMPROBAR LOGIN ===========================
-function conection_login($tip,$clave){                                                  
-    $url = BASE_URL.'users';
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    $data = json_decode($response, true); 
 
-     // Buscar el usuario que coincide con el TIP y la clave
-     foreach ($data as $user) {
-        
-        if ($user['userTip'] == $tip ){
-
-            //Verificar si la contraseña ingresada coincide con la alamacenada(hash)
-            if (password_verify($clave,$user['userPassword'])){
-                session_start(); //Iniciamos sesion del usuario
-                $_SESSION['user_id'] = $user['userId'];
-                $_SESSION['user_tip'] = $user['userTip']; 
-                $_SESSION['user_rol'] = $user['userRol']; 
-                
-                setcookie('gaticket', '', 86400); //Establecemos una cookie de 1 dia
-                if($user['userRol'] === 'administrador'){
-                    // Envio a pagina de administradors
-                header('location:index.php?controller=admin&action=ticketlist');
-                } else {
-                    //Envio a pagina de usuarios
-                header('location:index.php?controller=user&action=firstPage'); 
-                }
-
-            }
-            
-        } else {
-            // Login erroneo
-    $_SESSION['login_error'] = "LOGIN FALLIDO"; // Almacena el mensaje de error en una variable de sesión
-    session_write_close(); // Borramos sesiones anteriores
-    header("Refresh: 3; url=index.php");
-        }
-       
-    }
-    
-
-}
 
 // =========== GRABAR TICKET ================================
 function recordTicket(){
