@@ -1,7 +1,7 @@
 <?php
 require_once './model/api.php';
-require_once './domain/Net.php';
-require_once('./resources/config.php');
+require_once './model/domain/Net.php';
+require_once('./config/config.php');
 
 $urlAddNet = BASE_URL.'net';
 
@@ -10,7 +10,7 @@ function listNet($netlist)
   ?>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableTypesAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableTypesAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">GATEWAY</th>

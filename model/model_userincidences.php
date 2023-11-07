@@ -6,7 +6,7 @@ function listUserIncidences($incidencesList)
   ?>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableIncidencesUser">
+    <table class="table table-sm table-striped table-fixed" id="tableIncidencesUser">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 14%">ASUNTO</th>

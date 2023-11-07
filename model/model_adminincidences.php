@@ -6,7 +6,7 @@ function listadminincidences($incidencesList)
   ?>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableIncidencesAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableIncidencesAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">ASUNTO</th>

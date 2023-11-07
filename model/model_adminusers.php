@@ -1,12 +1,13 @@
 <?php
 require_once './model/api.php';
+require_once './model/domain/User.php';
 
 function listUsers($userlist)
 {
   ?>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableUsersAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableUsersAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 5%">TIP</th>
@@ -37,7 +38,8 @@ function listUsers($userlist)
           }
 
           //Numero de incidencias del usuario
-          $incidencesUser = getUserIncidences($user['userId']);
+          $userincidences = new User();
+          $incidencesUser = $userincidences->getUserIncidences($user['userId']);
           $numberIncidences = count($incidencesUser);
                    
 ?>

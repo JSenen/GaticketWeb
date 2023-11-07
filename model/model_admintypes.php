@@ -10,7 +10,7 @@ function listTypes($typelist)
   ?>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableTypesAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableTypesAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">NOMBRE</th>

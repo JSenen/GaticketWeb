@@ -6,7 +6,7 @@ function listDevices($deviceList)
   ?>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableDeviceAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableDeviceAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">MODELO</th>
