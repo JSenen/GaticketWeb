@@ -37,9 +37,10 @@ function addUser(){
     
     //1º Capturar la lista de departamentos
     $listdepartment = getAllDepartments();
+    $userInstance = new User();
     //Mostrar formulario añadir usuarios
     include './view/view_adduser.php';
-    recordUserfromAdmin();
+    $userInstance->recordUserfromAdmin();
 
 }
 //==== AÑADIR TIPO DISPOSITIVO =====
