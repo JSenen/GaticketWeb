@@ -2,6 +2,7 @@
 
 include_once('view_header.php');
 include_once('./model/api.php');
+require ('./domain/User.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if ($_POST['action'] === 'login') {
@@ -13,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	} elseif ($_POST['action'] === 'register') {
 			// Lógica para procesar el formulario de registro
 			// Llama a la función que deseas ejecutar para el registro
-			recordUserFromRegister();
+			$userInstance = new User();
+			$userInstance->recordUserFromRegister();
 	}
 }
 
