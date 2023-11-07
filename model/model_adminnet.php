@@ -1,5 +1,6 @@
 <?php
 require_once './model/api.php';
+require_once './domain/Net.php';
 require_once('./resources/config.php');
 
 $urlAddNet = BASE_URL.'net';
@@ -32,11 +33,11 @@ function listNet($netlist)
           if ($net['netStatus']) {
             $device = getDeviceIp($ip);
             
-            if (!empty($device)) {
+            if (!empty($device) && isset($device[0]['deviceModel'])) {
               $model = $device[0]['deviceModel'];
-            }else{
+          } else {
               $model = '';
-            }
+          }
             
           } else {
             $model = '';

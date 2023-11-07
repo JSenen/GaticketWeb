@@ -2,18 +2,19 @@
 
 include_once('view_header.php');
 include_once('./model/api.php');
-
+require ('./domain/User.php');
+$userInstance = new User();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if ($_POST['action'] === 'login') {
 			// Lógica para procesar el formulario de inicio de sesión
 			// Llama a la función que deseas ejecutar para el inicio de sesión
             $tip = strtoupper($_POST['usertip']);
             $clave = $_POST['password'];
-			conection_login($tip,$clave);
+			$userInstance->conection_login($tip,$clave);
 	} elseif ($_POST['action'] === 'register') {
 			// Lógica para procesar el formulario de registro
 			// Llama a la función que deseas ejecutar para el registro
-			recordUserFromRegister();
+			$userInstance->recordUserFromRegister();
 	}
 }
 

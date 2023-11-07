@@ -47,15 +47,19 @@ $fecha_actual = date('d-m-Y');
             <textarea class="form-control" name="commit_incidence" placeholder="Detalle la incidencia" rows="6" required></textarea>            
         </div>
         <div class="form-group text-center">
-            <p>Rellene los campos de los que tenga conocimiento</p>
+            <p>Para facilitar nuestro trabajo, seleccione el campo que pueda aportar y rellene los datos</p>
         </div>
         <div class="form-group">
-            <label for="label">IDENTIFICADOR EQUIPO (NUEMRO SERIE / MAC / IP):</label>
-            <input type="text" class="form-control" name="device_serialnumber" placeholder="Ingrese numero de serie del equipo">
+           
+        <div class="form-group">
+            <select class="form-select" name="typeId" id="typeSelect">
+                <option value="deviceSerial">Numero de serie</option>
+                <option value="deviceMac">MAC</option>
+            </select>
         </div>
         <div class="form-group">
-            <label for="IP">IP:</label>
-            <input type="text" class="form-control" name="device_ip" placeholder="Ingrese IP del equipo">
+            <label for="IP">Datos:</label>
+            <input type="text" class="form-control" name="field_value" placeholder="Ingrese campo seleccionado" id="dataField">
         </div>
         <input type="hidden" name="action" value="sendticket"> <!-- Agrega un campo oculto con el valor de acción para identificar el formulario -->
         <button type="submit" class="btn btn-primary btn-block" name="sendticket" value="sendticket">Enviar</button>
@@ -63,6 +67,22 @@ $fecha_actual = date('d-m-Y');
 </div>
 </div>
 </form>
+<script>
+    // Obtener el elemento select y el campo de entrada
+    const select = document.getElementById("typeSelect");
+    const dataField = document.getElementById("dataField");
+
+    // Agregar un controlador de eventos para detectar cambios en el select
+    select.addEventListener("change", function() {
+        // Asociar el valor del select con el atributo name del campo de entrada
+        dataField.setAttribute("name", select.value);
+    });
+</script>
+
+
+
+
+
 
 <?php
 include ('view_footer.php');

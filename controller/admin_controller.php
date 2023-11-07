@@ -1,5 +1,12 @@
 <?php
 require_once './model/api.php';
+require_once './model/domain/Net.php';
+require_once './model/domain/User.php';
+require_once './model/domain/Department.php';
+require_once './model/domain/Device.php';
+require_once './model/domain/Type.php';
+require_once './model/domain/Incidence.php';
+require_once './model/domain/IncidenceHistory.php';
 
 //==== MODIFICAR ADMIN TICKETS =====
 function ticketlist(){
@@ -34,9 +41,10 @@ function addUser(){
     
     //1º Capturar la lista de departamentos
     $listdepartment = getAllDepartments();
+    $userInstance = new User();
     //Mostrar formulario añadir usuarios
     include './view/view_adduser.php';
-    recordUserfromAdmin();
+    $userInstance->recordUserfromAdmin();
 
 }
 //==== AÑADIR TIPO DISPOSITIVO =====
@@ -92,7 +100,8 @@ function deleteUser($iduser) {
     $adminId = $user['userId'];
 
     // Obtener usuario seleccionado
-    eraseUser($iduser); // Pasar $iduser como argumento
+    $userInstance = new User();
+    $userInstance->eraseUser($iduser); // Pasar $iduser como argumento
 }
 
 //==== PAGINA ADMIN DISPOSITIVOS ========
@@ -116,10 +125,10 @@ function addDepart(){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }   
-    
-    
+
     include './view/view_adddepart.php';
-    recordNewDepart();
+    $departmentInstance = new Department();
+    $departmentInstance->recordNewDepart();
     
 }
 //======= ADMIN DEPARTAMENTOS ==========
@@ -177,7 +186,8 @@ function freeIp($idNet){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }  
-    eraseIp($idNet);
+    $netInstance = new Net();
+    $netInstance->eraseIp($idNet);
 }
 //======= AGREGAR IP  ===========
 function addIp(){
@@ -186,10 +196,10 @@ function addIp(){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }   
-
+    $netInstance = new Net();
     //Mostrar formulario añadir nuevo tipo dispositivo
     include './view/view_addip.php';
-    recordNewIp();
+    $netInstance->recordNewIp();
 
 }
 //======= ASIGNAR IP A DISPOSITIVO =======
@@ -214,7 +224,8 @@ function deleteDepart($id){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }  
-    eraseDepart($id);
+    $departmentInstance = new Department();
+    $departmentInstance->eraseDepart($id);
 }
 //======== UPDATE DEPARTAMENTO =========
 function updateDepart($idDepart){
@@ -227,7 +238,8 @@ function updateDepart($idDepart){
     $url = 'departments/'.$idDepart;
     $depart = getAllSomeThing($url);
     include './view/view_updatedepart.php';
-    changeDepart($idDepart);
+    $departInstance = new Department();
+    $departInstance->changeDepart($idDepart);
     header('Location: index.php?controller=admin&action=departmentChanges');
 }
 //======== UPDATE USER ================
@@ -237,8 +249,10 @@ function updateUser($idUser){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }  
+
+    $userInstance = new User();
     //Buscamos el usuario
-    $userdata = getOneUser($idUser);
+    $userdata = $userInstance->getOneUser($idUser);
     $rol = $userdata['userRol'];
     
     //Segun el tipo de rol, le pasamos el contrario
@@ -248,7 +262,8 @@ function updateUser($idUser){
         $rol = 'usuario';
     }
     //Cambiamos el rol
-    changeRol($idUser,$rol);
+    
+    $userInstance->changeRol($idUser,$rol);
    
     
 
