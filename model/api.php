@@ -1,9 +1,5 @@
 <!-- Intercambio general de datos con la API -->
 <?php
-include './config/config.php';
-
-
-
 
 // =========== GRABAR TICKET ================================
 function recordTicket(){

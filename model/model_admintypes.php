@@ -1,6 +1,6 @@
 <?php
 require_once './model/api.php';
-require_once('./resources/config.php');
+
 
 $urlAddType = BASE_URL.'types';
 

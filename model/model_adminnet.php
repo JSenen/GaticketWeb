@@ -1,7 +1,7 @@
 <?php
 require_once './model/api.php';
 require_once './model/domain/Net.php';
-require_once('./config/config.php');
+
 
 $urlAddNet = BASE_URL.'net';
 

@@ -1,8 +1,6 @@
 <?php
+require_once 'config/config.php';
 
-define('CONTROLLER_FOLDER', "controller/"); //Directorio donde definimos los controladores
-define('DEFAULT_CONTROLLER', "login"); //Controlador por defecto
-define('DEFAULT_ACTION', "loginpage"); //Accion por defecto
 
 // Obtenemos el controlador y la acción. Si no, por defecto
 $controller = isset($_GET['controller']) ? $_GET['controller'] : DEFAULT_CONTROLLER;

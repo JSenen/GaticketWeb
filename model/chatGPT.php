@@ -1,7 +1,5 @@
 <?php
 
-define('BASE_URL', 'http://localhost:8080/');
-
 // Verifica si la variable de entorno API_KEY está definida en el archivo .env
 if (getenv('API_KEY')) {
     define('API_KEY', getenv('API_KEY'));
