@@ -103,5 +103,5 @@ function listDepart($departlist)
 <?php
 
 }
-include './view/view_footer.php';
+require_once './view/view_footer.php';
 ?>

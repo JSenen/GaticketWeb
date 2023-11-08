@@ -53,13 +53,13 @@ function listUserIncidences($incidencesList)
 ?>
       </tbody>
     </table>
-  </div>
+
      
 
   <script>
     $(document).ready(function () {
       $('#tableIncidencesUser').DataTable({
-        "order": [[3, "des"]],
+        "order": [[3, "desc"]],
         "language": {
           "lengthMenu": "Mostrar _MENU_ registros por página",
           "zeroRecords": "Sin resultados - lo lamento",
@@ -76,7 +76,8 @@ function listUserIncidences($incidencesList)
 
       });
     });
-  </text-warning bg-dark
+</script>
+</div>
 <?php
 }
 include './view/view_footer.php';

@@ -61,5 +61,6 @@ $fecha_actual = date('d-m-Y');
   });
 </script>
 <?php
-include ('view_footer.php');
+require_once ('view_footer.php');
 ?>
+

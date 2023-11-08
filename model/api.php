@@ -3,7 +3,7 @@
 
 // =========== GRABAR TICKET ================================
 function recordTicket(){
-    
+    ob_start();
     //Comprobamos que session este iniciada
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
@@ -19,9 +19,7 @@ function recordTicket(){
             $incidenceStatus = "active";
             $incidenceDate = $fecha_actual;
             $incidenceDateFinish = ""; 
-            $deviceSerialNumber = $_POST['deviceSerial'];
-            $deviceMAc = $_POST['deviceMac'];
-
+       
            // Inicializa $endpoint a un valor predeterminado
             $endpoint = BASE_URL.'/device';
 
@@ -36,7 +34,7 @@ function recordTicket(){
             
 
                 // 1º GET device según $endpoint formado
-                if ($deviceSerialNumber !== null || $deviceMac !== null) {
+                if (isset($deviceSerialNumber) || isset($deviceMac)) {
                     $ch = curl_init($endpoint);
                     curl_setopt($ch, CURLOPT_URL, $endpoint);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -66,10 +64,13 @@ function recordTicket(){
                     );
 
                     // Agrega el dispositivo solo si se proporcionó uno
-                    if ($deviceSerialNumber !== null || $deviceMac !== null) {
+                   
+                    if (isset($deviceSerialNumber) || isset($deviceMac)) {
                         $incidencedata['device'] = array(
                             'deviceId' => $deviceId
                         );
+                    } else {
+                        $incidencedata['device'] = null; // Si no se ha proporcionado ningún dato
                     }
 
             // Realiza una solicitud POST a la API para grabar una incidencia
@@ -79,14 +80,11 @@ function recordTicket(){
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
             curl_setopt($ch, CURLOPT_POST, 1);
             $response = curl_exec($ch);
-
             // Después de procesar la solicitud, redirigir de nuevo a la misma página
             header('Location: index.php?controller=user&action=listIncidencesUser');
-            exit(); // asegura de que el script se detenga aquí
-        
-     } else {
-            echo "Acceso no permitido.";
-        }
+            exit(); // asegurar de que el script se detenga aquí
+            ob_end_clean();
+     }
 }
 
 

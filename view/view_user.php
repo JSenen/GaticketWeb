@@ -78,12 +78,6 @@ $fecha_actual = date('d-m-Y');
         dataField.setAttribute("name", select.value);
     });
 </script>
-
-
-
-
-
-
 <?php
-include ('view_footer.php');
+require_once ('view_footer.php');
 ?>
