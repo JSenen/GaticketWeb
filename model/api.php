@@ -10,7 +10,7 @@ function recordTicket() {
     }
 
     $fecha_actual = date('d/m/y');
-
+    
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Recopila los datos del formulario en los campos name
         $incidenceCommit = $_POST['commit_incidence'];
@@ -83,7 +83,7 @@ function recordTicket() {
         $response = curl_exec($ch);
         //Después de procesar la solicitud, redirigir de nuevo a la pagina listado
         $_SESSION['savedticket'] = 'Incidencia recibida';
-        header('Location: index.php?controller=user&action=listIncidencesUser');
+       // header('Location: index.php?controller=user&action=listIncidencesUser');
        
         exit(); // Asegurar de que el script se detenga aquí
         ob_end_clean();
