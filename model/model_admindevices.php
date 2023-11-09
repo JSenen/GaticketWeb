@@ -11,14 +11,14 @@ function listDevices($deviceList)
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">MODELO</th>
           <th class="text-warning bg-dark" style="width: 10%">TIPO</th>
-          <th class="text-warning bg-dark" style="width: 20%">HD</th>
-          <th class="text-warning bg-dark" style="width: 10%">RAM</th>
+          <th class="text-warning bg-dark" style="width: 5%">HD</th>
+          <th class="text-warning bg-dark" style="width: 5%">RAM</th>
           <th class="text-warning bg-dark" style="width: 10%">MAC</th>
           <th class="text-warning bg-dark" style="width: 10%">S/N</th>
           <th class="text-warning bg-dark" style="width: 10%">FECHA TEIN</th>
           <th class="text-warning bg-dark" style="width: 10%">FECHA DEPART</th>
           <th class="text-warning bg-dark" style="width: 10%">IP</th>
-          <th class="text-warning bg-dark" style="width: 10%">INCIDENCIAS</th>
+          <th class="text-warning bg-dark" style="width: 10%">Nª INCIDENCIAS</th>
           <th class="text-warning bg-dark" style="width: 10%">Seleccionar</th>
         </tr>
       </thead>

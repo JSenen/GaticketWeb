@@ -28,7 +28,12 @@ function listTypes($typelist)
           //Totales por tipo
         $typeId = $type['typeId'];
         $typo = getAllByType($typeId);
-        $numberType = count($typo);
+        if ($typo !=null) {
+          $numberType = count($typo);
+        } else {
+          $numberType = 0;
+        }
+       
                    
 ?>
           <tr>

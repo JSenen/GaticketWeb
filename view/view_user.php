@@ -29,7 +29,6 @@ $fecha_actual = date('d-m-Y');
 </header>
 <!-- Start Page content holder -->
 <div class="page-content p-5 text-gray" id="content">
-
 <form action="" method="post">
   <div class="container d-flex justify-content-center align-items-center" style="height: 85vh;">
     <div class="form-container" style="width: 600px;">        
@@ -46,8 +45,10 @@ $fecha_actual = date('d-m-Y');
             <label for="nombre">Descripcion:</label>
             <textarea class="form-control" name="commit_incidence" placeholder="Detalle la incidencia" rows="6" required></textarea>            
         </div>
-        <div class="form-group text-center">
-            <p>Para facilitar nuestro trabajo, seleccione el campo que pueda aportar y rellene los datos</p>
+        <div class="form-group text-justify">
+            <p>Facilite nuestro trabajo, y en caso de conocerlo. Seleccione el campo que pueda aportar y rellene los datos.
+                Si los desconoce, dejelo en blanco
+            </p>
         </div>
         <div class="form-group">
            
@@ -78,6 +79,3 @@ $fecha_actual = date('d-m-Y');
         dataField.setAttribute("name", select.value);
     });
 </script>
-<?php
-require_once ('view_footer.php');
-?>

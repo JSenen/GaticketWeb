@@ -34,16 +34,16 @@ function listUserIncidences($incidencesList)
 ?>
           <?php
           
-          if(empty($incidence['device']['deviceMac']) || is_null($incidence['device']['deviceMac'])){
-            $device = "Sin Datos";
+          if(empty($incidence['device']['deviceType']['typeName']) || is_null($incidence['device']['deviceType']['typeName'])){
+            $typeName = "Sin Datos";
           }else{
-            $device = $incidence['device']['deviceMac'];
+            $typeName = $incidence['device']['deviceType']['typeName'];
           }
           ?>
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $incidence['incidenceTheme'];?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceCommit'];?></td>
-            <td style="vertical-align: middle;"><?php echo $device;?></td>
+            <td style="vertical-align: middle;"><?php echo $typeName;?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceDate'];?></td>
             <!-- Modificamos color según estado -->
             <td style="vertical-align: middle;" class="<?php echo $class_td_cell?>"><?php echo $estado ?></td>            
@@ -53,6 +53,15 @@ function listUserIncidences($incidencesList)
 ?>
       </tbody>
     </table>
+    <!--- MENSAJE EMERGENTE --->
+    <div id="rolChangeMessage" class="alert alert-success" style="display: none;">
+              <?php
+              if (isset($_SESSION['savedticket'])) {
+                  echo $_SESSION['savedticket'];
+                  unset($_SESSION['savedticket']); // Limpia la variable de sesión después de mostrar el mensaje
+              }
+              ?>
+          </div>
 
      
 
@@ -75,6 +84,21 @@ function listUserIncidences($incidencesList)
 
 
       });
+    });
+</script>
+<!-- Control mensaje emergente -->
+<script>
+    $(document).ready(function() {
+        // Mostrar el mensaje si está presente
+        var rolChangeMessage = $('#rolChangeMessage');
+        if (rolChangeMessage.html().trim() !== '') {
+            rolChangeMessage.show();
+
+            // Ocultar el mensaje después de 3 segundos (3000 milisegundos)
+            setTimeout(function() {
+                rolChangeMessage.hide();
+            }, 3000); // 3000 ms = 3 segundos
+        }
     });
 </script>
 </div>
