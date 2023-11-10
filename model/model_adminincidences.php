@@ -41,13 +41,23 @@ function listadminincidences($incidencesList)
           $userid = $incidence['user']['userId'];
           $departUser = new Department();
           $departmentUser = $departUser->getUserDepartment($userid);
+         
+
+          // Recuperar el dispositivo de haber sido introducido
+          if (isset($incidence['device']['deviceType']['typeName']) && $incidence['device']['deviceType']['typeName'] !== null) {
+            $deviceName = $incidence['device']['deviceType']['typeName'];
+          } else {
+            $deviceName = 'Sin datos';
+          }
           
+          //Recuperar departamento de haber sido introducido
+
           
 ?>
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $incidence['incidenceTheme'];?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceCommit'];?></td>
-            <td style="vertical-align: middle;"><?php echo $incidence['device'];?></td>
+            <td style="vertical-align: middle;"><?php echo $deviceName;?></td>
             <td style="vertical-align: middle;"><?php echo $usertip;?></td>
             <td style="vertical-align: middle;"><?php echo $departmentUser['departmentName'];?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceDate'];?></td>
@@ -68,7 +78,7 @@ function listadminincidences($incidencesList)
   <script>
     $(document).ready(function () {
       $('#tableIncidencesAdmin').DataTable({
-        "order": [[3, "des"]],
+        "order": [[5, "des"]],
         "language": {
           "lengthMenu": "Mostrar _MENU_ registros por página",
           "zeroRecords": "Sin resultados - lo lamento",

@@ -3,14 +3,11 @@
 // =========== GRABAR TICKET ================================
 function recordTicket() {
     ob_start();
-
     // Comprobamos que la sesión esté iniciada
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-
     $fecha_actual = date('d/m/y');
-    
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Recopila los datos del formulario en los campos name
         $incidenceCommit = $_POST['commit_incidence'];
@@ -34,9 +31,9 @@ function recordTicket() {
                 $endpoint_device .= '?mac=' . $fieldValue;
             }
         }
-
         // GET device según $endpoint formado
         $ch = curl_init($endpoint_device);
+        curl_setopt($ch, CURLOPT_URL, $endpoint_device);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $resultDevice = curl_exec($ch);
         curl_close($ch);
@@ -64,7 +61,6 @@ function recordTicket() {
             'incidenceDate' => $incidenceDate,
             'incidenceDateFinish' => $incidenceDateFinish
         );
-
        // Agrega el dispositivo solo si se proporcionó uno
         if (!empty($dataDevice) && isset($dataDevice[0]['deviceId'])) {
             $incidencedata['device'] = array(
@@ -73,7 +69,6 @@ function recordTicket() {
         } else {
             $incidencedata['device'] = null; // Si no se ha proporcionado ningún dato
         }
-
         // Realiza una solicitud POST a la API para grabar una incidencia
         $url = BASE_URL . 'incidence/' . $userId;
         $ch = curl_init($url);
@@ -83,9 +78,7 @@ function recordTicket() {
         $response = curl_exec($ch);
         //Después de procesar la solicitud, redirigir de nuevo a la pagina listado
         $_SESSION['savedticket'] = 'Incidencia recibida';
-       // header('Location: index.php?controller=user&action=listIncidencesUser');
-       
-        exit(); // Asegurar de que el script se detenga aquí
+        header('Location: index.php?controller=user&action=listIncidencesUser');
         ob_end_clean();
     }
 }
@@ -120,13 +113,10 @@ function getAllIncidences(){
     $adminincidences = json_decode($result, true);
 
     if(is_array($adminincidences) && !empty($adminincidences)){
-        return$adminincidences;
+        return $adminincidences;
     }else{
         return [];
     }
-            
-    
-
 }
 
 
