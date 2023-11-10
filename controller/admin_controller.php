@@ -17,7 +17,7 @@ function ticketlist(){
     $adminId = $user['userId'];
 
     include './model/model_adminincidences.php';
-    $incidences = getAllIncidences();
+    $incidences = getAllSomeThing('incidences');
     include './view/view_admin.php';
     listadminincidences($incidences);
 }

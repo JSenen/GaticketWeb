@@ -57,7 +57,13 @@ function listDevices($deviceList)
 
           //Numero de incidencias del device
           $incidencesDevice = getDeviceIncidences($deviceId);
-          $numberIncidences = count($incidencesDevice);
+          if (!empty($incidencesDevice) || $incidencesDevice != null ) {
+            $numberIncidences = 0;
+          } else {
+            
+            $numberIncidences = count($incidencesDevice);
+          }
+         
                    
 ?>
           <tr>
@@ -80,8 +86,9 @@ function listDevices($deviceList)
           </tr>
 <?php
         }
-        echo "Sin dispositivos";
+        
       }
+      echo "Sin dispositivos";
 ?>
       </tbody>
     </table>

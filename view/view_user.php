@@ -54,6 +54,7 @@ $fecha_actual = date('d-m-Y');
            
         <div class="form-group">
             <select class="form-select" name="typeId" id="typeSelect">
+                <option value="deviceNulll" selected>Sin datos</option>
                 <option value="deviceSerial">Numero de serie</option>
                 <option value="deviceMac">MAC</option>
             </select>
@@ -75,6 +76,7 @@ $fecha_actual = date('d-m-Y');
 
     // Agregar un controlador de eventos para detectar cambios en el select
     select.addEventListener("change", function() {
+        console.log("Selected value:", select.value);
         // Asociar el valor del select con el atributo name del campo de entrada
         dataField.setAttribute("name", select.value);
     });

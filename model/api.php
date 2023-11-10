@@ -3,6 +3,7 @@
 // =========== GRABAR TICKET ================================
 function recordTicket() {
     ob_start();
+    var_dump($_POST);
     // Comprobamos que la sesión esté iniciada
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
@@ -20,9 +21,9 @@ function recordTicket() {
         // Inicializa $endpoint a un valor predeterminado
         $endpoint_device = BASE_URL . 'device';
 
-       // Verifica si se proporciona deviceSerial o deviceMac
-        if (isset($_POST['field_value']) && !empty($_POST['field_value'])) {
-            $fieldValue = $_POST['field_value'];
+         // Verifica si se proporciona deviceSerial o deviceMac
+        if (isset($_POST['deviceSerial']) && !empty($_POST['deviceSerial'])) {
+            $fieldValue = $_POST['deviceSerial'];
 
             // Determina si es deviceSerial o deviceMac según la opción seleccionada en el formulario
             if ($_POST['typeId'] === 'deviceSerial') {
@@ -31,6 +32,11 @@ function recordTicket() {
                 $endpoint_device .= '?mac=' . $fieldValue;
             }
         }
+        var_dump($_POST);
+        var_dump($endpoint_device);
+       exit();
+
+    
         // GET device según $endpoint formado
         $ch = curl_init($endpoint_device);
         curl_setopt($ch, CURLOPT_URL, $endpoint_device);
@@ -40,7 +46,8 @@ function recordTicket() {
 
         // Decodificamos Json
         $dataDevice = json_decode($resultDevice, true);
-
+    
+        exit();
         // Verificar si se obtuvo una respuesta válida y si el campo "deviceId" está presente
         if (isset($dataDevice['deviceId']) && !is_null($dataDevice['deviceId'])) {
             // Obtener el valor del deviceId
@@ -96,27 +103,6 @@ function getDeviceIncidences($deviceId){
     $deviceIncidences = json_decode($result, true);
             
     return $deviceIncidences;
-}
-
-//==================== LISTAR INCIDENCIAS ADMINISTRADOR ===============================
-
-function getAllIncidences(){
-
-    $urladminincidences = BASE_URL.'incidences';
-    $ch = curl_init($urladminincidences);
-    curl_setopt($ch, CURLOPT_URL, $urladminincidences);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    //Recopila el listado total de incidencias
-    $adminincidences = json_decode($result, true);
-
-    if(is_array($adminincidences) && !empty($adminincidences)){
-        return $adminincidences;
-    }else{
-        return [];
-    }
 }
 
 
