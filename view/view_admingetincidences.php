@@ -4,7 +4,24 @@ require_once 'view_admin.php';
 require_once './model/api.php';
 $fecha_actual = date('d-m-Y');
 ?>
+<style>
+    /* Estilo para el bocadillo de chat */
+.chat-bubble {
+    background-image: url('./resources/img/bubble.png'); /* Reemplaza 'ruta-de-tu-imagen.png' con la ruta correcta de tu imagen */
+    background-size: cover;
+    width: 100px; /* Ancho de la imagen */
+    height: 70px; /* Altura de la imagen */
+    margin-right: 10px; /* Margen derecho para separar el bocadillo de la etiqueta */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+/* Estilo adicional para centrar verticalmente el contenido dentro del bocadillo de chat */
+.chat-bubble label {
+    margin: 0;
+}
+</style>
 <div class="container mt-5">
     <h3 class="text-center">INCIDENCIA</h3>
 
@@ -70,13 +87,18 @@ $fecha_actual = date('d-m-Y');
             ?>
         </table>
        <!-- Formulario mensajes -->
-<form method="post" action="" class="mt-3">
-    <div class="mb-3 d-flex">
-        <label for="mensaje" class="form-label me-2 fw-bold">Chat Online:</label>
-        <textarea class="form-control me-2" name="messageCommit" rows="2" required></textarea>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </div>
-</form>
+    <form method="post" action="" class="mt-3">
+            <div class="mb-3 d-flex position-relative">
+                <!-- Bocadillo de chat con imagen de fondo -->
+                <div class="chat-bubble">
+                    <label for="mensaje" class="form-label me-2 fw-bold">CHAT</label>
+                </div>
+                
+                <!-- Textarea y botón -->
+                <textarea class="form-control me-2" name="messageCommit" rows="2" required></textarea>
+                <button type="submit" class="btn btn-danger">Enviar</button>
+            </div>
+    </form>
     <?php
     } else {
         echo '<p class="text-center">No se ha proporcionado información de la incidencia.</p>';
