@@ -89,6 +89,22 @@ if (
         header('Location: index.php?controller=user&action=listIncidencesUser'); 
     }
 }
+//========= RECUPERAR INCIDENCIA POR ID
+//===================== LISTAR INCIDENCIAS DISPOSITIVOS ==================================
+function searchIncidence($incidenceId){
+    $urllistincidences = BASE_URL.'incidences/'.$incidenceId;
+    $ch = curl_init($urllistincidences);
+    curl_setopt($ch, CURLOPT_URL, $urllistincidences);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    //Recopila el listado de incidencias del usuario
+    //Decodificamos json
+    $searchIncidence = json_decode($result, true);
+            
+    return $searchIncidence;
+}
 
 }
 ?>

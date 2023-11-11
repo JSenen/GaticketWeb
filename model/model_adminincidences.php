@@ -16,7 +16,7 @@ function listadminincidences($incidencesList)
           <th class="text-warning bg-dark" style="width: 2%">USUARIO</th>
           <th class="text-warning bg-dark" style="width: 5%">DEPARTAMENTO</th>
           <th class="text-warning bg-dark" style="width: 5%">FECHA EMISION</th>
-          <th class="text-warning bg-dark" style="width: 4%">ESTADO</th>        
+          <th class="text-warning bg-dark" style="width: %">ESTADO</th>        
         </tr>
       </thead>
       <tbody>
@@ -62,7 +62,7 @@ function listadminincidences($incidencesList)
             <td style="vertical-align: middle;"><?php echo $departmentUser['departmentName'];?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceDate'];?></td>
             <!-- Modificamos color según estado -->
-            <td style="vertical-align: middle;"><a class="<?php echo $class_td_cell?>"><?php echo $estado ?></a></td>            
+            <td style="vertical-align: middle;"><a class="<?php echo $class_td_cell?>" href="index.php?controller=admin&action=getIncidence&id=<?php echo $incidence['incidencesId']?>"><?php echo $estado ?></a></td>            
           </tr>
 <?php
         }

@@ -21,6 +21,15 @@ function ticketlist(){
     include './view/view_admin.php';
     listadminincidences($incidences);
 }
+//==== PAGINA RESOLVER INCIDENCIA =====
+function getIncidence($idIncidence){
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $adminId = $user['userId'];
+    $incidenceCatch = new Incidence();
+    $incidenceToSolve = $incidenceCatch->searchIncidence($idIncidence);
+    include './view/view_admingetincidences.php';
+}
 //==== PAGINA ADMIN USUARIOS =====
 function userChanges(){
     session_start();
