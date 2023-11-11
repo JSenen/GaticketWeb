@@ -328,4 +328,5 @@ function getAllByType($typeId){
     $devicesTypeName = json_decode($url, true);
     return $devicesTypeName;
 }
+
 ?>

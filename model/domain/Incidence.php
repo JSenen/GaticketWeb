@@ -145,6 +145,21 @@ function searchIncidence($incidenceId){
             
     return $resultIncidence;
 }
+//======= LEER TODO LOS MENSAJES DE LA INCIDENCIA
+function getAllMenssagesIncidence($idIncidence){
+    //Listamos los tipos
+    $usrsome = BASE_URL.'messages/'.$idIncidence;
+    $ch = curl_init($usrsome);
+    curl_setopt($ch, CURLOPT_URL, $usrsome);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $usrsome = curl_exec($ch);
+    curl_close($ch);
 
+    //Recopila los datos 
+    $resultlist = json_decode($usrsome, true);
+
+    return $resultlist;
+
+}
 }
 ?>

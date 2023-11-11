@@ -7,6 +7,7 @@ require_once './model/domain/Device.php';
 require_once './model/domain/Type.php';
 require_once './model/domain/Incidence.php';
 require_once './model/domain/IncidenceHistory.php';
+require_once './model/domain/Messages.php';
 
 //==== MODIFICAR ADMIN TICKETS =====
 function ticketlist(){
@@ -21,14 +22,24 @@ function ticketlist(){
     include './view/view_admin.php';
     listadminincidences($incidences);
 }
-//==== PAGINA RESOLVER INCIDENCIA =====
+//==== PAGINA RESOLVER INCIDENCIA y MENSAJES =====
 function getIncidence($idIncidence){
     session_start();
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     $incidenceCatch = new Incidence();
+    $messageGetSet = new Messages();
     $incidenceToSolve = $incidenceCatch->searchIncidence($idIncidence);
+    // Guardar el mensaje
+    // Verificar si se ha enviado un mensaje
+    if (isset($_POST['messageCommit']) && !empty($_POST['messageCommit'])) {
+        // Guardar el mensaje solo si hay un mensaje proporcionado
+        $messageGetSet->adminMessages($idIncidence, $adminId);
+    }
+    //Leer todos los mensajes de la incidencia
+    $listmessages = $incidenceCatch->getAllMenssagesIncidence($idIncidence);
     include './view/view_admingetincidences.php';
+
 }
 //==== PAGINA ADMIN USUARIOS =====
 function userChanges(){
@@ -275,8 +286,7 @@ function updateUser($idUser){
     
     $userInstance->changeRol($idUser,$rol);
    
-    
-
 }   
+
 ?>
 
