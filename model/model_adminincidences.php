@@ -12,11 +12,11 @@ function listadminincidences($incidencesList)
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">ASUNTO</th>
           <th class="text-warning bg-dark" style="width: 20%">INCIDENCIA</th>
-          <th class="text-warning bg-dark" style="width: 10%">DISPOSITIVO</th>
-          <th class="text-warning bg-dark" style="width: 10%">USUARIO</th>
-          <th class="text-warning bg-dark" style="width: 10%">DEPARTAMENTO</th>
-          <th class="text-warning bg-dark" style="width: 10%">FECHA EMISION</th>
-          <th class="text-warning bg-dark" style="width: 7%">ESTADO</th>        
+          <th class="text-warning bg-dark" style="width: 5%">DISPOSITIVO</th>
+          <th class="text-warning bg-dark" style="width: 2%">USUARIO</th>
+          <th class="text-warning bg-dark" style="width: 5%">DEPARTAMENTO</th>
+          <th class="text-warning bg-dark" style="width: 5%">FECHA EMISION</th>
+          <th class="text-warning bg-dark" style="width: 4%">ESTADO</th>        
         </tr>
       </thead>
       <tbody>
