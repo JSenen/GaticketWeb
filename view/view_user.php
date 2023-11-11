@@ -2,9 +2,6 @@
 include('view_header.php');
 $fecha_actual = date('d-m-Y');
 ?>
-<script>
-    
-</script>
 <header id="header">
 <nav class="navbar-dark bg-dark navbar-vertical show">
     <ul class="navbar-nav">
@@ -73,11 +70,12 @@ $fecha_actual = date('d-m-Y');
     // Obtener el elemento select y el campo de entrada
     const select = document.getElementById("typeSelect");
     const dataField = document.getElementById("dataField");
-
     // Agregar un controlador de eventos para detectar cambios en el select
     select.addEventListener("change", function() {
-        console.log("Selected value:", select.value);
-        // Asociar el valor del select con el atributo name del campo de entrada
         dataField.setAttribute("name", select.value);
     });
 </script>
+</div>
+</div>
+  </body>
+</html>
