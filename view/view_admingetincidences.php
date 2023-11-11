@@ -40,7 +40,7 @@ $fecha_actual = date('d-m-Y');
                     <td><?php echo $incidenceToSolve['incidence']['device']['deviceMac']; ?></td>
                     <td><?php echo $incidenceToSolve['incidence']['device']['deviceSerial']; ?></td>
                 </tr>
-                <!-- Puedes agregar más detalles del dispositivo según sea necesario -->
+                
             <?php
             }
 
@@ -63,11 +63,11 @@ $fecha_actual = date('d-m-Y');
                     <td><?php echo $incidenceToSolve['department']['departmentPhone']; ?></td>
                     <td><?php echo $incidenceToSolve['department']['departmentMail']; ?></td>
                 </tr>
-                <!-- Puedes agregar más detalles del usuario según sea necesario -->
+               
             <?php
             }
             ?>
-            <!-- Agregar más campos según sea necesario -->
+           
         </table>
     <?php
     } else {
