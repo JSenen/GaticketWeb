@@ -3,7 +3,6 @@
 // =========== GRABAR TICKET ================================
 function recordTicket() {
     ob_start();
-    var_dump($_POST);
     // Comprobamos que la sesión esté iniciada
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
@@ -16,46 +15,44 @@ function recordTicket() {
         $incidenceStatus = "active";
         $incidenceDate = $fecha_actual;
         $incidenceDateFinish = "";
-     
-
         // Inicializa $endpoint a un valor predeterminado
         $endpoint_device = BASE_URL . 'device';
 
-         // Verifica si se proporciona deviceSerial o deviceMac
-        if (isset($_POST['deviceSerial']) && !empty($_POST['deviceSerial'])) {
-            $fieldValue = $_POST['deviceSerial'];
+        // Inicializa $endpoint a un valor predeterminado
+$endpoint_device = BASE_URL . 'device';
 
-            // Determina si es deviceSerial o deviceMac según la opción seleccionada en el formulario
-            if ($_POST['typeId'] === 'deviceSerial') {
-                $endpoint_device .= '?deviceSerial=' . $fieldValue;
-            } elseif ($_POST['typeId'] === 'deviceMac') {
-                $endpoint_device .= '?mac=' . $fieldValue;
-            }
-        }
-        var_dump($_POST);
-        var_dump($endpoint_device);
-       exit();
+// Verifica si se proporciona deviceSerial o deviceMac
+if (
+    (isset($_POST['deviceSerial']) && !empty($_POST['deviceSerial'])) ||
+    (isset($_POST['deviceMac']) && !empty($_POST['deviceMac']))
+) {
+    // Determina si es deviceSerial o deviceMac según la opción seleccionada en el formulario
+    if ($_POST['typeId'] === 'deviceSerial') {
+        $fieldValue = $_POST['deviceSerial'];
+        $endpoint_device .= '?deviceSerial=' . $fieldValue;
+    } elseif ($_POST['typeId'] === 'deviceMac') {
+        $fieldValue = $_POST['deviceMac'];
+        $endpoint_device .= '?mac=' . $fieldValue;
+    }
 
-    
-        // GET device según $endpoint formado
-        $ch = curl_init($endpoint_device);
-        curl_setopt($ch, CURLOPT_URL, $endpoint_device);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $resultDevice = curl_exec($ch);
-        curl_close($ch);
+    // GET device según $endpoint formado
+    $ch = curl_init($endpoint_device);
+    curl_setopt($ch, CURLOPT_URL, $endpoint_device);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $resultDevice = curl_exec($ch);
+    curl_close($ch);
 
-        // Decodificamos Json
-        $dataDevice = json_decode($resultDevice, true);
-    
-        exit();
-        // Verificar si se obtuvo una respuesta válida y si el campo "deviceId" está presente
-        if (isset($dataDevice['deviceId']) && !is_null($dataDevice['deviceId'])) {
-            // Obtener el valor del deviceId
-            $deviceId = $dataDevice['deviceId'];
-        } else {
-            // Si no se encuentra el deviceId o es null, dejarlo como null
-            $deviceId = null;
-        }
+    // Decodificamos Json
+    $dataDevice = json_decode($resultDevice, true);
+
+    // Verificar si $dataDevice está definido y no está vacío
+    if (!empty($dataDevice) && is_array($dataDevice)) {
+        // Obtener el valor del deviceId si está presente
+        $deviceId = isset($dataDevice[0]['deviceId']) ? $dataDevice[0]['deviceId'] : null;
+    }
+}
+
+
         // Recopila datos del usuario para grabar el ticket
         $userId = $_SESSION['user_id'];
         $userTip = $_SESSION['user_tip'];
@@ -68,6 +65,7 @@ function recordTicket() {
             'incidenceDate' => $incidenceDate,
             'incidenceDateFinish' => $incidenceDateFinish
         );
+        
        // Agrega el dispositivo solo si se proporcionó uno
         if (!empty($dataDevice) && isset($dataDevice[0]['deviceId'])) {
             $incidencedata['device'] = array(
@@ -76,6 +74,7 @@ function recordTicket() {
         } else {
             $incidencedata['device'] = null; // Si no se ha proporcionado ningún dato
         }
+
         // Realiza una solicitud POST a la API para grabar una incidencia
         $url = BASE_URL . 'incidence/' . $userId;
         $ch = curl_init($url);
