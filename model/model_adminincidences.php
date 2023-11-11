@@ -10,13 +10,12 @@ function listadminincidences($incidencesList)
     <table class="table table-sm table-striped table-fixed" id="tableIncidencesAdmin">
       <thead>
         <tr>
-          <th class="text-warning bg-dark" style="width: 10%">ASUNTO</th>
-          <th class="text-warning bg-dark" style="width: 20%">INCIDENCIA</th>
-          <th class="text-warning bg-dark" style="width: 5%">DISPOSITIVO</th>
+          <th class="text-warning bg-dark" style="width: 30%">ASUNTO</th>
+          <th class="text-warning bg-dark" style="width: 4%">DISPOSITIVO</th>
           <th class="text-warning bg-dark" style="width: 2%">USUARIO</th>
-          <th class="text-warning bg-dark" style="width: 5%">DEPARTAMENTO</th>
-          <th class="text-warning bg-dark" style="width: 5%">FECHA EMISION</th>
-          <th class="text-warning bg-dark" style="width: %">ESTADO</th>        
+          <th class="text-warning bg-dark" style="width: 4%">DEPARTAMENTO</th>
+          <th class="text-warning bg-dark" style="width: 4%">FECHA EMISION</th>
+          <th class="text-warning bg-dark" style="width: 4%">ESTADO</th>        
         </tr>
       </thead>
       <tbody>
@@ -56,7 +55,6 @@ function listadminincidences($incidencesList)
 ?>
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $incidence['incidenceTheme'];?></td>
-            <td style="vertical-align: middle;"><?php echo $incidence['incidenceCommit'];?></td>
             <td style="vertical-align: middle;"><?php echo $deviceName;?></td>
             <td style="vertical-align: middle;"><?php echo $usertip;?></td>
             <td style="vertical-align: middle;"><?php echo $departmentUser['departmentName'];?></td>
@@ -78,7 +76,7 @@ function listadminincidences($incidencesList)
   <script>
     $(document).ready(function () {
       $('#tableIncidencesAdmin').DataTable({
-        "order": [[5, "des"]],
+        "order": [[4, "des"]],
         "language": {
           "lengthMenu": "Mostrar _MENU_ registros por página",
           "zeroRecords": "Sin resultados - lo lamento",
