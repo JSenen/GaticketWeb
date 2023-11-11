@@ -91,7 +91,7 @@ $fecha_actual = date('d-m-Y');
         <th class="text-warning bg-dark" style="width: 3%">De</th>
         <th class="text-warning bg-dark" style="width: 3%">Para</th>
         <th class="text-warning bg-dark" style="width: 60%">Mensaje</th>
-        <th class="text-warning bg-dark" style="width: 5%">Fecha</th>
+        <th class="text-warning bg-dark" style="width: 10%">Fecha</th>
       </tr>
     </thead>
     <tbody>

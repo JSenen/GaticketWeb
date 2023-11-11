@@ -30,12 +30,8 @@ function getIncidence($idIncidence){
     $incidenceCatch = new Incidence();
     $messageGetSet = new Messages();
     $incidenceToSolve = $incidenceCatch->searchIncidence($idIncidence);
-    // Guardar el mensaje
-    // Verificar si se ha enviado un mensaje
-    if (isset($_POST['messageCommit']) && !empty($_POST['messageCommit'])) {
-        // Guardar el mensaje solo si hay un mensaje proporcionado
-        $messageGetSet->adminMessages($idIncidence, $adminId);
-    }
+    $messageGetSet->adminMessages($idIncidence, $adminId);
+    
     //Leer todos los mensajes de la incidencia
     $listmessages = $incidenceCatch->getAllMenssagesIncidence($idIncidence);
     include './view/view_admingetincidences.php';
