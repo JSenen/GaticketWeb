@@ -10,10 +10,10 @@ function listUserIncidences($incidencesList)
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 14%">ASUNTO</th>
-          <th class="text-warning bg-dark" style="width: 25%">INCIDENCIA</th>
-          <th class="text-warning bg-dark" style="width: 14%">DISPOSITIVO</th>
-          <th class="text-warning bg-dark" style="width: 12%">FECHA EMISION</th>
-          <th class="text-warning bg-dark" style="width: 7%">ESTADO</th>        
+          <th class="text-warning bg-dark" style="width: 55%">INCIDENCIA</th>
+          <th class="text-warning bg-dark" style="width: 3%">DISPOSITIVO</th>
+          <th class="text-warning bg-dark" style="width: 1%">FECHA EMISION</th>
+          <th class="text-warning bg-dark" style="width: 1%">ESTADO</th>        
         </tr>
       </thead>
       <tbody>
@@ -26,7 +26,7 @@ function listUserIncidences($incidencesList)
             $estado = "Activa";
           } elseif ($incidence['incidenceStatus'] == "process") {
             $class_td_cell = "table-warning";
-            $estado = "En Proceso";
+            $estado = "En proceso";
           } else {
             $class_td_cell = "table-success";
             $estado = "Finalizada";

@@ -25,12 +25,12 @@ function listadminincidences($incidencesList)
         foreach ($incidencesList as $incidence) {
           
           //Color del estado segun este activa o resuelto
-          if ($incidence['incidenceStatus'] == "active") {
+          if ($incidence['incidenceStatus'] === "active") {
             $class_td_cell = "btn btn-danger btn-sm";
             $estado = "Activa";
-          } elseif ($incidence['incidenceStatus'] == "process") {
+          } elseif ($incidence['incidenceStatus'] === "process") {
             $class_td_cell = "btn btn-warning btn-sm";
-            $estado = "En Proceso";
+            $estado = "En proceso";
           } else {
             $class_td_cell = "btn btn-success btn-sm";
             $estado = "Finalizada";

@@ -91,6 +91,7 @@ if (
 }
 //===================== DATOS COMPLETOS INCIDENCIAS por ID ==================================
 function searchIncidence($incidenceId){
+    //Buscamos la incidencia
     $urllistincidences = BASE_URL.'incidences/'.$incidenceId;
     $ch = curl_init($urllistincidences);
     curl_setopt($ch, CURLOPT_URL, $urllistincidences);
@@ -102,6 +103,28 @@ function searchIncidence($incidenceId){
     //Decodificamos json
     $searchIncidence = json_decode($result, true);
     $idUser = $searchIncidence['user']['userId'];
+
+    //Cambiar el estado de la incidencia a "En proceso"
+    //Datos a actualizar
+    $dataToChange = array (
+        'incidenceSatus' => 'process'
+    );
+    $urlchangeincidence = BASE_URL.'incidence/'.$incidenceId;
+    $ch = curl_init($urlchangeincidence);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH'); // Indica que es una solicitud PATCH
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataToChange)); // Define los datos a enviar
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json', // Especifica el tipo de contenido (en este caso, JSON)
+    ]);
+    // Realiza la solicitud cURL y obtén la respuesta
+    $response = curl_exec($ch);
+    // Cierra la instancia cURL
+    curl_close($ch);
+
+    if (curl_errno($ch)) {
+        echo 'Error en la solicitud PATCH: ' . curl_error($ch);
+    }
 
     //Buscamos datos del departamento del usuario
     $urllistdepart = BASE_URL.'department/'.$idUser;
