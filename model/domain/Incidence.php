@@ -89,8 +89,7 @@ if (
         header('Location: index.php?controller=user&action=listIncidencesUser'); 
     }
 }
-//========= RECUPERAR INCIDENCIA POR ID
-//===================== LISTAR INCIDENCIAS DISPOSITIVOS ==================================
+//===================== DATOS COMPLETOS INCIDENCIAS por ID ==================================
 function searchIncidence($incidenceId){
     $urllistincidences = BASE_URL.'incidences/'.$incidenceId;
     $ch = curl_init($urllistincidences);
@@ -102,8 +101,26 @@ function searchIncidence($incidenceId){
     //Recopila el listado de incidencias del usuario
     //Decodificamos json
     $searchIncidence = json_decode($result, true);
+    $idUser = $searchIncidence['user']['userId'];
+
+    //Buscamos datos del departamento del usuario
+    $urllistdepart = BASE_URL.'department/'.$idUser;
+    $ch = curl_init($urllistdepart);
+    curl_setopt($ch, CURLOPT_URL, $urllistdepart);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $resultDepart = curl_exec($ch);
+    curl_close($ch);
+
+     // Decodifica los datos del departamento
+     $userDepartment = json_decode($resultDepart, true);
+
+     // Combina la información de la incidencia y el departamento en un array
+     $resultIncidence = array(
+         'incidence' => $searchIncidence,
+         'department' => $userDepartment
+     );
             
-    return $searchIncidence;
+    return $resultIncidence;
 }
 
 }
