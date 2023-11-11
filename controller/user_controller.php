@@ -11,7 +11,8 @@ require_once './model/domain/IncidenceHistory.php';
 function firstPage(){
     session_start();
     include('./view/view_user.php');
-    recordTicket();
+    $incidenceInstance = new Incidence();
+    $incidenceInstance->recordTicket();
 }
 
 function listIncidencesUser(){
