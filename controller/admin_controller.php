@@ -29,7 +29,11 @@ function getIncidence($idIncidence){
     $adminId = $user['userId'];
     $incidenceCatch = new Incidence();
     $messageGetSet = new Messages();
+    //Asociar Incidence a admin
+    $incidenceCatch->giveIncidenceAdmin($idIncidence,$adminId);
+    //Buscar todos los datos de la incidencia
     $incidenceToSolve = $incidenceCatch->searchIncidence($idIncidence);
+    //Obtener todos los mensajes
     $messageGetSet->adminMessages($idIncidence, $adminId);
     
     //Leer todos los mensajes de la incidencia

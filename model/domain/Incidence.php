@@ -161,5 +161,26 @@ function getAllMenssagesIncidence($idIncidence){
     return $resultlist;
 
 }
+//======= ASOCIAR INCIDENCIA A ADMINISTRADOR ====
+function giveIncidenceAdmin($idIncidence,$idAdmin){
+
+    $urlAddAdmin = BASE_URL.'incidence/admin/'.$idIncidence;
+    
+    //Datos a actualizar, Id de admnistrador
+    $dataToChange = array (
+        'adminId' => $idAdmin
+    );
+    $ch = curl_init($urlAddAdmin);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH'); // Indica que es una solicitud PATCH
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataToChange)); // Define los datos a enviar
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json', // Especifica el tipo de contenido (en este caso, JSON)
+    ]);
+    // Realiza la solicitud cURL y obtén la respuesta
+    $response = curl_exec($ch);
+    // Cierra la instancia cURL
+    curl_close($ch);
+}
 }
 ?>

@@ -1,7 +1,8 @@
 <?php
 include('view_header.php');
-require_once 'view_admin.php';
+require_once 'view_userincidences.php';
 require_once './model/api.php';
+
 $fecha_actual = date('d-m-Y');
 ?>
 <style>
@@ -63,27 +64,17 @@ $fecha_actual = date('d-m-Y');
             }
 
             // Verificar si existe información sobre el usuario
-            if (isset($incidenceToSolve['incidence']['user']) && !empty($incidenceToSolve['incidence']['user'])) {
+            if (isset($incidenceToSolve['incidence']['adminId']) && !empty($incidenceToSolve['incidence']['adminId'])) {
+               
+               
             ?>
                 <tr>
-                    <th class="table-warning">Datos Usuario</th>
-                    <td><?php echo $incidenceToSolve['incidence']['user']['userTip']; ?></td>
-                    <td class="fw-bold bg-warning">Mail:</td>
-                    <td class="fw-bold bg-warning">Departamento:</td>
-                    <td class="fw-bold bg-warning">Telefono:</td>
-                    <td class="fw-bold bg-warning">Mail Departamento:</td>
+                    <th class="table-warning">Datos Administrador</th>
+                    <td><?php echo $adminData['userTip']; ?></td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><?php echo $incidenceToSolve['incidence']['user']['userMail']; ?></td>
-                    <td><?php echo $incidenceToSolve['department']['departmentName']; ?></td>
-                    <td><?php echo $incidenceToSolve['department']['departmentPhone']; ?></td>
-                    <td><?php echo $incidenceToSolve['department']['departmentMail']; ?></td>
-                </tr>
-               
             <?php
-            }
+            
+        }
             ?>
         </table>
        <!-- Formulario mensajes -->
@@ -119,7 +110,7 @@ $fecha_actual = date('d-m-Y');
         <?php
         if (is_array($listmessages) && !empty($listmessages)) {
             foreach ($listmessages as $message) {
-                # code...
+              
             
         ?>
     <tr>    

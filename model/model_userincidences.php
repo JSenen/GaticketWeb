@@ -46,7 +46,7 @@ function listUserIncidences($incidencesList)
             <td style="vertical-align: middle;"><?php echo $typeName;?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceDate'];?></td>
             <!-- Modificamos color según estado -->
-            <td style="vertical-align: middle;" class="<?php echo $class_td_cell?>"><?php echo $estado ?></td>            
+            <td style="vertical-align: middle;" class="<?php echo $class_td_cell?>"><a class="<?php echo $class_td_cell?>" href="index.php?controller=user&action=viewIncidence&id=<?php echo $incidence['incidencesId']; ?>"><?php echo $estado;?></a></td>            
           </tr>
 <?php
         }

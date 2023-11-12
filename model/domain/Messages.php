@@ -46,6 +46,22 @@ class Messages{
     
    }
 
+   function getAllMessages($idIncidence){
+
+    $urlmessage = BASE_URL.'message/'.$idIncidence;
+    $ch = curl_init($urlmessage);
+    curl_setopt($ch, CURLOPT_URL, $urlmessage);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $urnet = curl_exec($ch);
+    
+    $messages = json_decode($urlmessage, true);
+    curl_close($ch);
+
+    return $messages;
+    
+   }
+   
+
 }
 
 ?>
