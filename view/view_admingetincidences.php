@@ -9,8 +9,8 @@ $fecha_actual = date('d-m-Y');
 .chat-bubble {
     background-image: url('./resources/img/chat_icon.png'); /* Reemplaza 'ruta-de-tu-imagen.png' con la ruta correcta de tu imagen */
     background-size: cover;
-    width: 100px; /* Ancho de la imagen */
-    height: 70px; /* Altura de la imagen */
+    width: 70px; /* Ancho de la imagen */
+    height: 50px; /* Altura de la imagen */
     margin-right: 10px; /* Margen derecho para separar el bocadillo de la etiqueta */
     display: flex;
     align-items: center;
@@ -119,7 +119,6 @@ $fecha_actual = date('d-m-Y');
         <?php
         if (is_array($listmessages) && !empty($listmessages)) {
             foreach ($listmessages as $message) {
-                # code...
             
         ?>
     <tr>    
@@ -133,6 +132,16 @@ $fecha_actual = date('d-m-Y');
           ?>
           </tbody>
     </table>
+    <div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <textarea class="form-control" rows="2" placeholder="Introduzca solución aplicada..."></textarea>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-success">Finalizar Incidencia</button>
+        </div>
+    </div>
+</div>
       <!-- JQuery table -->
       <script>
     $(document).ready(function () {
