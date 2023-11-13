@@ -7,7 +7,7 @@ $fecha_actual = date('d-m-Y');
 <style>
     /* Estilo para el bocadillo de chat */
 .chat-bubble {
-    background-image: url('./resources/img/bubble.png'); /* Reemplaza 'ruta-de-tu-imagen.png' con la ruta correcta de tu imagen */
+    background-image: url('./resources/img/chat_icon.png'); /* Reemplaza 'ruta-de-tu-imagen.png' con la ruta correcta de tu imagen */
     background-size: cover;
     width: 100px; /* Ancho de la imagen */
     height: 70px; /* Altura de la imagen */
@@ -45,7 +45,7 @@ $fecha_actual = date('d-m-Y');
             if (isset($incidenceToSolve['incidence']['device']) && !empty($incidenceToSolve['incidence']['device'])) {
             ?>
                 <tr>
-                    <th class="table-success">Dispositivo</th>
+                    <th class="table-success">Dispositivo<img src="./resources/img/computer_icon.png" height="50px" width="70px"></th>
                     <td><?php echo $incidenceToSolve['incidence']['device']['deviceType']['typeName']; ?></td>
                     <td class="fw-bold bg-success text-white">Modelo:</td>
                     <td class="fw-bold bg-success text-white">MAC:</td>
@@ -66,7 +66,7 @@ $fecha_actual = date('d-m-Y');
             if (isset($incidenceToSolve['incidence']['user']) && !empty($incidenceToSolve['incidence']['user'])) {
             ?>
                 <tr>
-                    <th class="table-warning">Datos Usuario</th>
+                    <th class="table-warning">Datos Usuario<img src="./resources/img/User_icon.png" height="50px" width="50px"></th>
                     <td><?php echo $incidenceToSolve['incidence']['user']['userTip']; ?></td>
                     <td class="fw-bold bg-warning">Mail:</td>
                     <td class="fw-bold bg-warning">Departamento:</td>

@@ -16,7 +16,7 @@ $fecha_actual = date('d-m-Y');
             <a class="nav-link" href="index.php?controller=user&action=firstPage">Grabar Ticket</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" style="color: yellow;">Listado</a>
+            <a class="nav-link" href="index.php?controller=user&action=listIncidencesUser" style="color: yellow;">Listado</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="index.php">Salir</a>

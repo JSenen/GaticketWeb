@@ -92,6 +92,7 @@ if (
 //===================== DATOS COMPLETOS INCIDENCIAS por ID ==================================
 function searchIncidence($incidenceId){
     //Buscamos la incidencia
+  
     $urllistincidences = BASE_URL.'incidences/'.$incidenceId;
     $ch = curl_init($urllistincidences);
     curl_setopt($ch, CURLOPT_URL, $urllistincidences);
@@ -106,6 +107,8 @@ function searchIncidence($incidenceId){
 
     //Cambiar el estado de la incidencia a "En proceso"
     //Datos a actualizar
+    if ($_SESSION['user_rol'] == 'administrador') {
+      
     $dataToChange = array (
         'incidenceSatus' => 'process'
     );
@@ -125,7 +128,7 @@ function searchIncidence($incidenceId){
     if (curl_errno($ch)) {
         echo 'Error en la solicitud PATCH: ' . curl_error($ch);
     }
-
+}
     //Buscamos datos del departamento del usuario
     $urllistdepart = BASE_URL.'department/'.$idUser;
     $ch = curl_init($urllistdepart);

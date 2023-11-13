@@ -21,6 +21,8 @@ function listIncidencesUser(){
     session_start();
     $user['userId']= $_SESSION['user_id'];
     $userId = $user['userId'];
+    $userRol = $_SESSION['user_rol'];
+    
 
     $searchUserIncidences = new User();
     
