@@ -193,15 +193,10 @@ function finsihIncidence($idIncidence,$incidenceToSolve,$solution,$adminTip){
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-        // Inicializa $endpoint a un valor predeterminado
-        $endpoint_history = BASE_URL . 'history';
-        // Datos a grabar
-        // Verifica si $_SESSION['user_id'] es un array antes de acceder a sus elementos
+   
+    // Verifica si $_SESSION['user_id'] es un array antes de acceder a sus elementos
     $userIdArray = is_array($_SESSION['user_id']) ? $_SESSION['user_id'] : array();
-
-    // Recopila los datos del formulario en los campos name
-    $incidenceSolution = $_POST['solution'];
-    $incidenceDateFinish = $fecha_actual = date('d/m/y');
+    $incidenceDateFinish = $fecha_actual = date('d/m/Y');
 
     // Accede a 'user' dentro de $_SESSION['user_id']
     $userTip = isset($incidenceToSolve['incidence']['user']['userTip']) ? $incidenceToSolve['incidence']['user']['userTip'] : null;
@@ -214,19 +209,28 @@ function finsihIncidence($idIncidence,$incidenceToSolve,$solution,$adminTip){
         'historyDateFinish' => $incidenceDateFinish,
         'historyAdmin' => $adminTip,
         'historySolution' => $solution
-    );
+        );
 
-       
-
+        $endpoint_history = BASE_URL.'history';
         $ch = curl_init($endpoint_history);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataToChange));
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($ch, CURLOPT_POST, 1);
-        $response = curl_exec($ch);       
-
-        var_dump($dataToChange);
+        $response = curl_exec($ch);  
+        curl_close($ch);     
+        
+        //Eliminar incidencia despues de grabarla en history
+        $urlDelIncidence = BASE_URL.'incidence/'.$idIncidence;
+        $ch = curl_init($urlDelIncidence);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        ;
+        $responsedelete = curl_exec($ch);
+        curl_close($ch);
+        // Redirigir después de la acción
+        header('Location: index.php?controller=admin&action=ticketlist');
         exit();
-}
+    }
 }
 ?>
 

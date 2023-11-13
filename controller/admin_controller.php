@@ -35,8 +35,7 @@ function getIncidence($idIncidence){
     $incidenceCatch->giveIncidenceAdmin($idIncidence,$adminId);
     //Buscar todos los datos de la incidencia
     $incidenceToSolve = $incidenceCatch->searchIncidence($idIncidence);
-    //Obtener todos los mensajes
-    //$messageGetSet->adminMessages($idIncidence, $adminId);
+    //Obtener todos los mensajes o finalizar
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["submitMessage"])) {
             // Procesar el formulario de mensajes
@@ -48,6 +47,7 @@ function getIncidence($idIncidence){
             $solution = $_POST["solution"];
             // Pasa $incidenceToSolve como argumento a finsihIncidence
             $incidenceCatch->finsihIncidence($idIncidence, $incidenceToSolve, $solution,$adminTip);
+            
         }
     }
     //Leer todos los mensajes de la incidencia

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (isset($_POST["submitSolution"])) {
         // Procesar el formulario de finalizar incidencia
         $solution = $_POST["solution"];
-        $incidenceCatch->finsihIncidence($idIncidence, $solution);
+        $incidenceCatch->finsihIncidence($idIncidence,$incidenceToSolve,$solution,$adminTip);
     }
 }
 ?>

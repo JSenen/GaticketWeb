@@ -51,6 +51,9 @@ $fecha_actual = date('d-m-Y');
                 </ul>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="index.php?controller=admin&action=historyList">Historial</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="index.php">Salir</a>
         </li>
     </ul>

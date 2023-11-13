@@ -8,7 +8,7 @@ $fecha_actual = date('d-m-Y');
 <style>
     /* Estilo para el bocadillo de chat */
 .chat-bubble {
-    background-image: url('./resources/img/bubble.png'); /* Reemplaza 'ruta-de-tu-imagen.png' con la ruta correcta de tu imagen */
+    background-image: url('./resources/img/chat_icon.png'); /* Reemplaza 'ruta-de-tu-imagen.png' con la ruta correcta de tu imagen */
     background-size: cover;
     width: 100px; /* Ancho de la imagen */
     height: 70px; /* Altura de la imagen */
