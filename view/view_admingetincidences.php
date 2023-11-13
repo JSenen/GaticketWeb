@@ -37,7 +37,7 @@ $fecha_actual = date('d-m-Y');
             <tr>
                 <th class="table-primary">Comentario</th>
                 <td colspan="5">
-                    <textarea class="form-control col" rows="4" readonly><?php echo $incidenceToSolve['incidence']['incidenceCommit']; ?></textarea>
+                    <textarea class="form-control col" rows="3" readonly><?php echo $incidenceToSolve['incidence']['incidenceCommit']; ?></textarea>
                 </td>
             </tr>
             <?php
@@ -134,10 +134,10 @@ $fecha_actual = date('d-m-Y');
     </table>
     <div class="container mt-5">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <textarea class="form-control" rows="2" placeholder="Introduzca solución aplicada..."></textarea>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button type="submit" class="btn btn-success">Finalizar Incidencia</button>
         </div>
     </div>
