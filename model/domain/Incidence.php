@@ -185,5 +185,50 @@ function giveIncidenceAdmin($idIncidence,$idAdmin){
     // Cierra la instancia cURL
     curl_close($ch);
 }
+
+//======= FINALIZAR INCIDENCIA y GRABAR A HISTORIAL ==========
+function finsihIncidence($idIncidence,$incidenceToSolve,$solution,$adminTip){
+    ob_start();
+    // Comprobamos que la sesión esté iniciada
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+        // Inicializa $endpoint a un valor predeterminado
+        $endpoint_history = BASE_URL . 'history';
+        // Datos a grabar
+        // Verifica si $_SESSION['user_id'] es un array antes de acceder a sus elementos
+    $userIdArray = is_array($_SESSION['user_id']) ? $_SESSION['user_id'] : array();
+
+    // Recopila los datos del formulario en los campos name
+    $incidenceSolution = $_POST['solution'];
+    $incidenceDateFinish = $fecha_actual = date('d/m/y');
+
+    // Accede a 'user' dentro de $_SESSION['user_id']
+    $userTip = isset($incidenceToSolve['incidence']['user']['userTip']) ? $incidenceToSolve['incidence']['user']['userTip'] : null;
+
+    // Datos a grabar
+    $dataToChange = array (
+        'historyTip' => $userTip,
+        'historyTheme' => isset($incidenceToSolve['incidence']['incidenceTheme']) ? $incidenceToSolve['incidence']['incidenceTheme'] : null,
+        'historyCommit' => isset($incidenceToSolve['incidence']['incidenceCommit']) ? $incidenceToSolve['incidence']['incidenceCommit'] : null,
+        'historyDateFinish' => $incidenceDateFinish,
+        'historyAdmin' => $adminTip,
+        'historySolution' => $solution
+    );
+
+       
+
+        $ch = curl_init($endpoint_history);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataToChange));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_POST, 1);
+        $response = curl_exec($ch);       
+
+        var_dump($dataToChange);
+        exit();
+}
 }
 ?>
+
+
+

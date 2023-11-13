@@ -2,7 +2,21 @@
 include('view_header.php');
 require_once 'view_admin.php';
 require_once './model/api.php';
+require_once './model/domain/Incidence.php';
 $fecha_actual = date('d-m-Y');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["submitMessage"])) {
+        // Procesar el formulario de mensajes
+        $messageCommit = $_POST["messageCommit"];
+        $messageGetSet->adminMessages($idIncidence, $adminId);
+        
+    } elseif (isset($_POST["submitSolution"])) {
+        // Procesar el formulario de finalizar incidencia
+        $solution = $_POST["solution"];
+        $incidenceCatch->finsihIncidence($idIncidence, $solution);
+    }
+}
 ?>
 <style>
     /* Estilo para el bocadillo de chat */
@@ -96,7 +110,7 @@ $fecha_actual = date('d-m-Y');
                 
                 <!-- Textarea y botón -->
                 <textarea class="form-control me-2" name="messageCommit" rows="2" required></textarea>
-                <button type="submit" class="btn btn-danger">Enviar</button>
+                <button type="submit" class="btn btn-danger" name="submitMessage">Enviar</button>
             </div>
     </form>
     <?php
@@ -132,16 +146,18 @@ $fecha_actual = date('d-m-Y');
           ?>
           </tbody>
     </table>
+    <form method="post" action="" class="mt-3">
     <div class="container mt-5">
     <div class="row">
         <div class="col-md-10">
-            <textarea class="form-control" rows="2" placeholder="Introduzca solución aplicada..."></textarea>
+            <textarea class="form-control" rows="2" name="solution" placeholder="Introduzca solución aplicada..."></textarea>
         </div>
         <div class="col-md-2">
-            <button type="submit" class="btn btn-success">Finalizar Incidencia</button>
+            <button type="submit" class="btn btn-success" name="submitSolution">Finalizar Incidencia</button>
         </div>
     </div>
 </div>
+        </form>
       <!-- JQuery table -->
       <script>
     $(document).ready(function () {
