@@ -302,5 +302,16 @@ function updateUser($idUser){
    
 }   
 
+//========= PAGINA HISTORIAL ========
+function historyList(){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $incidencesHsitory = new IncidenceHistory();
+    $listHistory = $incidencesHsitory->getAllHistory();
+    include './view/view_adminhistory.php';
+    }
+}
+
+
 ?>
 
