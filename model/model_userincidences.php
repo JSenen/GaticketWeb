@@ -4,6 +4,18 @@ include './view/view_header.php';
 function listUserIncidences($incidencesList)
 {
   ?>
+          <style>
+  /* ESTILO TABLA INCIDENCE USER */
+/* Agrega un sombreado a la tabla para dar la apariencia de que sobresale */
+#tableIncidencesUser {
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo opcional para resaltar las filas al pasar el ratón */
+#tableIncidencesUser tbody tr:hover {
+  background-color: #f2f1bf;
+}
+</style>
   <div class="contenido">
   
     <table class="table table-sm table-striped table-fixed" id="tableIncidencesUser">

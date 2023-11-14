@@ -53,22 +53,6 @@ function getAllDepartments(){
 
     return $departlist;
 }
-//=================== TODOS LOS DISPOSITIVOS =========================================
-function getAllDevices(){
-     //Listamos los usuarios
-     $urlDepart = BASE_URL.'device';
-     $ch = curl_init($urlDepart);
-     curl_setopt($ch, CURLOPT_URL, $urlDepart);
-     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-     $resultdepart = curl_exec($ch);
-     curl_close($ch);
- 
-     //Recopila los datos 
-     $devicelist = json_decode($resultdepart, true);
- 
-     return $devicelist;
-}
-
 //=============== AÑADIR DISPOSITIVO ==================================
 function recordDeviceAdmin(){
   

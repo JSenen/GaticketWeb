@@ -145,9 +145,8 @@ function deviceChanges(){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }   
-
+    $deviceList = getAllSomeThing("device");
     include './model/model_admindevices.php';
-    $deviceList = getAllDevices();
     include './view/view_admin.php';
     listDevices($deviceList);
 

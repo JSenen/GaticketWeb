@@ -5,6 +5,18 @@ require_once './model/domain/Department.php';
 function listadminincidences($incidencesList)
 {
   ?>
+<style>
+  /* ESTILO TABLA INCIENCIAS ADMIN +/
+/* Agrega un sombreado a la tabla para dar la apariencia de que sobresale */
+#tableIncidencesAdmin {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo opcional para resaltar las filas al pasar el ratón */
+#tableIncidencesAdmin tbody tr:hover {
+  background-color: #f2f1bf;
+}
+</style>
   <div class="contenido">
   
     <table class="table table-sm table-striped table-fixed" id="tableIncidencesAdmin">
