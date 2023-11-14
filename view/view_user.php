@@ -2,9 +2,6 @@
 include('view_header.php');
 $fecha_actual = date('d-m-Y');
 ?>
-<script>
-    
-</script>
 <header id="header">
 <nav class="navbar-dark bg-dark navbar-vertical show">
     <ul class="navbar-nav">
@@ -29,7 +26,6 @@ $fecha_actual = date('d-m-Y');
 </header>
 <!-- Start Page content holder -->
 <div class="page-content p-5 text-gray" id="content">
-
 <form action="" method="post">
   <div class="container d-flex justify-content-center align-items-center" style="height: 85vh;">
     <div class="form-container" style="width: 600px;">        
@@ -46,13 +42,16 @@ $fecha_actual = date('d-m-Y');
             <label for="nombre">Descripcion:</label>
             <textarea class="form-control" name="commit_incidence" placeholder="Detalle la incidencia" rows="6" required></textarea>            
         </div>
-        <div class="form-group text-center">
-            <p>Para facilitar nuestro trabajo, seleccione el campo que pueda aportar y rellene los datos</p>
+        <div class="form-group text-justify">
+            <p>Facilite nuestro trabajo, y en caso de conocerlo. Seleccione el campo que pueda aportar y rellene los datos.
+                Si los desconoce, dejelo en blanco
+            </p>
         </div>
         <div class="form-group">
            
         <div class="form-group">
             <select class="form-select" name="typeId" id="typeSelect">
+                <option value="deviceNulll" selected>Sin datos</option>
                 <option value="deviceSerial">Numero de serie</option>
                 <option value="deviceMac">MAC</option>
             </select>
@@ -71,19 +70,12 @@ $fecha_actual = date('d-m-Y');
     // Obtener el elemento select y el campo de entrada
     const select = document.getElementById("typeSelect");
     const dataField = document.getElementById("dataField");
-
     // Agregar un controlador de eventos para detectar cambios en el select
     select.addEventListener("change", function() {
-        // Asociar el valor del select con el atributo name del campo de entrada
         dataField.setAttribute("name", select.value);
     });
 </script>
-
-
-
-
-
-
-<?php
-include ('view_footer.php');
-?>
+</div>
+</div>
+  </body>
+</html>

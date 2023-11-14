@@ -1,21 +1,33 @@
 <?php
 require_once './model/api.php';
+require_once './model/domain/Department.php';
 
 function listadminincidences($incidencesList)
 {
   ?>
+<style>
+  /* ESTILO TABLA INCIENCIAS ADMIN +/
+/* Agrega un sombreado a la tabla para dar la apariencia de que sobresale */
+#tableIncidencesAdmin {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo opcional para resaltar las filas al pasar el ratón */
+#tableIncidencesAdmin tbody tr:hover {
+  background-color: #f2f1bf;
+}
+</style>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableIncidencesAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableIncidencesAdmin">
       <thead>
         <tr>
-          <th class="text-warning bg-dark" style="width: 10%">ASUNTO</th>
-          <th class="text-warning bg-dark" style="width: 20%">INCIDENCIA</th>
-          <th class="text-warning bg-dark" style="width: 10%">DISPOSITIVO</th>
-          <th class="text-warning bg-dark" style="width: 10%">USUARIO</th>
-          <th class="text-warning bg-dark" style="width: 10%">DEPARTAMENTO</th>
-          <th class="text-warning bg-dark" style="width: 10%">FECHA EMISION</th>
-          <th class="text-warning bg-dark" style="width: 7%">ESTADO</th>        
+          <th class="text-warning bg-dark" style="width: 30%">ASUNTO</th>
+          <th class="text-warning bg-dark" style="width: 4%">DISPOSITIVO</th>
+          <th class="text-warning bg-dark" style="width: 2%">USUARIO</th>
+          <th class="text-warning bg-dark" style="width: 4%">DEPARTAMENTO</th>
+          <th class="text-warning bg-dark" style="width: 4%">FECHA EMISION</th>
+          <th class="text-warning bg-dark" style="width: 4%">ESTADO</th>        
         </tr>
       </thead>
       <tbody>
@@ -25,12 +37,12 @@ function listadminincidences($incidencesList)
         foreach ($incidencesList as $incidence) {
           
           //Color del estado segun este activa o resuelto
-          if ($incidence['incidenceStatus'] == "active") {
+          if ($incidence['incidenceStatus'] === "active") {
             $class_td_cell = "btn btn-danger btn-sm";
             $estado = "Activa";
-          } elseif ($incidence['incidenceStatus'] == "process") {
+          } elseif ($incidence['incidenceStatus'] === "process") {
             $class_td_cell = "btn btn-warning btn-sm";
-            $estado = "En Proceso";
+            $estado = "En proceso";
           } else {
             $class_td_cell = "btn btn-success btn-sm";
             $estado = "Finalizada";
@@ -38,19 +50,29 @@ function listadminincidences($incidencesList)
           //Recuperamos los datos del Array Json del usuario
           $usertip = $incidence['user']['userTip'];
           $userid = $incidence['user']['userId'];
-          $departmentUser = getUserDepartment($userid);
+          $departUser = new Department();
+          $departmentUser = $departUser->getUserDepartment($userid);
+         
+
+          // Recuperar el dispositivo de haber sido introducido
+          if (isset($incidence['device']['deviceType']['typeName']) && $incidence['device']['deviceType']['typeName'] !== null) {
+            $deviceName = $incidence['device']['deviceType']['typeName'];
+          } else {
+            $deviceName = 'Sin datos';
+          }
           
+          //Recuperar departamento de haber sido introducido
+
           
 ?>
           <tr>
             <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $incidence['incidenceTheme'];?></td>
-            <td style="vertical-align: middle;"><?php echo $incidence['incidenceCommit'];?></td>
-            <td style="vertical-align: middle;"><?php echo $incidence['device'];?></td>
+            <td style="vertical-align: middle;"><?php echo $deviceName;?></td>
             <td style="vertical-align: middle;"><?php echo $usertip;?></td>
             <td style="vertical-align: middle;"><?php echo $departmentUser['departmentName'];?></td>
             <td style="vertical-align: middle;"><?php echo $incidence['incidenceDate'];?></td>
             <!-- Modificamos color según estado -->
-            <td style="vertical-align: middle;"><a class="<?php echo $class_td_cell?>"><?php echo $estado ?></a></td>            
+            <td style="vertical-align: middle;"><a class="<?php echo $class_td_cell?>" href="index.php?controller=admin&action=getIncidence&id=<?php echo $incidence['incidencesId']?>"><?php echo $estado ?></a></td>            
           </tr>
 <?php
         }
@@ -66,7 +88,7 @@ function listadminincidences($incidencesList)
   <script>
     $(document).ready(function () {
       $('#tableIncidencesAdmin').DataTable({
-        "order": [[3, "des"]],
+        "order": [[4, "des"]],
         "language": {
           "lengthMenu": "Mostrar _MENU_ registros por página",
           "zeroRecords": "Sin resultados - lo lamento",

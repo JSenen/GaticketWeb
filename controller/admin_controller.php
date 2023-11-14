@@ -7,6 +7,7 @@ require_once './model/domain/Device.php';
 require_once './model/domain/Type.php';
 require_once './model/domain/Incidence.php';
 require_once './model/domain/IncidenceHistory.php';
+require_once './model/domain/Messages.php';
 
 //==== MODIFICAR ADMIN TICKETS =====
 function ticketlist(){
@@ -17,9 +18,42 @@ function ticketlist(){
     $adminId = $user['userId'];
 
     include './model/model_adminincidences.php';
-    $incidences = getAllIncidences();
+    $incidences = getAllSomeThing('incidences');
     include './view/view_admin.php';
     listadminincidences($incidences);
+}
+//==== PAGINA RESOLVER INCIDENCIA y MENSAJES =====
+function getIncidence($idIncidence){
+    session_start();
+    $user['userId']= $_SESSION['user_id'];
+    $user['userTip'] = $_SESSION['user_tip'];
+    $adminId = $user['userId'];
+    $adminTip = $user['userTip'];
+    $incidenceCatch = new Incidence();
+    $messageGetSet = new Messages();
+    //Asociar Incidence a admin
+    $incidenceCatch->giveIncidenceAdmin($idIncidence,$adminId);
+    //Buscar todos los datos de la incidencia
+    $incidenceToSolve = $incidenceCatch->searchIncidence($idIncidence);
+    //Obtener todos los mensajes o finalizar
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["submitMessage"])) {
+            // Procesar el formulario de mensajes
+            $messageCommit = $_POST["messageCommit"];
+            $messageGetSet->adminMessages($idIncidence, $adminId);
+            
+        } elseif (isset($_POST["submitSolution"])) {
+            // Procesar el formulario de finalizar incidencia
+            $solution = $_POST["solution"];
+            // Pasa $incidenceToSolve como argumento a finsihIncidence
+            $incidenceCatch->finsihIncidence($idIncidence, $incidenceToSolve, $solution,$adminTip);
+            
+        }
+    }
+    //Leer todos los mensajes de la incidencia
+    $listmessages = $incidenceCatch->getAllMenssagesIncidence($idIncidence);
+    include './view/view_admingetincidences.php';
+
 }
 //==== PAGINA ADMIN USUARIOS =====
 function userChanges(){
@@ -111,9 +145,8 @@ function deviceChanges(){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }   
-
+    $deviceList = getAllSomeThing("device");
     include './model/model_admindevices.php';
-    $deviceList = getAllDevices();
     include './view/view_admin.php';
     listDevices($deviceList);
 
@@ -266,8 +299,18 @@ function updateUser($idUser){
     
     $userInstance->changeRol($idUser,$rol);
    
-    
-
 }   
+
+//========= PAGINA HISTORIAL ========
+function historyList(){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $incidencesHsitory = new IncidenceHistory();
+    $listHistory = $incidencesHsitory->getAllHistory();
+    include './view/view_adminhistory.php';
+    }
+}
+
+
 ?>
 

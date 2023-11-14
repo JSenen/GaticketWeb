@@ -1,4 +1,6 @@
 GIT IGNORE
+# Configuration, tokens, variables
+.env
 
 # Default ignored files
 /shelf/

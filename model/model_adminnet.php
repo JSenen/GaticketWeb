@@ -1,16 +1,28 @@
 <?php
 require_once './model/api.php';
-require_once './domain/Net.php';
-require_once('./resources/config.php');
+require_once './model/domain/Net.php';
+
 
 $urlAddNet = BASE_URL.'net';
 
 function listNet($netlist)
 {
   ?>
+    <style>
+  /* ESTILO TABLA NET ADMIN +/
+/* Agrega un sombreado a la tabla para dar la apariencia de que sobresale */
+#tableTypesAdmin {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo opcional para resaltar las filas al pasar el ratón */
+#tableTypesAdmin tbody tr:hover {
+  background-color: #f2f1bf;
+}
+</style>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableTypesAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableTypesAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">GATEWAY</th>

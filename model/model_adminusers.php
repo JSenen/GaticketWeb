@@ -1,12 +1,26 @@
 <?php
 require_once './model/api.php';
+require_once './model/domain/User.php';
+require_once './model/domain/Department.php';
 
 function listUsers($userlist)
 {
   ?>
+        <style>
+  /* ESTILO TABLA USERS ADMIN +/
+/* Agrega un sombreado a la tabla para dar la apariencia de que sobresale */
+#tableUsersAdmin {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo opcional para resaltar las filas al pasar el ratón */
+#tableUsersAdmin tbody tr:hover {
+  background-color: #f2f1bf;
+}
+</style>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableUsersAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableUsersAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 5%">TIP</th>
@@ -27,7 +41,8 @@ function listUsers($userlist)
 
           //Recuperamos los datos del Array Json del usuario
           $userid = $user['userId'];
-          $userdepartment = getUserDepartment($userid);
+          $departSearch = new Department();
+          $userdepartment = $departSearch->getUserDepartment($userid);
           if (empty($userdepartment)) {
             $userdepartment = [
                 'departmentName' => 'Sin datos',
@@ -37,7 +52,8 @@ function listUsers($userlist)
           }
 
           //Numero de incidencias del usuario
-          $incidencesUser = getUserIncidences($user['userId']);
+          $userincidences = new User();
+          $incidencesUser = $userincidences->getUserIncidences($user['userId']);
           $numberIncidences = count($incidencesUser);
                    
 ?>

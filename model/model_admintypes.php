@@ -1,16 +1,29 @@
 <?php
 require_once './model/api.php';
-require_once('./resources/config.php');
+require_once './model/domain/Device.php';
 
+$typo = new Device();
 $urlAddType = BASE_URL.'types';
 
 function listTypes($typelist)
 {
 
   ?>
+      <style>
+  /* ESTILO TABLA TYPES ADMIN +/
+/* Agrega un sombreado a la tabla para dar la apariencia de que sobresale */
+#tableTypesAdmin {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo opcional para resaltar las filas al pasar el ratón */
+#tableTypesAdmin tbody tr:hover {
+  background-color: #f2f1bf;
+}
+</style>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableTypesAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableTypesAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">NOMBRE</th>
@@ -22,13 +35,17 @@ function listTypes($typelist)
       <tbody>
        
 <?php 
+      if (!isset($typo)) {
+        $typo = new Device();
+      }
       if (is_array($typelist) && !empty($typelist)) {
         foreach ($typelist as $type) {
 
           //Totales por tipo
         $typeId = $type['typeId'];
-        $typo = getAllByType($typeId);
-        $numberType = count($typo);
+        $devices = $typo->getAllByType($typeId);
+        $numberType = count($devices);
+       
                    
 ?>
           <tr>

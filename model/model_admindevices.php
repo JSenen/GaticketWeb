@@ -4,21 +4,33 @@ require_once './model/api.php';
 function listDevices($deviceList)
 {
   ?>
+  <style>
+  /* ESTILO TABLA DEVICE ADMIN +/
+/* Agrega un sombreado a la tabla para dar la apariencia de que sobresale */
+#tableDeviceAdmin {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo opcional para resaltar las filas al pasar el ratón */
+#tableDeviceAdmin tbody tr:hover {
+  background-color: #f2f1bf;
+}
+</style>
   <div class="contenido">
   
-    <table class="table table-striped table-fixed" id="tableDeviceAdmin">
+    <table class="table table-sm table-striped table-fixed" id="tableDeviceAdmin">
       <thead>
         <tr>
           <th class="text-warning bg-dark" style="width: 10%">MODELO</th>
           <th class="text-warning bg-dark" style="width: 10%">TIPO</th>
-          <th class="text-warning bg-dark" style="width: 20%">HD</th>
-          <th class="text-warning bg-dark" style="width: 10%">RAM</th>
+          <th class="text-warning bg-dark" style="width: 5%">HD</th>
+          <th class="text-warning bg-dark" style="width: 5%">RAM</th>
           <th class="text-warning bg-dark" style="width: 10%">MAC</th>
           <th class="text-warning bg-dark" style="width: 10%">S/N</th>
           <th class="text-warning bg-dark" style="width: 10%">FECHA TEIN</th>
           <th class="text-warning bg-dark" style="width: 10%">FECHA DEPART</th>
           <th class="text-warning bg-dark" style="width: 10%">IP</th>
-          <th class="text-warning bg-dark" style="width: 10%">INCIDENCIAS</th>
+          <th class="text-warning bg-dark" style="width: 10%">Nª INCIDENCIAS</th>
           <th class="text-warning bg-dark" style="width: 10%">Seleccionar</th>
         </tr>
       </thead>
@@ -57,7 +69,13 @@ function listDevices($deviceList)
 
           //Numero de incidencias del device
           $incidencesDevice = getDeviceIncidences($deviceId);
-          $numberIncidences = count($incidencesDevice);
+          if (!empty($incidencesDevice) || $incidencesDevice != null ) {
+            $numberIncidences = count($incidencesDevice);
+          } else {
+            
+            $numberIncidences = 0;
+          }
+         
                    
 ?>
           <tr>
@@ -80,8 +98,9 @@ function listDevices($deviceList)
           </tr>
 <?php
         }
-        echo "Sin dispositivos";
+        
       }
+      echo "Sin dispositivos";
 ?>
       </tbody>
     </table>
