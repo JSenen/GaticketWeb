@@ -1,7 +1,8 @@
 <?php
 require_once './model/api.php';
+require_once './model/domain/Device.php';
 
-
+$typo = new Device();
 $urlAddType = BASE_URL.'types';
 
 function listTypes($typelist)
@@ -34,17 +35,16 @@ function listTypes($typelist)
       <tbody>
        
 <?php 
+      if (!isset($typo)) {
+        $typo = new Device();
+      }
       if (is_array($typelist) && !empty($typelist)) {
         foreach ($typelist as $type) {
 
           //Totales por tipo
         $typeId = $type['typeId'];
-        $typo = getAllByType($typeId);
-        if ($typo !=null) {
-          $numberType = count($typo);
-        } else {
-          $numberType = 0;
-        }
+        $devices = $typo->getAllByType($typeId);
+        $numberType = count($devices);
        
                    
 ?>
