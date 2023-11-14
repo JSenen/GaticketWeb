@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <style>
     /* Estilo para el bocadillo de chat */
 .chat-bubble {
-    background-image: url('./resources/img/chat_icon.png'); /* Reemplaza 'ruta-de-tu-imagen.png' con la ruta correcta de tu imagen */
+    background-image: url('./resources/img/chat_icon.png'); 
     background-size: cover;
     width: 70px; /* Ancho de la imagen */
     height: 50px; /* Altura de la imagen */

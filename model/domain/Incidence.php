@@ -27,8 +27,6 @@ function recordTicket() {
         // Inicializa $endpoint a un valor predeterminado
         $endpoint_device = BASE_URL . 'device';
 
-        // Inicializa $endpoint a un valor predeterminado
-$endpoint_device = BASE_URL . 'device';
 // Verifica si se proporciona deviceSerial o deviceMac
 if (
     (isset($_POST['deviceSerial']) && !empty($_POST['deviceSerial'])) ||

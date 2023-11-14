@@ -44,7 +44,7 @@ $fecha_actual = date('d-m-Y');
 </div>
    
 
-<script>
+<!-- <script>
   $(document).ready(function () {
     $('#tableHistory').DataTable({
       "order": [[4, "des"]],
@@ -64,6 +64,61 @@ $fecha_actual = date('d-m-Y');
 
     });
   });
+</script> -->
+<!-- Modal -->
+<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="historyModalLabel">Detalles de la Incidencia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Usuario:</strong> <span id="modalHistoryUser"></span></p>
+                <p><strong>Asunto:</strong> <span id="modalHistoryTheme"></span></p>
+                <p><strong>Incidencia:</strong> <span id="modalHistoryIncidence"></span></p>
+                <p><strong>Solución:</strong> <span id="modalHistorySolution"></span></p>
+                <p><strong>Fecha Solución:</strong> <span id="modalHistoryDateFinish"></span></p>
+                <p><strong>Admin:</strong> <span id="modalHistoryAdmin"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#tableHistory').DataTable({
+            "order": [[4, "desc"]],
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "Sin resultados - lo lamento",
+                "info": "Mostrando _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(Filtrando _MAX_ registros totales)",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "search": "Buscar"
+            }
+        });
+
+        // Manejar clic en cualquier fila de la tabla
+        $('#tableHistory tbody').on('click', 'tr', function () {
+            var rowData = $('#tableHistory').DataTable().row(this).data();
+
+            // Llenar el modal con los datos de la fila
+            $('#modalHistoryUser').text(rowData[0]);
+            $('#modalHistoryTheme').text(rowData[1]);
+            $('#modalHistoryIncidence').text(rowData[2]);
+            $('#modalHistorySolution').text(rowData[3]);
+            $('#modalHistoryDateFinish').text(rowData[4]);
+            $('#modalHistoryAdmin').text(rowData[5]);
+
+            // Mostrar el modal
+            $('#historyModal').modal('show');
+        });
+    });
 </script>
 <!-- Boton actualizar pagina -->
 <div class="container">
