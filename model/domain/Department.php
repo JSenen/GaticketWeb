@@ -1,4 +1,7 @@
 <?php
+/**
+ * Clase Department. Contiene los atributos y metodos relacionados con la entidad Departamentos
+ */
 class Department {
 
   public $departemtId;
@@ -9,7 +12,9 @@ class Department {
 
   function __construct(){}
 
-  //================ AGREGAR DEPARTAMENTO ===================
+/**
+ * Grabar un nuevo ticket de incidencia 
+ */
 function recordNewDepart(){
   if (session_status() == PHP_SESSION_NONE) {
       session_start();
@@ -43,6 +48,11 @@ function recordNewDepart(){
       }
        
     }
+    /**
+     * Eliminar un departamento
+     * 
+     * @param tipo $idDepart Número ID del departamento
+     */
 
           //===================== ELIMINAR DEPARTAMENTO ==================
     function eraseDepart($idDepart){
@@ -63,7 +73,10 @@ function recordNewDepart(){
       curl_close($ch);
     }
 
-    //=========== UPDATE DEPARTAMENTO ===============
+ /**
+  * Actualizar un departamento
+  * @param tipo $idDepart Número ID del departamento
+  */
 function changeDepart($idDepart){
 
   if (session_status() == PHP_SESSION_NONE) {
@@ -106,7 +119,10 @@ function changeDepart($idDepart){
          }         
  }
 
- //==================== DATOS DEPARTAMENTO USUARIO ==========================================
+ /**
+  * Obtener el departamento en el que se encuentra un usuario
+  * @param tipo $userId Numero ID del usuario 
+  */
 
 function getUserDepartment($userid){
 
