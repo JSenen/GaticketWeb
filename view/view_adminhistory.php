@@ -91,7 +91,7 @@ $fecha_actual = date('d-m-Y');
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background-color: #F8F4F3;
     padding: 20px;
     border-radius: 5px;
     z-index: 1001;
@@ -117,7 +117,7 @@ $fecha_actual = date('d-m-Y');
         <p><strong>Incidencia:</strong> <span id="modalHistoryIncidence"></span></p>
         <p><strong>Solución:</strong> <span id="modalHistorySolution"></span></p>
         <p><strong>Fecha Solución:</strong> <span id="modalHistoryDateFinish"></span></p>
-        <p><strong>Admin:</strong> <span id="modalHistoryAdmin"></span></p>
+        <p><strong>Administrador:</strong> <span id="modalHistoryAdmin"></span></p>
     </div>
 </div>
 <script>
