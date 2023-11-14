@@ -5,6 +5,7 @@ require_once './model/api.php';
 require_once './model/domain/IncidenceHistory.php';
 $fecha_actual = date('d-m-Y');
 ?>
+
 <div class="contenido">
   
   <table class="table table-sm table-striped table-fixed" id="tableHistory">
@@ -25,7 +26,7 @@ $fecha_actual = date('d-m-Y');
       foreach ($listHistory as $history) {
         
 ?>
-        <tr>
+         <tr onclick="fillPopup('<?php echo $history['historyTip']; ?>', '<?php echo $history['historyTheme']; ?>', '<?php echo $history['historyCommit']; ?>', '<?php echo $history['historySolution']; ?>', '<?php echo $history['historyDateFinish']; ?>', '<?php echo $history['historyAdmin']; ?>'); openPopup();">
           <td style="vertical-align: middle; font-weight: bold; font-size: 18px;"><?php echo $history['historyTip'];?></td>
           <td style="vertical-align: middle;"><?php echo $history['historyTheme'];?></td>
           <td style="vertical-align: middle;"><?php echo $history['historyCommit'];?></td>
@@ -44,7 +45,7 @@ $fecha_actual = date('d-m-Y');
 </div>
    
 
-<!-- <script>
+<script>
   $(document).ready(function () {
     $('#tableHistory').DataTable({
       "order": [[4, "des"]],
@@ -64,67 +65,80 @@ $fecha_actual = date('d-m-Y');
 
     });
   });
-</script> -->
-<!-- Modal -->
-<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="historyModalLabel">Detalles de la Incidencia</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Usuario:</strong> <span id="modalHistoryUser"></span></p>
-                <p><strong>Asunto:</strong> <span id="modalHistoryTheme"></span></p>
-                <p><strong>Incidencia:</strong> <span id="modalHistoryIncidence"></span></p>
-                <p><strong>Solución:</strong> <span id="modalHistorySolution"></span></p>
-                <p><strong>Fecha Solución:</strong> <span id="modalHistoryDateFinish"></span></p>
-                <p><strong>Admin:</strong> <span id="modalHistoryAdmin"></span></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function () {
-        $('#tableHistory').DataTable({
-            "order": [[4, "desc"]],
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "Sin resultados - lo lamento",
-                "info": "Mostrando _PAGE_ de _PAGES_",
-                "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(Filtrando _MAX_ registros totales)",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-                "search": "Buscar"
-            }
-        });
-
-        // Manejar clic en cualquier fila de la tabla
-        $('#tableHistory tbody').on('click', 'tr', function () {
-            var rowData = $('#tableHistory').DataTable().row(this).data();
-
-            // Llenar el modal con los datos de la fila
-            $('#modalHistoryUser').text(rowData[0]);
-            $('#modalHistoryTheme').text(rowData[1]);
-            $('#modalHistoryIncidence').text(rowData[2]);
-            $('#modalHistorySolution').text(rowData[3]);
-            $('#modalHistoryDateFinish').text(rowData[4]);
-            $('#modalHistoryAdmin').text(rowData[5]);
-
-            // Mostrar el modal
-            $('#historyModal').modal('show');
-        });
-    });
 </script>
 <!-- Boton actualizar pagina -->
 <div class="container">
   <button type="button" class="btn btn-info" onclick="location.reload()">Actualizar</button>
 </div>
-<?php
 
+<div id="popup" class="popup">
+  <span class="close" onclick="closePopup()">&times;</span>
+  <h5>Detalles de la Incidencia</h5>
+  <p><strong>Usuario:</strong> <span id="popupHistoryUser"></span></p>
+  <p><strong>Asunto:</strong> <span id="popupHistoryTheme"></span></p>
+  <p><strong>Incidencia:</strong> <span id="popupHistoryIncidence"></span></p>
+  <p><strong>Solución:</strong> <span id="popupHistorySolution"></span></p>
+  <p><strong>Fecha Solución:</strong> <span id="popupHistoryDateFinish"></span></p>
+  <p><strong>Admin:</strong> <span id="popupHistoryAdmin"></span></p>
+</div>
+
+<!-- Modal -->
+<style>
+  /* Estilos del modal */
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1001;
+    max-width: 400px; /* Ajusta según sea necesario */
+    width: 100%;
+    text-align: center;
+  }
+
+  .close {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+</style>
+<div id="historyModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h5>Detalles de la Incidencia</h5>
+        <p><strong>Usuario:</strong> <span id="modalHistoryUser"></span></p>
+        <p><strong>Asunto:</strong> <span id="modalHistoryTheme"></span></p>
+        <p><strong>Incidencia:</strong> <span id="modalHistoryIncidence"></span></p>
+        <p><strong>Solución:</strong> <span id="modalHistorySolution"></span></p>
+        <p><strong>Fecha Solución:</strong> <span id="modalHistoryDateFinish"></span></p>
+        <p><strong>Admin:</strong> <span id="modalHistoryAdmin"></span></p>
+    </div>
+</div>
+<script>
+  function openPopup() {
+    document.getElementById("popup").style.display = "block";
+  }
+
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+  }
+
+  // Llenar la ventana emergente con los datos
+  function fillPopup(user, theme, incidence, solution, dateFinish, admin) {
+    document.getElementById("popupHistoryUser").innerText = user;
+    document.getElementById("popupHistoryTheme").innerText = theme;
+    document.getElementById("popupHistoryIncidence").innerText = incidence;
+    document.getElementById("popupHistorySolution").innerText = solution;
+    document.getElementById("popupHistoryDateFinish").innerText = dateFinish;
+    document.getElementById("popupHistoryAdmin").innerText = admin;
+  }
+</script>
+<?php
 include './view/view_footer.php';
 ?>
