@@ -1,8 +1,12 @@
 <?php
 require_once 'config/config.php';
-
-
-// Obtenemos el controlador y la acción. Si no, por defecto
+/**
+ * Obtiene el controlador y la acción, y luego ejecuta la acción correspondiente.
+ *
+ * @param string $controller El controlador a utilizar.
+ * @param string $action La acción a ejecutar.
+ * @param string $id El ID asociado a la acción (puede ser vacío).
+ */
 $controller = isset($_GET['controller']) ? $_GET['controller'] : DEFAULT_CONTROLLER;
 $action = isset($_GET['action']) ? $_GET['action'] : DEFAULT_ACTION;
 $id = isset($_GET['id']) ? $_GET['id'] : "";

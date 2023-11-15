@@ -9,13 +9,18 @@ require_once './model/domain/Incidence.php';
 require_once './model/domain/IncidenceHistory.php';
 require_once './model/domain/Messages.php';
 
+/**
+ * Grabar la incidencia del usuario
+ */
 function firstPage(){
     session_start();
     include('./view/view_user.php');
     $incidenceInstance = new Incidence();
     $incidenceInstance->recordTicket();
 }
-
+/**
+ * Listar las incidencias del usuario
+ */
 function listIncidencesUser(){
     
     session_start();
@@ -32,7 +37,9 @@ function listIncidencesUser(){
     include('./view/view_userincidences.php');
     listUserIncidences($userincidences);
 }
-
+/**
+ * Ver los detalles de una incidencia por parte del usuario
+ */
 function viewIncidence($idIncidence){
     session_start();
     $user['userId']= $_SESSION['user_id'];

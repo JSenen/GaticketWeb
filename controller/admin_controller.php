@@ -28,6 +28,12 @@ function ticketlist(){
 }
 /** Funcion que maneja la resolucion de incidencias y los mensajes
  *  @param int $adminTip TIP del adminsitrador
+ *  @param int $adminId ID del administrador
+ * @param array  $incidenceToSolve datos completos de incidencia
+ * @param string $messageCommit cuerpo del mensaje
+ * @param string $solution solucion a la incidencia
+ * 
+ *  
  */
 function getIncidence($idIncidence){
      // Comprobamos que la sesión esté iniciada
@@ -65,7 +71,9 @@ function getIncidence($idIncidence){
     
 
 }
-//==== PAGINA ADMIN USUARIOS =====
+/**
+ * Gestiona los usuarios por el administrador
+ */
 function userChanges(){
     session_start();
     $user['userId']= $_SESSION['user_id'];
@@ -76,7 +84,9 @@ function userChanges(){
     include './view/view_admin.php';
     listUsers($userList);
 }
-//==== AÑADIR USUARIO =====
+/**
+ * Añadir un nuevo usuario desde el administrados
+ */
 function addUser(){
 
     session_start();
@@ -91,7 +101,9 @@ function addUser(){
     $userInstance->recordUserfromAdmin();
 
 }
-//==== AÑADIR TIPO DISPOSITIVO =====
+/**
+ * Añadir un nuevo tipo de dispositivo desde el adminstrador
+ */
 function addType(){
 
     if (session_status() !== PHP_SESSION_ACTIVE) {
@@ -105,7 +117,9 @@ function addType(){
     recordNewType();
 
 }
-//==== AÑADIR DISPOSITIVO ====
+/**
+ * Añadir un nuevo dispositivo desde el administrador
+ */
 function addDevice(){
     session_start();
     $user['userId']= $_SESSION['user_id'];
@@ -126,7 +140,9 @@ function addDevice(){
 
 
 }
-//==== ELIMINAR DISPOSITIVO =====
+/**
+ * Elimninar un dispositivo
+ */
 function deleteDevice($idDevice){
     session_start();
     $user['userId'] = $_SESSION['user_id'];
@@ -137,7 +153,9 @@ function deleteDevice($idDevice){
 
 }
 
-//==== ELIMINAR USUARIO =====
+/**
+ * Eliminar un usuario
+ */
 function deleteUser($iduser) {
     session_start();
     $user['userId'] = $_SESSION['user_id'];
@@ -148,7 +166,7 @@ function deleteUser($iduser) {
     $userInstance->eraseUser($iduser); // Pasar $iduser como argumento
 }
 
-//==== PAGINA ADMIN DISPOSITIVOS ========
+/** Actualizar los datos de un dispositivo */
 function deviceChanges(){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -161,7 +179,9 @@ function deviceChanges(){
     listDevices($deviceList);
 
 }
-//======= ADMIN AÑADIR DEPARTAMENTO ====
+/**
+ * Añadir un nuevo departamento
+ */
 function addDepart(){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -174,7 +194,9 @@ function addDepart(){
     $departmentInstance->recordNewDepart();
     
 }
-//======= ADMIN DEPARTAMENTOS ==========
+/**
+ * Actualizar un departamento
+ */
 function departmentChanges(){
     session_start();
     $user['userId']= $_SESSION['user_id'];
@@ -186,7 +208,9 @@ function departmentChanges(){
     listDepart($departlist);
     
 }
-//======== ADMIN TIPOS =================
+/**
+ * Administrar los tipos de dispositivos
+ */
 function typeChanges(){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -200,7 +224,9 @@ function typeChanges(){
     listTypes($typelist);
     
 }
-//======= ADMIN BORRAR TIPO ===========
+/**
+ * Eliminar un tipo de dispositivo
+ */
 function deleteType($id){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -210,7 +236,9 @@ function deleteType($id){
     $typeToErase = new Type();
    $typeToErase->eraseType($id);
 }
-//======= ADMIN NET LIST ===========
+/**
+ * Administrar la red
+ */
 function netChanges(){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -223,7 +251,7 @@ function netChanges(){
     include './view/view_admin.php';
     listNet($netlist);
 }
-//======= LIBERAR NET IP ===========
+/** Liberar una IP */
 function freeIp($idNet){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -233,7 +261,9 @@ function freeIp($idNet){
     $netInstance = new Net();
     $netInstance->eraseIp($idNet);
 }
-//======= AGREGAR IP  ===========
+/**
+ * Agregar una nueva IP
+ */
 function addIp(){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -246,7 +276,7 @@ function addIp(){
     $netInstance->recordNewIp();
 
 }
-//======= ASIGNAR IP A DISPOSITIVO =======
+/** Asignar una IP a un dispositivo */
 
 function giveIp($deviceId){
     if (session_status() !== PHP_SESSION_ACTIVE) {
@@ -261,7 +291,9 @@ function giveIp($deviceId){
     setIpDevice($device);
     
 }
-//======= BORRAR DEPARTAMENTO ========
+/** 
+ * Eliminar un departamento
+ */
 function deleteDepart($id){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -271,7 +303,7 @@ function deleteDepart($id){
     $departmentInstance = new Department();
     $departmentInstance->eraseDepart($id);
 }
-//======== UPDATE DEPARTAMENTO =========
+/** Actualizar un departamento */
 function updateDepart($idDepart){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();

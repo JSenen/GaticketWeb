@@ -1,9 +1,31 @@
 <?php
+/**
+ * URL base para la aplicación.
+ * @var string
+ */
 define('BASE_URL','http://localhost:8080/');
-//Token de la API ChatGPT
+/**
+ *Obtiene el token para la api key de chatgpt
+ *
+ * @var string
+ */
 define('API_KEY',getenv('MI_API_KEY'));
-
-define('CONTROLLER_FOLDER', "controller/"); //Directorio donde definimos los controladores
-define('DEFAULT_CONTROLLER', "login");      //Controlador por defecto
-define('DEFAULT_ACTION', "loginpage");      //Accion por defecto
+/**
+ * Carpeta donde se almacenan los controladores.
+ *
+ * @var string
+ */
+define('CONTROLLER_FOLDER', "controller/"); 
+/**
+ * Controlador por defecto.
+ *
+ * @var string
+ */
+define('DEFAULT_CONTROLLER', "login");      
+/**
+ * Acción por defecto.
+ *
+ * @var string
+ */
+define('DEFAULT_ACTION', "loginpage"); 
 ?>
