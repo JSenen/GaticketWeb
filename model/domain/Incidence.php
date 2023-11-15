@@ -90,7 +90,10 @@ if (
 //===================== DATOS COMPLETOS INCIDENCIAS por ID ==================================
 function searchIncidence($incidenceId){
     //Buscamos la incidencia
-  
+  // Comprobamos que la sesión esté iniciada
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
     $urllistincidences = BASE_URL.'incidences/'.$incidenceId;
     $ch = curl_init($urllistincidences);
     curl_setopt($ch, CURLOPT_URL, $urllistincidences);
@@ -146,7 +149,11 @@ function searchIncidence($incidenceId){
             
     return $resultIncidence;
 }
-//======= LEER TODO LOS MENSAJES DE LA INCIDENCIA
+/** Funcion que obtiene todos los mensajes de la incidencia
+ * @param string $usrsome endpoint de la peticion a la api
+ * @param array $resultlist listado de los mensajes
+ * @return array $resultlist
+ */
 function getAllMenssagesIncidence($idIncidence){
     //Listamos los tipos
     $usrsome = BASE_URL.'messages/'.$idIncidence;

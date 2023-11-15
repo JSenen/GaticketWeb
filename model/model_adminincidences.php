@@ -1,7 +1,17 @@
 <?php
 require_once './model/api.php';
 require_once './model/domain/Department.php';
-
+/**
+ * Funcion que genera la tabla con la totalidad de las incidencias
+ * @param array $incidencesList Listado de todas las incidencias
+ * @param array $incidence array de una única incidencia con todos los datos
+ * @param string $class_td_cell define el tipo de clase para aplicar css
+ * @param string $estado estado de la incidencia (Activa, En proceso o Finalizada)
+ * @param string $usertip TIP del usuario
+ * @param string $userid Numero Id del usuario
+ * @param array $departmentUser Datos del departamento del usuario
+ * @param string $deviceName modelo del dispositivo
+ */
 function listadminincidences($incidencesList)
 {
   ?>

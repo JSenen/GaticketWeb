@@ -5,10 +5,17 @@ class Messages{
     public $messageCommit;
     public $timeMessage;
 
-   function adminMessages($idIncidence,$idAdmin){
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
+    /** Función que guarda los mensajes entre usuarios y administradores
+     * @param string $messageCommit Cuerpo del mensaje
+     * @param DateTime $timeMessage hora de envio del mensaje
+     * @param string $endpoint_device endpoint de la api para el registro de mensajes
+     * @param int $idIncidence Numero Id de la incidencia
+     * @param int $idAdmin Numero Id del que envia el mensaje
+     * @param array $response Listado de los mensajes obtenidos de la api
+     * @return array lista de mensajes por Id de incidencia e Id de usuario
+     */
+   function adminMessages($idIncidence,$idUser){
+   
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Recopila los datos del mesnaje
         $messageCommit = $_POST['messageCommit'];
@@ -20,7 +27,7 @@ class Messages{
             'timeMessage' => $timeMessage
         ];
         // Inicializa $endpoint a un valor predeterminado
-        $endpoint_device = BASE_URL . 'messages/'.$idIncidence.'/'.$idAdmin;
+        $endpoint_device = BASE_URL . 'messages/'.$idIncidence.'/'.$idUser;
 
         // Inicializa cURL
         $ch = curl_init($endpoint_device);
@@ -45,7 +52,14 @@ class Messages{
     
     
    }
-
+    /** Función que obtiene todos los mensajes desde el Id de una incidencia
+     * @param string $urlmessage url de peticion a la api
+     * @param string $idIncidence Numero Id de la incidencia
+     * @param int $idIncidence Numero Id de la incidencia
+     * @param int $idAdmin Numero Id del que envia el mensaje
+     * @param array $response Listado de los mensajes obtenidos de la api
+     * @return array lista de mensajes por Id de incidencia
+     */
    function getAllMessages($idIncidence){
 
     $urlmessage = BASE_URL.'message/'.$idIncidence;

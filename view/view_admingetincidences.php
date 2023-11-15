@@ -4,7 +4,7 @@ require_once 'view_admin.php';
 require_once './model/api.php';
 require_once './model/domain/Incidence.php';
 $fecha_actual = date('d-m-Y');
-
+/* 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["submitMessage"])) {
         // Procesar el formulario de mensajes
@@ -15,8 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Procesar el formulario de finalizar incidencia
         $solution = $_POST["solution"];
         $incidenceCatch->finsihIncidence($idIncidence,$incidenceToSolve,$solution,$adminTip);
-    }
-}
+    } 
+}*/
 ?>
 <style>
     /* Estilo para el bocadillo de chat */
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 <div class="contenido fs-12">
   
-  <table class="table table-sm table-striped table-fixed fs-8" id="tableMessages">
+  <table class="table table-sm table-striped table-fixed fs-8" id="tableMessagesAdmin">
     <thead>
       <tr>
         <th class="text-warning bg-dark" style="width: 3%">De</th>
@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <!-- JQuery table -->
       <script>
     $(document).ready(function () {
-      $('#tableMessages').DataTable({
+      $('#tableMessagesAdmin').DataTable({
         "order": [[2, "des"]],
         "language": {
           "lengthMenu": "Mostrar _MENU_ registros por página",

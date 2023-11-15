@@ -9,7 +9,11 @@ require_once './model/domain/Incidence.php';
 require_once './model/domain/IncidenceHistory.php';
 require_once './model/domain/Messages.php';
 
-//==== MODIFICAR ADMIN TICKETS =====
+/** Funcion que administra los tickets de incidencia por parte del administrador
+ * @param int $adminId Numero Id del administrador
+ * @param array $incidences Listado de las incidencias 
+ * @return array listadminincidences($incidences) Listado con todas las incidencias
+ */
 function ticketlist(){
 
     //Obtner el Id de usuario administrador
@@ -22,9 +26,14 @@ function ticketlist(){
     include './view/view_admin.php';
     listadminincidences($incidences);
 }
-//==== PAGINA RESOLVER INCIDENCIA y MENSAJES =====
+/** Funcion que maneja la resolucion de incidencias y los mensajes
+ *  @param int $adminTip TIP del adminsitrador
+ */
 function getIncidence($idIncidence){
-    session_start();
+     // Comprobamos que la sesión esté iniciada
+     if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     $user['userId']= $_SESSION['user_id'];
     $user['userTip'] = $_SESSION['user_tip'];
     $adminId = $user['userId'];
@@ -33,7 +42,7 @@ function getIncidence($idIncidence){
     $messageGetSet = new Messages();
     //Asociar Incidence a admin
     $incidenceCatch->giveIncidenceAdmin($idIncidence,$adminId);
-    //Buscar todos los datos de la incidencia
+    //Buscar todos los datos de la incidencia y cambiar estado
     $incidenceToSolve = $incidenceCatch->searchIncidence($idIncidence);
     //Obtener todos los mensajes o finalizar
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -48,11 +57,12 @@ function getIncidence($idIncidence){
             // Pasa $incidenceToSolve como argumento a finsihIncidence
             $incidenceCatch->finsihIncidence($idIncidence, $incidenceToSolve, $solution,$adminTip);
             
-        }
+        } 
     }
     //Leer todos los mensajes de la incidencia
     $listmessages = $incidenceCatch->getAllMenssagesIncidence($idIncidence);
     include './view/view_admingetincidences.php';
+    
 
 }
 //==== PAGINA ADMIN USUARIOS =====
