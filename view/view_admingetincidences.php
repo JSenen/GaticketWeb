@@ -4,19 +4,7 @@ require_once 'view_admin.php';
 require_once './model/api.php';
 require_once './model/domain/Incidence.php';
 $fecha_actual = date('d-m-Y');
-/* 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["submitMessage"])) {
-        // Procesar el formulario de mensajes
-        $messageCommit = $_POST["messageCommit"];
-        $messageGetSet->adminMessages($idIncidence, $adminId);
-        
-    } elseif (isset($_POST["submitSolution"])) {
-        // Procesar el formulario de finalizar incidencia
-        $solution = $_POST["solution"];
-        $incidenceCatch->finsihIncidence($idIncidence,$incidenceToSolve,$solution,$adminTip);
-    } 
-}*/
+
 ?>
 <style>
     /* Estilo para el bocadillo de chat */
@@ -29,11 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* Estilo adicional para centrar verticalmente el contenido dentro del bocadillo de chat */
-.chat-bubble label {
-    margin: 0;
 }
 </style>
 <div class="container mt-5">
@@ -100,19 +83,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             ?>
         </table>
-       <!-- Formulario mensajes -->
+     <!-- Formulario mensajes -->
     <form method="post" action="" class="mt-3">
-            <div class="mb-3 d-flex position-relative">
-                <!-- Bocadillo de chat con imagen de fondo -->
-                <div class="chat-bubble">
-                    <label for="mensaje" class="form-label me-2 fw-bold">CHAT</label>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="mb-6 d-flex position-relative">
+                    <!-- Bocadillo de chat con imagen de fondo -->
+                    <div class="chat-bubble">
+                        <label for="mensaje" class="form-label me-2 fw-bold">CHAT</label>
+                    </div>
+                    <!-- Textarea y botón Chat propio-->
+                    <textarea class="form-control me-2" name="messageCommit" rows="1" required></textarea>
+                    <button type="submit" class="btn btn-danger" name="submitMessage">Enviar</button>
+                    <div class="mb-3 d-flex position-relative" style="padding-left: 80px;">
+                        <a href="index.php?controller=admin&action=startChatGpt">
+                            <img src="./resources/img/icon_ia.jpg" height="80px" width="100px" alt="Acceso a chatGPT">
+                        </a>
+                        <div class="align-self-center">
+                            <label for="ia" class="form-label me-2 fw-bold">Inteligencia Artificial</label>
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- Textarea y botón -->
-                <textarea class="form-control me-2" name="messageCommit" rows="2" required></textarea>
-                <button type="submit" class="btn btn-danger" name="submitMessage">Enviar</button>
             </div>
+        </div>
     </form>
+
     <?php
     } else {
         echo '<p class="text-center">No se ha proporcionado información de la incidencia.</p>';
@@ -187,7 +182,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     });
 });
   </script>
-
+<?php
+include 'view_footer.php';
+?>
 </body>
 
 </html>

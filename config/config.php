@@ -9,7 +9,7 @@ define('BASE_URL','http://localhost:8080/');
  *
  * @var string
  */
-define('API_KEY',getenv('MI_API_KEY'));
+define('API_KEY','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');
 /**
  * Carpeta donde se almacenan los controladores.
  *
@@ -28,4 +28,5 @@ define('DEFAULT_CONTROLLER', "login");
  * @var string
  */
 define('DEFAULT_ACTION', "loginpage"); 
+
 ?>

@@ -8,6 +8,8 @@ require_once './model/domain/Type.php';
 require_once './model/domain/Incidence.php';
 require_once './model/domain/IncidenceHistory.php';
 require_once './model/domain/Messages.php';
+require_once './model/chatGPT.php';
+
 
 /** Funcion que administra los tickets de incidencia por parte del administrador
  * @param int $adminId Numero Id del administrador
@@ -343,13 +345,33 @@ function updateUser($idUser){
    
 }   
 
-//========= PAGINA HISTORIAL ========
+/**
+ * Acceso a la página de historial de incidencias
+ * @param array $listHistory listado de incidencias archivadas
+ */
 function historyList(){
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
     $incidencesHsitory = new IncidenceHistory();
     $listHistory = $incidencesHsitory->getAllHistory();
     include './view/view_adminhistory.php';
+    }
+}
+/**
+ * Acceso a la página de chat con la inteligencia artifical
+ */
+function startChatGpt() {
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+
+        $result = ''; // Inicializa $result antes del bloque condicional
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $user_query = $_POST["user_query"];
+            $result = talkChatGpt($user_query);
+        }
+
+        include './view/view_admingpt.php';
     }
 }
 
