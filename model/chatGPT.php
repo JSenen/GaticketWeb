@@ -2,7 +2,7 @@
 function talkChatGpt($user_query){
     // Obtén la API key de las variables de entorno
     echo getenv("API_KEY");
-    define('API_KEY', getenv("API_KEY")); // Asegúrate de definir tu clave API
+    
 
     $api_url = "https://api.openai.com/v1/chat/completions"; 
 

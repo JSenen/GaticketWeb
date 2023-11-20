@@ -9,7 +9,7 @@ define('BASE_URL','http://localhost:8080/');
  *
  * @var string
  */
-define('API_KEY',getenv("API_KEY"));
+define('API_KEY','');
 /**
  * Carpeta donde se almacenan los controladores.
  *
