@@ -1,6 +1,8 @@
 <?php
 function talkChatGpt($user_query){
     // Obtén la API key de las variables de entorno
+    echo getenv("API_KEY");
+    define('API_KEY', getenv("API_KEY")); // Asegúrate de definir tu clave API
 
     $api_url = "https://api.openai.com/v1/chat/completions"; 
 
@@ -9,7 +11,7 @@ function talkChatGpt($user_query){
         "messages" => [],  
         "temperature" => 0.5,
         "max_tokens" => 256,
-        "query" => $user_query  // Añade el query d
+        "query" => $user_query  // Añade el query
     ]);
 
     $ch = curl_init($api_url);
@@ -26,12 +28,20 @@ function talkChatGpt($user_query){
     if ($response === false) {
         echo "Error en la solicitud a ChatGPT: " . curl_error($ch);
         return null;
-    } else {
-        $result = json_decode($response, true);
-        return $result['error']['message'];
     }
-    
+
+    // Cierra la solicitud
     curl_close($ch);
+
+    $result = json_decode($response, true);
+
+    // Verifica si hay un error en la respuesta
+    if (isset($result['error'])) {
+        return $result['error']['message'];
+    } else {
+        // Manejar la respuesta exitosa según tus necesidades
+        return $result['choices'][0]['message']['content'];
+    }
    
 }
 ?>

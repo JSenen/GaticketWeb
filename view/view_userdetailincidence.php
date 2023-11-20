@@ -110,13 +110,15 @@ $fecha_actual = date('d-m-Y');
         <?php
         if (is_array($listmessages) && !empty($listmessages)) {
             foreach ($listmessages as $message) {
+                $timeMessage = $message['timeMessage'];
+                $formattedDate = formatDate($timeMessage);
               
             
         ?>
     <tr>    
         <td style="vertical-align: middle; font-weight: bold; font-size: 12px;"><?php echo $message['emisorMessage']['userTip'];?></td>
             <td style="vertical-align: middle; font-weight: bold; font-size: 12px;"><?php echo $message['messageCommit'];?></td>
-            <td style="vertical-align: middle; font-weight: bold; font-size: 12px;"><?php echo $message['timeMessage'];?></td>
+            <td style="vertical-align: middle; font-weight: bold; font-size: 12px;"><?php echo $formattedDate;?></td>
           </tr>
           <?php
         }
@@ -153,7 +155,15 @@ $fecha_actual = date('d-m-Y');
     });
 });
   </script>
-
+<?php
+// Función para formatear la fecha
+function formatDate($timeMessage) {
+    $dateTime = new DateTime();
+    $dateTime->setDate($timeMessage[0], $timeMessage[1], $timeMessage[2]);
+    $dateTime->setTime($timeMessage[3], $timeMessage[4], $timeMessage[5]);
+    return $dateTime->format('d-m-Y H:i:s');
+}
+?>
 </body>
 
 </html>
