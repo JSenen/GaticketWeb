@@ -189,9 +189,7 @@ include 'view_footer.php';
 
 // Función para formatear la fecha
 function formatDate($timeMessage) {
-    $dateTime = new DateTime();
-    $dateTime->setDate($timeMessage[0], $timeMessage[1], $timeMessage[2]);
-    $dateTime->setTime($timeMessage[3], $timeMessage[4], $timeMessage[5]);
+    $dateTime = new DateTime($timeMessage);
     return $dateTime->format('d-m-Y H:i:s');
 }
 ?>
