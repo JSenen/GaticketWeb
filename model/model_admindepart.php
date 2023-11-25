@@ -35,9 +35,7 @@ function listDepart($departlist)
       if (is_array($departlist) && !empty($departlist)) {
         foreach ($departlist as $depart) {
 
-          // TODO: Numero de incidencias del departamento
-          /* $incidencesDevice = getDeviceIncidences($deviceId);
-          $numberIncidences = count($incidencesDevice); */
+        
                    
 ?>
           <tr>

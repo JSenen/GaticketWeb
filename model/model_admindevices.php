@@ -1,8 +1,10 @@
 <?php
 require_once './model/api.php';
+require_once './model/domain/Device.php';
 
 function listDevices($deviceList)
 {
+  $deviceSearch = new Device();
   ?>
   <style>
   /* ESTILO TABLA DEVICE ADMIN +/
@@ -56,19 +58,9 @@ function listDevices($deviceList)
         }else{
           $deviceType = $device['deviceType']['typeName'];
         }
-        
-
-         // Gestion campo departamento
-          /*  if (empty($userdepartment)) {
-            $userdepartment = [
-                'departmentName' => 'Sin datos',
-                'departmentPhone' => 'Sin datos',
-                'departmentMail' => 'Sin datos'
-            ];
-          } */
-
+      
           //Numero de incidencias del device
-          $incidencesDevice = getDeviceIncidences($deviceId);
+          $incidencesDevice = $deviceSearch->getDeviceIncidences($deviceId);
           if (!empty($incidencesDevice) || $incidencesDevice != null ) {
             $numberIncidences = count($incidencesDevice);
           } else {

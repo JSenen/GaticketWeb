@@ -1,58 +1,5 @@
 <?php
 
-
-//===================== LISTAR INCIDENCIAS DISPOSITIVOS ==================================
-function getDeviceIncidences($deviceId){
-    $urllistincidences = BASE_URL.'incidences/device/'.$deviceId;
-    $ch = curl_init($urllistincidences);
-    curl_setopt($ch, CURLOPT_URL, $urllistincidences);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    //Recopila el listado de incidencias del usuario
-    //Decodificamos json
-    $deviceIncidences = json_decode($result, true);
-            
-    return $deviceIncidences;
-}
-
-
-//================== TODOS LOS USUARIOS ============================================
-
-function getAllUsers(){
-
-    //Listamos los usuarios
-    $urlUser = BASE_URL.'users';
-    $ch = curl_init($urlUser);
-    curl_setopt($ch, CURLOPT_URL, $urlUser);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $resultusers = curl_exec($ch);
-    curl_close($ch);
-
-    //Recopila los datos 
-    $userlist = json_decode($resultusers, true);
-
-    return $userlist;
-}
-
-//================== TODOS LOSDEPARTAMENTOS ============================================
-
-function getAllDepartments(){
-
-    //Listamos los usuarios
-    $urlDepart = BASE_URL.'departments';
-    $ch = curl_init($urlDepart);
-    curl_setopt($ch, CURLOPT_URL, $urlDepart);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $resultdepart = curl_exec($ch);
-    curl_close($ch);
-
-    //Recopila los datos 
-    $departlist = json_decode($resultdepart, true);
-
-    return $departlist;
-}
 //=============== AÑADIR DISPOSITIVO ==================================
 function recordDeviceAdmin(){
   
@@ -218,22 +165,7 @@ function getDeviceIp($ip){
 
     return $deviceIp;
 }
-// ============ BUSCAR DISPOSITIVO POR ID ===========================
-function getDeviceById($id){
-    //Listamos los tipos
-    $url = BASE_URL.'device/'.$id;
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $url = curl_exec($ch);
-    curl_close($ch);
 
-    //Recopila los datos 
-    $result = json_decode($url, true);
-
-    return $result;
-
-}
 // ========== ASIGNAR IP A DISPOSITIVO ============================
 function setIpDevice($device){
     //Comprobamos que session este iniciada
@@ -267,24 +199,6 @@ function setIpDevice($device){
 
 
 
-//============ ELIMINAR DISPOSITIVO ====================
-function eraseDevice($idDevice){
-    $url = BASE_URL . 'device/' . $idDevice; 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $response = curl_exec($ch);
-
-    if ($response === false) {
-        echo "Error de cURL: " . curl_error($ch);
-    } else {
-        $_SESSION['rolchange'] =  "Dispositivo eliminado: ";
-        header('Location: index.php?controller=admin&action=deviceChanges');
-    }
-
-    curl_close($ch);
-}
 
 
 

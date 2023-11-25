@@ -17,8 +17,7 @@ require_once './model/chatGPT.php';
  * @return array listadminincidences($incidences) Listado con todas las incidencias
  */
 function ticketlist(){
-
-    //Obtner el Id de usuario administrador
+     //Obtner el Id de usuario administrador
     session_start();
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
@@ -82,7 +81,7 @@ function userChanges(){
     $adminId = $user['userId'];
 
     include './model/model_adminusers.php';
-    $userList = getAllUsers();
+    $userList = getAllSomeThing('users');
     include './view/view_admin.php';
     listUsers($userList);
 }
@@ -96,7 +95,7 @@ function addUser(){
     $adminId = $user['userId'];
     
     //1º Capturar la lista de departamentos
-    $listdepartment = getAllDepartments();
+    $listdepartment = getAllSomeThing('departments');
     $userInstance = new User();
     //Mostrar formulario añadir usuarios
     include './view/view_adduser.php';
@@ -149,9 +148,9 @@ function deleteDevice($idDevice){
     session_start();
     $user['userId'] = $_SESSION['user_id'];
     $adminId = $user['userId'];
-
+    $deviceSearch = new Device();
     // Obtener usuario seleccionado
-    eraseDevice($idDevice); // Pasar $iduser como argumento
+    $deviceSearch->eraseDevice($idDevice); // Pasar $iduser como argumento
 
 }
 
@@ -205,7 +204,7 @@ function departmentChanges(){
     $adminId = $user['userId'];
 
     include './model/model_admindepart.php';
-    $departlist = getAllDepartments();
+    $departlist = getAllSomeThing('departments');
     include './view/view_admin.php';
     listDepart($departlist);
     
@@ -287,7 +286,8 @@ function giveIp($deviceId){
     $adminId = $user['userId'];
     }   
     //Obtener todas las Ip
-    $device = getDeviceById($deviceId);
+    $deviceSearch = new Device();
+    $device = $deviceSearch->getDeviceById($deviceId);
     $listIp = getAllSomeThing('net');
     include './view/view_addiptodevice.php';
     setIpDevice($device);
