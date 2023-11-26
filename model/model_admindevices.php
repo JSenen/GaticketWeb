@@ -86,7 +86,7 @@ function listDevices($deviceList)
                             echo $deviceIP;
                           }?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>    
-            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteDevice&id=<?php echo $device['deviceId']?>" class="btn btn-danger">Borrar</a></td> 
+            <td style="vertical-align: middle;"><?php if($_SESSION['user_rol'] == 'superusuario' ) { ?><a href="index.php?controller=admin&action=deleteDevice&id=<?php echo $device['deviceId']?>" class="btn btn-danger">Borrar</a><?php } ?></td> 
           </tr>
 <?php
         }

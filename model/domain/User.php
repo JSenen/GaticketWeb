@@ -113,8 +113,8 @@ function conection_login($tip,$clave){
                 $_SESSION['user_rol'] = $user['userRol']; 
                 
                 setcookie('gaticket', '', 86400); //Establecemos una cookie de 1 dia
-                if($user['userRol'] === 'administrador'){
-                    // Envio a pagina de administradors
+                if($user['userRol'] === 'administrador' OR $user['userRol'] == 'superusuario'){
+                    // Envio a pagina de administradores
                 header('location:index.php?controller=admin&action=ticketlist');
                 } else {
                     //Envio a pagina de usuarios

@@ -76,9 +76,11 @@ function getIncidence($idIncidence){
  * Gestiona los usuarios por el administrador
  */
 function userChanges(){
-    session_start();
-    $user['userId']= $_SESSION['user_id'];
-    $adminId = $user['userId'];
+    if(session_status() == PHP_SESSION_NONE){
+        session_start();
+        $user['userId']= $_SESSION['user_id'];
+        $adminId = $user['userId'];
+    }
 
     include './model/model_adminusers.php';
     $userList = getAllSomeThing('users');

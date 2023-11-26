@@ -44,7 +44,9 @@ function listDepart($departlist)
             <td style="vertical-align: middle;"><?php echo $depart['departmentMail'];?></td>
             <!-- TODO: Añadir total dispositivos y personal del departamento -->
             <td style="vertical-align: middle;"><?php echo $depart['departmentCity'];?></td>
-            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteDepart&id=<?php echo $depart['departemtId']?>" class="btn btn-outline-danger">Borrar</a><a href="index.php?controller=admin&action=updateDepart&id=<?php echo $depart['departemtId']?>" class="btn btn-outline-primary">Actualizar</a></td> 
+            <td style="vertical-align: middle;"><?php
+            if($_SESSION['user_rol'] == 'superusuario'){ ?>
+            <a href="index.php?controller=admin&action=deleteDepart&id=<?php echo $depart['departemtId']?>" class="btn btn-outline-danger">Borrar</a><a href="index.php?controller=admin&action=updateDepart&id=<?php echo $depart['departemtId']?>" class="btn btn-outline-primary">Actualizar</a></td> <?php } ?>
           </tr>
 <?php
         }

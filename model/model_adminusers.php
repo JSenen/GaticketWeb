@@ -64,8 +64,10 @@ function listUsers($userlist)
             <td style="vertical-align: middle;"><?php echo $userdepartment['departmentPhone'];?></td>
             <td style="vertical-align: middle;"><?php echo $userdepartment['departmentMail'];?></td>
             <td style="vertical-align: middle;"><?php echo $numberIncidences;?></td>
-            <td style="vertical-align: middle;"><?php echo $user['userRol'];?></td>    
-            <td style="vertical-align: middle;"><a href="index.php?controller=admin&action=deleteUser&id=<?php echo $user['userId']?>" class="btn btn-outline-danger">Borrar</a><a href="index.php?controller=admin&action=updateUser&id=<?php echo $user['userId']?>" class="btn btn-outline-success">Rol</a></td> 
+            <td style="vertical-align: middle;"><?php echo $user['userRol'];?></td> 
+            <td style="vertical-align: middle;"><?php
+            if ($_SESSION['user_rol'] == 'superusuario'){
+              ?><a href="index.php?controller=admin&action=deleteUser&id=<?php echo $user['userId']?>" class="btn btn-outline-danger">Borrar</a><a href="index.php?controller=admin&action=updateUser&id=<?php echo $user['userId']?>" class="btn btn-outline-success">Rol</a></td> <?php } ?>
           </tr>
 <?php
         }
