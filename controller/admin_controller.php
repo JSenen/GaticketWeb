@@ -112,10 +112,10 @@ function addType(){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }   
-
+    $typeAdd = new Type();
     //Mostrar formulario añadir nuevo tipo dispositivo
     include './view/view_addtype.php';
-    recordNewType();
+    $typeAdd->recordNewType();
 
 }
 /**
@@ -125,7 +125,8 @@ function addDevice(){
     session_start();
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
-
+    
+    $deviceSearch = new Device();
     //1º Capturar la lista de tipos
     $url = 'types';
     $listtypes = getAllSomeThing($url);
@@ -137,7 +138,7 @@ function addDevice(){
     $listdepart = getAllSomeThing($urldep);
     //Mostrar formulario añadir dispositivo
     include './view/view_adddevice.php';
-    recordDeviceAdmin();
+    $deviceSearch->recordDeviceAdmin();
 
 
 }
@@ -285,12 +286,13 @@ function giveIp($deviceId){
     $user['userId']= $_SESSION['user_id'];
     $adminId = $user['userId'];
     }   
+    $IpToAdd = new Net();
     //Obtener todas las Ip
     $deviceSearch = new Device();
     $device = $deviceSearch->getDeviceById($deviceId);
     $listIp = getAllSomeThing('net');
     include './view/view_addiptodevice.php';
-    setIpDevice($device);
+    $IpToAdd->setIpDevice($device);
     
 }
 /** 

@@ -90,6 +90,35 @@ function eraseIp($idNet) {
       }
 
 }
+// ========== ASIGNAR IP A DISPOSITIVO ============================
+function setIpDevice($device){
+    //Comprobamos que session este iniciada
+ if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        // Recopila los datos del formulario en los campos name de la vista
+        $netId = $_POST['netId'];
+        $deviceId = $_POST['deviceId'];
+
+        // Realiza una solicitud POST a la API para grabar tippo
+        $urlsave = BASE_URL.'net/'.$netId.'/'.$deviceId;
+        $ch = curl_init($urlsave);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($netData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_exec($ch);
+
+        echo '<div class="container">';
+        echo '<span>IP asignada</span>';
+        echo '</div>';
+                      
+        header("Refresh: 10; url=index.php?controller=admin&action=deviceChanges.php");
+
+        
+}
+}
 
 }
 ?>

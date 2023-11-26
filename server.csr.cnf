@@ -1,0 +1,13 @@
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+[dn]
+C = ES
+ST = Spain
+L = Barcelona
+O = Company name
+OU = Web Development
+CN = localhost
+emailAddress=juansenen@hotmail.com

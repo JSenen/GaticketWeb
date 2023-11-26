@@ -1,4 +1,7 @@
 GIT IGNORE
+# Archivos de certificado
+.ext
+.cnf
 # Configuration, tokens, variables
 .env
 
