@@ -236,6 +236,30 @@ function finsihIncidence($idIncidence,$incidenceToSolve,$solution,$adminTip){
         header('Location: index.php?controller=admin&action=ticketlist');
         exit();
     }
+
+    //============ REACTIVAR INCIDENCIA ===============
+    function changeStatus($idIncidence){
+        $urlChange = BASE_URL.'incidence/'.$idIncidence;
+        //Datos a actualizar, Id de admnistrador
+        $dataToChange = array (
+            'incidenceStatus' => 'reactivate'
+        );
+        $ch = curl_init($urlChange);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH'); // Indica que es una solicitud PATCH
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataToChange)); // Define los datos a enviar
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json', // Especifica el tipo de contenido (en este caso, JSON)
+        ]);
+        // Realiza la solicitud cURL y obtén la respuesta
+        $response = curl_exec($ch);
+        // Cierra la instancia cURL
+        curl_close($ch);
+        // Regresar a listado de Tickets
+        header('Location: index.php?controller=admin&action=ticketlist');
+        exit();
+        }
+
 }
 ?>
 

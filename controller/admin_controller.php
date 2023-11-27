@@ -378,6 +378,18 @@ function startChatGpt() {
         include './view/view_admingpt.php';
     }
 }
+/**
+ * reactivar incidencia
+ */
+function activateIncidence($idIncidence){
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    $incidenceChange = new Incidence();
+    $incidenceChange->changeStatus($idIncidence);
+
+}
+}
+
 
 
 ?>

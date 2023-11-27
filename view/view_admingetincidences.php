@@ -20,7 +20,16 @@ $fecha_actual = date('d-m-Y');
 }
 </style>
 <div class="container mt-5">
-    <h3 class="text-center">INCIDENCIA</h3>
+<div class="row">
+        <div class="col-md-6">
+            <h3 class="text-center">INCIDENCIA</h3>
+        </div>
+        <div class="col-md-6 text-end">
+            <a class="btn btn-danger btn-sm" <?php 
+            if (isset($incidenceToSolve) && !empty($incidenceToSolve)) {
+                ?> href="index.php?controller=admin&action=activateIncidence&id=<?php echo $incidenceToSolve['incidence']['incidencesId']?>">Reactivar</a><?php } ?>
+        </div>
+    </div>
 
     <?php
     // Verificar si $incidenceToSolve está definida y no está vacía
