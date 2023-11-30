@@ -1,14 +1,15 @@
 <?php
 function talkChatGpt($user_query){
-    
     $api_url = "https://api.openai.com/v1/chat/completions"; 
 
     $data = json_encode([
         "model" => "gpt-3.5-turbo",
-        "messages" => [],  
+        "messages" => [
+            ["role" => "system", "content" => "You are a helpful assistant."],
+            ["role" => "user", "content" => $user_query]
+        ],
         "temperature" => 0.5,
-        "max_tokens" => 256,
-        "query" => $user_query  // Añade el query
+        "max_tokens" => 256
     ]);
 
     $ch = curl_init($api_url);
@@ -39,6 +40,5 @@ function talkChatGpt($user_query){
         // Manejar la respuesta exitosa según tus necesidades
         return $result['choices'][0]['message']['content'];
     }
-   
 }
 ?>
