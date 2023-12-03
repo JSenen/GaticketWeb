@@ -12,7 +12,7 @@ require_once './model/chatGPT.php';
 
 
 /** Funcion que administra los tickets de incidencia por parte del administrador
- * @param int $adminId Numero Id del administrador
+ * @var int $adminId Numero Id del administrador
  * @param array $incidences Listado de las incidencias 
  * @return array listadminincidences($incidences) Listado con todas las incidencias
  */
@@ -28,12 +28,14 @@ function ticketlist(){
     listadminincidences($incidences);
 }
 /** Funcion que maneja la resolucion de incidencias y los mensajes
- *  @param int $adminTip TIP del adminsitrador
+ *  @var int $adminTip TIP del adminsitrador
  *  @param int $adminId ID del administrador
  * @param array  $incidenceToSolve datos completos de incidencia
  * @param string $messageCommit cuerpo del mensaje
  * @param string $solution solucion a la incidencia
- * 
+ * @param string $incidenceToSolve Id incidencia a resolver
+ * @param string $solution Solución a la incidencia
+ * @param string $idIncidence Id de la incidencia
  *  
  */
 function getIncidence($idIncidence){
@@ -74,6 +76,9 @@ function getIncidence($idIncidence){
 }
 /**
  * Gestiona los usuarios por el administrador
+ * @var string $user['userId'] id del usuario
+ * @var string $adminId Id del administrador
+ * @see listUsers
  */
 function userChanges(){
     if(session_status() == PHP_SESSION_NONE){
@@ -89,6 +94,7 @@ function userChanges(){
 }
 /**
  * Añadir un nuevo usuario desde el administrados
+ * @param Array $listdepartment listado de departamentos
  */
 function addUser(){
 
