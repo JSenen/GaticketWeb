@@ -29,7 +29,7 @@ $fecha_actual = date('d-m-Y');
     <ul class="navbar-nav">
         <img src="./resources/img/GaticketAdmin.jpeg"  alt="" width="130" height="130">>
         <li class="nav-item">
-            <a class="nav-link" href="#" style="color: yellow;">ADMINISTRADOR</a>
+            <a class="nav-link" href="#" style="color: yellow;"><?php echo strtoupper($_SESSION['user_rol']) ?></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#"><?php echo $_SESSION['user_tip'] ?></a>

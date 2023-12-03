@@ -24,11 +24,15 @@ $fecha_actual = date('d-m-Y');
         <div class="col-md-6">
             <h3 class="text-center">INCIDENCIA</h3>
         </div>
+        <?php if ($_SESSION['user_rol'] == 'superusuario') {
+            
+        ?>
         <div class="col-md-6 text-end">
             <a class="btn btn-danger btn-sm" <?php 
             if (isset($incidenceToSolve) && !empty($incidenceToSolve)) {
                 ?> href="index.php?controller=admin&action=activateIncidence&id=<?php echo $incidenceToSolve['incidence']['incidencesId']?>">Reactivar</a><?php } ?>
         </div>
+        <?php } ?>
     </div>
 
     <?php
