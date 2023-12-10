@@ -31,6 +31,17 @@ Para el uso de la aplicación Web se debe tener en cuenta lo siguiente:
 
 La imagen adjunta nos muestra los casos de uso de la aplición por parte de cualquiera de los actores implicados
  ![Imagen](https://github.com/JSenen/GaticketWeb/blob/develop/resources/img/Casos_de_uso.png)
+
+## Arquitectura
+
+Para la realización de la aplicación web se ha usado la arquitectura en capas:
+
+1. Capa Controller
+    - Capa que hace de intermediario y establece la comunicación e intercamnbio de datos entre el resto de capas.
+2. Capa Model
+    - Capa que gestiona la lógica de la aplicación
+3. Capa View
+    - Capa que gestiona la relación con el usuario
    
 ### Seguridad HTTPS
 
