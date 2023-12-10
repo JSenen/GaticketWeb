@@ -32,7 +32,6 @@ Para el uso de la aplicación Web se debe tener en cuenta lo siguiente:
 La imagen adjunta nos muestra los casos de uso de la aplición por parte de cualquiera de los actores implicados
  ![Imagen](https://github.com/JSenen/GatickerWeb/blob/develop/resources/img/Casos_de_uso.png)
    
-   
 ### Seguridad HTTPS
 
 Los archivos
