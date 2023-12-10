@@ -1,4 +1,9 @@
 GIT IGNORE
+# Archivos de certificado
+.ext
+.cnf
+# Configuration, tokens, variables
+.env
 
 # Default ignored files
 /shelf/
