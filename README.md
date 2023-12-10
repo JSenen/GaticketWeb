@@ -2,6 +2,8 @@
 ![ChatGPT Shield](https://img.shields.io/badge/ChatGPT-00BFFF?style=for-the-badge&logo=chatbot&logoColor=white)
 ![Bootstrap Shield](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![jQuery Shield](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
+![MAMP Shield](https://img.shields.io/badge/MAMP-2C3A47?style=for-the-badge&logo=mamp&logoColor=white)
+
 
 
 # GaticketWebApp 
@@ -28,8 +30,14 @@ Para el uso de la aplicación Web se debe tener en cuenta lo siguiente:
 ## Casos de uso
 
 La imagen adjunta nos muestra los casos de uso de la aplición por parte de cualquiera de los actores implicados
+ ![Imagen](https://github.com/JSenen/GatickerWeb/blob/develop/resources/img/Casos_de_uso.png)
+   
+### Seguridad HTTPS
 
-***
+Los archivos
+1. server.csr.cnf
+2. v3.ext
+Se utulizan para simular un certificado **SSL** en local con la aplicacion MAMP. La cual nos genera un servidor Apache en local.
 
 
 
